@@ -1,0 +1,151 @@
+import type { CollectionConfig } from 'payload'
+
+const conceptRel = (name: string, label: string, family: string, hasMany = false, required = false) => ({
+  name,
+  type: 'relationship' as const,
+  relationTo: 'concepts' as const,
+  hasMany,
+  required,
+  label,
+  filterOptions: { family: { equals: family } },
+})
+
+export const Courses: CollectionConfig = {
+  slug: 'courses',
+  labels: { singular: '课程', plural: '课程' },
+  admin: {
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'gradeMin', 'primaryX', 'primaryY', 'totalHours', 'status'],
+    group: '课程',
+  },
+  access: { read: () => true },
+  versions: { drafts: true },
+  fields: [
+    {
+      type: 'tabs',
+      tabs: [
+        {
+          label: '基础',
+          fields: [
+            { name: 'title', type: 'text', required: true, label: '名称' },
+            { name: 'subtitle', type: 'text', label: '副标题' },
+            { name: 'slug', type: 'text', required: true, unique: true, label: 'URL 标识' },
+            { name: 'summary', type: 'textarea', required: true, label: '摘要' },
+            { name: 'cover', type: 'upload', relationTo: 'media', label: '封面' },
+            { name: 'sampleFlag', type: 'checkbox', label: '示例课程', defaultValue: true },
+            {
+              type: 'row',
+              fields: [
+                { name: 'gradeMin', type: 'number', required: true, label: '年级下限', min: 1, max: 12 },
+                { name: 'gradeMax', type: 'number', required: true, label: '年级上限', min: 1, max: 12 },
+                { name: 'totalHours', type: 'number', required: true, label: '课时' },
+              ],
+            },
+            { name: 'drivingQuestion', type: 'textarea', required: true, label: '驱动性问题' },
+            {
+              name: 'subjects',
+              type: 'select',
+              hasMany: true,
+              label: '学科',
+              options: [
+                { label: '语文', value: '语文' },
+                { label: '数学', value: '数学' },
+                { label: '科学', value: '科学' },
+                { label: '信息技术', value: '信息技术' },
+                { label: '人文社科', value: '人文社科' },
+                { label: '艺术', value: '艺术' },
+                { label: '外语', value: '外语' },
+                { label: '劳动/综合实践', value: '综合实践' },
+              ],
+            },
+          ],
+        },
+        {
+          label: 'B1.0 坐标',
+          fields: [
+            { name: 'paradigmVersion', type: 'text', defaultValue: 'B1.0', label: '范式版本', required: true },
+            conceptRel('primaryX', '主 X 议题', 'X', false, true),
+            conceptRel('secondaryX', '辅助 X', 'X', true),
+            conceptRel('primaryY', '主 Y 透镜', 'Y', false, true),
+            conceptRel('secondaryY', '辅助 Y 透镜', 'Y'),
+            conceptRel('targetC', '目标 C', 'C', true, true),
+            conceptRel('primaryT', '核心 T 技能构件', 'T', true, true),
+            conceptRel('targetL', '目标 L', 'L', false, true),
+            conceptRel('teachingArc', '教学弧', 'ARC', false, true),
+            conceptRel('domainPathways', '领域路径 A1-A6', 'A', true),
+            conceptRel('aiCapabilities', 'AI 能力 A/B/C/D', 'AI', true),
+            {
+              name: 'trackAffinity',
+              type: 'relationship',
+              relationTo: 'concepts',
+              hasMany: true,
+              label: '综合赛道倾向（非认定）',
+              filterOptions: { family: { equals: 'TRACK' } },
+              admin: { description: '赛道只标注倾向，不做学生结论。' },
+            },
+          ],
+        },
+        {
+          label: '实施与评价',
+          fields: [
+            { name: 'modules', type: 'relationship', relationTo: 'course-modules', hasMany: true, label: '模块' },
+            { name: 'materials', type: 'textarea', label: '物料' },
+            { name: 'hardware', type: 'textarea', label: '硬件' },
+            { name: 'software', type: 'textarea', label: '软件' },
+            { name: 'safety', type: 'textarea', required: true, label: '安全要求' },
+            { name: 'assessments', type: 'textarea', required: true, label: '评价' },
+            { name: 'evidence', type: 'textarea', required: true, label: '证据要求' },
+            { name: 'gallery', type: 'upload', relationTo: 'media', hasMany: true, label: '过程与成果画廊' },
+            {
+              type: 'collapsible',
+              label: 'C1.3 补充（可选，不得覆盖 B1.0）',
+              admin: { initCollapsed: true },
+              fields: [
+                {
+                  name: 'c13_project_maturity',
+                  type: 'select',
+                  label: 'c13_project_maturity',
+                  options: ['P1', 'P2', 'P3', 'P4', 'P5'].map((v) => ({ label: v, value: v })),
+                },
+                { name: 'c13_ai_breadth', type: 'text', label: 'c13_ai_breadth' },
+                {
+                  name: 'c13_real_world_intensity',
+                  type: 'select',
+                  label: 'c13_real_world_intensity（真实世界强度，不是 T 技能）',
+                  options: ['T1', 'T2', 'T3', 'T4', 'T5'].map((v) => ({ label: `强度 ${v}`, value: v })),
+                  admin: { description: 'C1.3 真实世界强度。禁止称为 T技能。' },
+                },
+                { name: 'c13_domain_balance', type: 'text', label: 'c13_domain_balance' },
+              ],
+            },
+          ],
+        },
+        {
+          label: '发布',
+          fields: [
+            {
+              name: 'seo',
+              type: 'group',
+              fields: [
+                { name: 'title', type: 'text', label: 'SEO 标题' },
+                { name: 'description', type: 'textarea', label: 'SEO 描述' },
+              ],
+            },
+            { name: 'featured', type: 'checkbox', label: '首页精选', defaultValue: false },
+            {
+              name: 'status',
+              type: 'select',
+              defaultValue: 'published',
+              options: [
+                { label: '草稿', value: 'draft' },
+                { label: '审核中', value: 'review' },
+                { label: '已发布', value: 'published' },
+                { label: '已归档', value: 'archived' },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+}

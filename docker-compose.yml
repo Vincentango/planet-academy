@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: planet
+      POSTGRES_PASSWORD: planet
+      POSTGRES_DB: planet_academy
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U planet -d planet_academy"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  web:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URI: postgresql://planet:planet@postgres:5432/planet_academy
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET:-CHANGE_ME_PAYLOAD_SECRET_PLANET}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@planetacad.one}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-ChangeMe_Planet1}
+      NEXT_TELEMETRY_DISABLED: "1"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pgdata:

@@ -1,0 +1,37 @@
+# 星球学院门户
+
+以 B1.0 为唯一范式母本的公开门户、课程知识库与 Payload CMS。
+
+第一阶段：理念展示 + 课程档案 + CMS + PostgreSQL + 媒体上传（图片与视频）。不含 LMS、支付、SIS、社交或学生账号。
+
+## 技术栈
+
+Next.js App Router, Payload CMS 3, PostgreSQL, Tailwind.
+
+## 运行
+
+复制环境示例文件，启动数据库，安装依赖，然后执行开发脚本。前台为 3000 端口，后台为 /admin。可用 compose 同时拉起数据库与站点。首次启动自动写入术语和示例课程。
+
+## 页面
+
+- / 首页
+- /paradigm 总览
+- /paradigm/why
+- /paradigm/capabilities
+- /paradigm/xyz
+- /paradigm/teaching-arcs
+- /paradigm/assessment
+- /paradigm/ecosystem
+- /courses 与 /courses/[slug]
+- /projects /about /contact /privacy
+- /admin
+
+导航：首页 | 教育范式 | 课程中心 | 项目成果 | 关于我们
+
+## 治理
+
+B1.0 是唯一母本。官方代码不可自由改名。C1.3 只用 c13 前缀字段。不得把 C1.3 强度叫做技能构件。赛道只标倾向。课程卡片只展示名称、学段或年级、主X、主Y、课时、一两门学科。
+
+## 示例课程
+
+盲盒课程、河流特攻队、碳索校园、火星基地。各含两到三个模块，并标记为示例课程。

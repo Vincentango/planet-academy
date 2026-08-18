@@ -1,0 +1,61 @@
+import type { CollectionConfig } from 'payload'
+
+export const Concepts: CollectionConfig = {
+  slug: 'concepts',
+  labels: { singular: '术语', plural: '术语库' },
+  admin: {
+    useAsTitle: 'name',
+    defaultColumns: ['code', 'name', 'family', 'layer'],
+    group: '范式',
+  },
+  access: { read: () => true },
+  fields: [
+    {
+      name: 'code',
+      type: 'text',
+      required: true,
+      unique: true,
+      label: '官方代码',
+      admin: { description: 'B1.0 锁定代码，不得自由改名。' },
+    },
+    { name: 'name', type: 'text', required: true, label: '名称' },
+    { name: 'nameEn', type: 'text', label: '英文名称' },
+    {
+      name: 'family',
+      type: 'select',
+      required: true,
+      label: '术语族',
+      options: [
+        { label: 'C 核心能力', value: 'C' },
+        { label: 'X 议题领域', value: 'X' },
+        { label: 'Y 认知透镜', value: 'Y' },
+        { label: 'T 技能构件', value: 'T' },
+        { label: 'L 认知阶梯', value: 'L' },
+        { label: 'ARC 教学弧', value: 'ARC' },
+        { label: 'AI 人机协作能力', value: 'AI' },
+        { label: 'A 领域路径', value: 'A' },
+        { label: 'TRACK 综合赛道倾向', value: 'TRACK' },
+        { label: 'LOOP 五重闭环', value: 'LOOP' },
+      ],
+    },
+    { name: 'shortCode', type: 'text', label: '短码', admin: { description: '如 C1、X5、ARC3' } },
+    { name: 'layer', type: 'text', label: '层级（如基础层/核心层/整合层）' },
+    { name: 'shortDefinition', type: 'textarea', required: true, label: '简明定义' },
+    { name: 'officialDefinition', type: 'textarea', label: '权威定义（B1.0）' },
+    { name: 'stages', type: 'text', label: '阶段摘要（教学弧）' },
+    { name: 'sort', type: 'number', defaultValue: 0, label: '排序' },
+    {
+      name: 'locked',
+      type: 'checkbox',
+      defaultValue: true,
+      label: '锁定代码',
+      admin: { description: '官方代码不可由课程编辑改写。' },
+    },
+    {
+      name: 'paradigmVersion',
+      type: 'text',
+      defaultValue: 'B1.0',
+      label: '范式版本',
+    },
+  ],
+}
