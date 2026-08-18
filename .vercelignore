@@ -1,0 +1,5 @@
+# Keep local Docker/localhost env out of Vercel uploads
+.env
+.env.*
+.agents
+skills-lock.json
