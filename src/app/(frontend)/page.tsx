@@ -53,7 +53,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <section className="hero-band">
+      <section className="hero-page">
         <div className="promo-strip">
           <p className="container-wide py-2.5">B1.0 正式基线 →</p>
         </div>

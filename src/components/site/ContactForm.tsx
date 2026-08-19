@@ -55,7 +55,7 @@ export function ContactForm() {
         留言
         <textarea required name="message" rows={5} className="form-control" />
       </label>
-      <button className="btn-mint justify-self-start" type="submit">
+      <button className="btn-ink justify-self-start" type="submit">
         发送
       </button>
       {status !== 'idle' ? (

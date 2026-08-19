@@ -12,7 +12,7 @@ export function NewsletterStrip() {
           </p>
         </div>
         <div className="md:text-right">
-          <Link href="/contact" className="btn-mint no-underline">联系合作</Link>
+          <Link href="/contact" className="btn-ink no-underline">联系合作</Link>
         </div>
       </div>
     </section>

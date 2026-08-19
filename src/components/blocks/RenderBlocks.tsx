@@ -33,7 +33,7 @@ export function RenderBlocks({
         const type = String(block.blockType || '')
         if (type === 'hero') {
           return (
-            <section key={i} className="hero-band">
+            <section key={i} className="hero-page">
               <div className="promo-strip">
                 <p className="container-wide py-2.5">B1.0 正式基线 →</p>
               </div>

@@ -1,12 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --teal: #004142;
   --paper: #ffffff;
   --band-grey: #ebecf0;
   --ink: #111111;
   --muted: #555555;
-  --mint: #a0f5e9;
   --peach: #f5ad6e;
   --black: #000000;
   --rule: #d5d6db;
@@ -14,10 +12,8 @@
   --bg: var(--paper);
   --bg-elevated: var(--paper);
   --bg-card: var(--paper);
-  --lime: var(--mint);
   --line: var(--rule);
-  --forest: var(--teal);
-  --accent: var(--mint);
+  --accent: var(--peach);
   --danger: #c23b22;
 }
 
@@ -31,12 +27,8 @@
   --color-muted: var(--muted);
   --color-rule: var(--rule);
   --color-line: var(--line);
-  --color-mint: var(--mint);
   --color-peach: var(--peach);
-  --color-teal: var(--teal);
   --color-accent: var(--accent);
-  --color-lime: var(--lime);
-  --color-forest: var(--forest);
   --color-band: var(--black);
   --font-sans: "Inter", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Inter Tight", "Noto Sans SC", "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -63,7 +55,7 @@ a {
 }
 
 ::selection {
-  background: var(--mint);
+  background: var(--peach);
   color: var(--ink);
 }
 
@@ -108,8 +100,8 @@ a {
 
 .badge-collection {
   display: inline-block;
-  background: var(--mint);
-  color: var(--ink);
+  background: var(--black);
+  color: #fff;
   font-size: 0.7rem;
   font-weight: 700;
   padding: 0.18rem 0.4rem;
@@ -119,7 +111,7 @@ a {
 .section-head {
   margin: 0 0 1.5rem;
   padding-top: 1.25rem;
-  border-top: 4px solid var(--mint);
+  border-top: 4px solid var(--black);
   font-family: var(--font-display);
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 800;
@@ -128,7 +120,7 @@ a {
 }
 
 .collection-rule {
-  border-top: 4px solid var(--mint);
+  border-top: 4px solid var(--black);
   padding-top: 1.15rem;
 }
 
@@ -137,20 +129,6 @@ a {
   font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0;
-}
-
-.btn-mint {
-  display: inline-block;
-  background: var(--mint);
-  color: var(--ink);
-  padding: 0.55rem 0.9rem;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-decoration: none;
-  border: 1px solid var(--mint);
-  cursor: pointer;
 }
 
 .btn-ghost {
@@ -181,7 +159,7 @@ a {
 
 .btn-ink {
   display: inline-block;
-  background: var(--ink);
+  background: var(--black);
   color: #fff;
   padding: 0.55rem 0.95rem;
   font-size: 0.75rem;
@@ -197,12 +175,12 @@ a {
   border: 0;
 }
 
-.hero-band { background: var(--teal); color: #fff; }
+.hero-page { background: var(--paper); color: var(--ink); }
 .band-grey { background: var(--band-grey); }
 .band-black { background: var(--black); color: #fff; }
 
 .promo-strip {
-  background: var(--mint);
+  background: var(--band-grey);
   color: var(--ink);
   font-size: 0.875rem;
   font-weight: 600;
@@ -252,9 +230,8 @@ a {
   place-items: center;
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  background:
-    linear-gradient(160deg, #d9ece9, #c5d4d3 42%, #e7e3dc);
-  color: var(--teal);
+  background: var(--band-grey);
+  color: var(--ink);
 }
 
 .story-media span {
@@ -262,7 +239,7 @@ a {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
   letter-spacing: -0.04em;
-  opacity: 0.55;
+  opacity: 0.45;
 }
 
 .story-card {
@@ -272,17 +249,12 @@ a {
   color: inherit;
 }
 
-.story-card h3:hover { color: var(--teal); }
+.story-card h3:hover { color: var(--peach); }
 
 .site-header {
   position: sticky;
   top: 0;
   z-index: 40;
-}
-
-.site-header--teal {
-  background: var(--teal);
-  color: #fff;
 }
 
 .site-header--white {
@@ -330,16 +302,17 @@ a {
   height: 2.5rem;
   display: grid;
   place-items: center;
-  border: 0;
-  background: var(--mint);
-  color: var(--ink);
+  border: 1px solid var(--ink);
+  background: var(--black);
+  color: #fff;
   font-size: 1.1rem;
   cursor: pointer;
 }
 
 .arrow-btn[disabled] {
-  background: #d7eeea;
-  color: #8aa9a4;
+  background: var(--band-grey);
+  color: var(--muted);
+  border-color: var(--rule);
   cursor: default;
 }
 
