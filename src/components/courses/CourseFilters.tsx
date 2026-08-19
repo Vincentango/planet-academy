@@ -39,7 +39,9 @@ export function CourseFilters({
     const next = new URLSearchParams(params.toString())
     if (value) next.set(key, value)
     else next.delete(key)
-    router.push(`/courses?${next.toString()}`)
+    next.delete('page')
+    const qs = next.toString()
+    router.push(qs ? `/courses?${qs}` : '/courses')
   }
 
   const selectClass = 'form-control'

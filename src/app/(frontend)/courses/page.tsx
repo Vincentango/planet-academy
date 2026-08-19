@@ -3,7 +3,9 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { CourseCard } from '@/components/courses/CourseCard'
 import { CourseFilters } from '@/components/courses/CourseFilters'
+import { CoursePager } from '@/components/courses/CoursePager'
 import { PageHero } from '@/components/site/PageHero'
+import { parsePage, type CourseFilterParams } from '@/lib/course-listing'
 import { payloadClient } from '@/lib/payload'
 import { CONCEPTS } from '@/lib/taxonomies'
 
@@ -25,8 +27,13 @@ export default async function CoursesPage({ searchParams }: { searchParams: Prom
   const arc = first(sp.arc)
   const subject = first(sp.subject)
   const hours = first(sp.hours)
+  const page = parsePage(first(sp.page))
+  const filters: CourseFilterParams = { q, grade, x, y, c, arc, subject, hours }
 
   let courses: Record<string, unknown>[] = []
+  let totalDocs = 0
+  let totalPages = 0
+  let currentPage = page
   try {
     const payload = await payloadClient()
     const where: Record<string, unknown> = { status: { equals: 'published' } }
@@ -60,12 +67,19 @@ export default async function CoursesPage({ searchParams }: { searchParams: Prom
       collection: 'courses',
       where: { and },
       depth: 1,
-      limit: 48,
+      limit: 12,
+      page,
       sort: 'title',
     })
     courses = res.docs as unknown as Record<string, unknown>[]
+    totalDocs = res.totalDocs
+    totalPages = res.totalPages || (totalDocs ? Math.ceil(totalDocs / 12) : 0)
+    currentPage = res.page || page
   } catch {
     courses = []
+    totalDocs = 0
+    totalPages = 0
+    currentPage = page
   }
 
   const opt = (family: 'X' | 'Y' | 'C' | 'ARC') =>
@@ -89,13 +103,14 @@ export default async function CoursesPage({ searchParams }: { searchParams: Prom
           />
         </Suspense>
         <p className="mt-5 text-sm text-muted">
-          {courses.length ? `共 ${courses.length} 门课程` : '没有符合条件的课程，请放宽筛选。'}
+          {totalDocs ? `第 ${currentPage} / ${totalPages} 页，共 ${totalDocs} 门` : '没有符合条件的课程，请放宽筛选。'}
         </p>
-        <div className="mt-6 grid gap-4 md:grid-cols-2">
+        <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {courses.map((course) => (
             <CourseCard key={String((course as { slug?: string }).slug)} course={course as never} />
           ))}
         </div>
+        <CoursePager page={currentPage} totalPages={totalPages} filters={filters} />
       </section>
     </>
   )
