@@ -120,8 +120,9 @@ export default async function CourseDetailPage({
   }[]
 
   return (
-    <article className="pb-20">
-      <section className="container-wide pt-14">
+    <article className="pb-16">
+      <section className="container-wide pt-10">
+        <div className="panel px-6 py-10 md:px-10">
         <p className="kicker">
           {lab ? (
             <Link href={`/labs/${lab.slug}`} className="no-underline">
@@ -151,15 +152,16 @@ export default async function CourseDetailPage({
             </Link>
           ))}
         </nav>
+        </div>
       </section>
 
       {tab === 'outline' ? (
-        <section className="container-wide pt-10">
+        <section className="container-wide pt-4">
           <div className="course-overview">
-            <div>
+            <div className="course-main">
               <p className="kicker">驱动性问题</p>
               <p className="driving-q">{course.drivingQuestion}</p>
-              <h2 className="headline mt-12 text-3xl">纲要</h2>
+              <h2 className="headline mt-10 text-3xl">纲要</h2>
               <p className="mt-5 max-w-3xl text-base leading-8">{course.summary}</p>
               {course.subjects?.length ? (
                 <p className="mt-6 text-sm text-muted">学科：{course.subjects.join(' · ')}</p>
@@ -201,7 +203,7 @@ export default async function CourseDetailPage({
           <ol className="mt-6 grid gap-4">
             {modules.length ? (
               modules.map((mod, i) => (
-                <li key={mod.id || i} className="border border-rule bg-paper p-5">
+                <li key={mod.id || i} className="module-card">
                   <p className="kicker">
                     模块 {i + 1}
                     {mod.hours ? ` · ${mod.hours} 课时` : ''}
@@ -237,7 +239,7 @@ export default async function CourseDetailPage({
               ['硬件', course.hardware],
               ['软件', course.software],
             ].map(([label, body]) => (
-              <article key={String(label)} className="border border-rule bg-paper p-5">
+              <article key={String(label)} className="material-card">
                 <h3 className="font-semibold">{label}</h3>
                 <p className="mt-3 text-sm leading-7 text-muted">{body || '—'}</p>
               </article>
@@ -253,7 +255,7 @@ export default async function CourseDetailPage({
           {projects.length ? (
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               {projects.map((project) => (
-                <article key={project.slug} className="border border-rule bg-paper p-5">
+                <article key={project.slug} className="outcome-card">
                   <h3 className="headline text-xl">{project.title}</h3>
                   <p className="mt-3 leading-7 text-muted">{project.summary}</p>
                   {project.processNote ? <p className="mt-3 text-sm text-muted">{project.processNote}</p> : null}
@@ -264,11 +266,11 @@ export default async function CourseDetailPage({
             <p className="mt-6 max-w-2xl leading-8 text-muted">此课程尚未公开成果。过程证据与项目故事会在这里出现。</p>
           )}
           <div className="mt-10 grid gap-4 md:grid-cols-2">
-            <article className="border border-rule bg-paper p-5">
+            <article className="outcome-card">
               <h3 className="font-semibold">证据要求</h3>
               <p className="mt-3 text-sm leading-7 text-muted">{course.evidence || '—'}</p>
             </article>
-            <article className="border border-rule bg-paper p-5">
+            <article className="outcome-card">
               <h3 className="font-semibold">评价</h3>
               <p className="mt-3 text-sm leading-7 text-muted">{course.assessments || '—'}</p>
             </article>

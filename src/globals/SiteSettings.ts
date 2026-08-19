@@ -6,7 +6,7 @@ export const SiteSettings: GlobalConfig = {
   access: { read: () => true },
   fields: [
     { name: 'siteName', type: 'text', defaultValue: '星球学院', label: '站点名称' },
-    { name: 'siteNameEn', type: 'text', defaultValue: 'PLANET ACADEMY', label: '英文名' },
+    { name: 'siteNameEn', type: 'text', defaultValue: 'CRADLE-X', label: '英文名' },
     { name: 'tagline', type: 'textarea', label: '口号' },
     { name: 'footerNote', type: 'textarea', label: '页脚说明' },
     { name: 'contactEmail', type: 'email', label: '联系邮箱' },

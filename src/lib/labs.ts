@@ -55,6 +55,14 @@ export const LABS = [
   },
 ] as const
 
+
+export const ALL_COURSES = {
+  slug: 'all',
+  name: '课程总览',
+  nameEn: 'All Courses',
+  focus: '全部已发布课程，跨九间研究室。按年级、学科、课时、教学弧与认知阶梯筛选。',
+} as const
+
 export type LabSlug = (typeof LABS)[number]['slug']
 
 export const LAB_SELECT_OPTIONS = LABS.map((lab) => ({
@@ -72,6 +80,7 @@ export const GRADE_BANDS = [
 export type GradeBandId = (typeof GRADE_BANDS)[number]['id']
 
 export function getLab(slug: string) {
+  if (slug === ALL_COURSES.slug) return ALL_COURSES
   return LABS.find((lab) => lab.slug === slug) ?? null
 }
 

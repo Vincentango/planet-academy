@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { LABS } from '@/lib/labs'
+import { ALL_COURSES, LABS } from '@/lib/labs'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,34 +12,40 @@ export const metadata: Metadata = {
 export default function LabsPage() {
   return (
     <>
-      <section className="container-wide pb-12 pt-16">
+      <section className="container-wide pb-8 pt-12">
         <p className="kicker">RESEARCH LABS</p>
         <h1 className="headline mt-4 max-w-4xl text-5xl md:text-7xl">星球研究室</h1>
         <p className="dek mt-6 max-w-2xl text-lg">
           九个跨学科研究室连成一张网络。点进一间研究室，只看属于它的课程。
         </p>
         <nav className="lab-index-nav" aria-label="研究室速览">
-          {LABS.map((lab, i) => (
-            <span key={lab.slug} className="lab-index-nav__item">
-              {i > 0 ? <span className="lab-index-nav__rule" aria-hidden="true" /> : null}
-              <Link href={`/labs/${lab.slug}`}>{lab.name}</Link>
-            </span>
+          <Link href={`/labs/${ALL_COURSES.slug}`} data-contrast="true">
+            {ALL_COURSES.name}
+          </Link>
+          {LABS.map((lab) => (
+            <Link key={lab.slug} href={`/labs/${lab.slug}`}>
+              {lab.name}
+            </Link>
           ))}
         </nav>
       </section>
 
-      <section className="band-black">
-        <div className="container-wide py-16">
-          <p className="kicker text-white/50">九间研究室 · 一张网络</p>
-          <div className="mt-8 grid gap-px bg-white/15 md:grid-cols-3">
-            {LABS.map((lab) => (
-              <Link key={lab.slug} href={`/labs/${lab.slug}`} className="lab-card">
-                <p className="kicker text-white/45">{lab.nameEn}</p>
-                <h2 className="headline mt-3 text-3xl text-white">{lab.name}</h2>
-                <p className="mt-4 text-sm leading-7 text-white/70">{lab.focus}</p>
-              </Link>
-            ))}
-          </div>
+      <section className="container-wide pb-16">
+        <p className="kicker">十张入口 · 一张网络</p>
+        <div className="lab-grid mt-6">
+          <Link href={`/labs/${ALL_COURSES.slug}`} className="lab-card lab-card--contrast">
+            <p className="chip-yellow">All courses</p>
+            <p className="kicker mt-4 text-white/50">{ALL_COURSES.nameEn}</p>
+            <h2 className="headline mt-2 text-3xl text-white">{ALL_COURSES.name}</h2>
+            <p className="mt-4 text-sm leading-7 text-white/70">{ALL_COURSES.focus}</p>
+          </Link>
+          {LABS.map((lab) => (
+            <Link key={lab.slug} href={`/labs/${lab.slug}`} className="lab-card">
+              <p className="kicker">{lab.nameEn}</p>
+              <h2 className="headline mt-3 text-3xl">{lab.name}</h2>
+              <p className="mt-4 text-sm leading-7 text-muted">{lab.focus}</p>
+            </Link>
+          ))}
         </div>
       </section>
     </>

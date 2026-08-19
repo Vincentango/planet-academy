@@ -26,7 +26,7 @@ export default function ParadigmPage() {
             <p className="dek mt-3">{body}</p>
           </Link>
         ))}
-        <article className="band-black p-6 md:col-span-2">
+        <article className="band-black p-8 md:col-span-2">
           <p className="kicker text-white/55">SUSTAIN</p>
           <h2 className="headline mt-2 text-2xl text-white">五重闭环</h2>
           <p className="mt-3 leading-7 text-white/80">

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { LabCourseCard, type LabCourseCardData } from '@/components/courses/LabCourseCard'
 import { LabTagBar, type TagGroup } from '@/components/labs/LabTagBar'
-import { GRADE_BANDS, getLab, matchingGradeBands, type LabTagKey } from '@/lib/labs'
+import { FALLBACK_FEATURED, GRADE_BANDS, getLab, matchingGradeBands, type LabTagKey } from '@/lib/labs'
 import { conceptLabel, payloadClient } from '@/lib/payload'
 
 type Search = { [key: string]: string | string[] | undefined }
@@ -46,14 +46,17 @@ export default async function LabDetailPage({
     const payload = await payloadClient()
     const res = await payload.find({
       collection: 'courses',
-      where: { and: [{ status: { equals: 'published' } }, { lab: { equals: slug } }] },
+      where:
+        slug === 'all'
+          ? { status: { equals: 'published' } }
+          : { and: [{ status: { equals: 'published' } }, { lab: { equals: slug } }] },
       depth: 1,
       limit: 100,
       sort: 'title',
     })
     all = res.docs as unknown as typeof all
   } catch {
-    all = []
+    all = slug === 'all' ? (FALLBACK_FEATURED as unknown as typeof all) : []
   }
 
   const subjects = Array.from(new Set(all.flatMap((course) => course.subjects || []))).sort()
@@ -102,21 +105,23 @@ export default async function LabDetailPage({
 
   return (
     <>
-      <section className="container-wide pb-8 pt-16">
-        <p className="kicker">
-          <Link href="/labs" className="no-underline">
-            星球研究室
-          </Link>
-          {' / '}
-          {lab.nameEn}
-        </p>
-        <h1 className="headline mt-4 text-5xl md:text-7xl">{lab.name}</h1>
-        <p className="dek mt-5 max-w-2xl text-lg">{lab.focus}</p>
+      <section className="container-wide pb-6 pt-12">
+        <article className="panel px-6 py-10 md:px-10">
+          <p className="kicker">
+            <Link href="/labs" className="no-underline">
+              星球研究室
+            </Link>
+            {' / '}
+            {lab.nameEn}
+          </p>
+          <h1 className="headline mt-4 text-5xl md:text-7xl">{lab.name}</h1>
+          <p className="dek mt-5 max-w-2xl text-lg">{lab.focus}</p>
+        </article>
       </section>
 
       <section className="container-wide pb-16">
         <LabTagBar slug={slug} groups={groups} current={current} />
-        <p className="mt-8 text-sm text-muted">
+        <p className="mt-6 text-sm text-muted">
           {shown.length ? `${shown.length} 门课程` : '此筛选下暂无课程。标签仍可切换。'}
         </p>
         <div className="mt-6 grid gap-4">

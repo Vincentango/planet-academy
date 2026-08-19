@@ -29,7 +29,7 @@ export function ContactForm() {
   }
 
   return (
-    <form action={onSubmit} className="grid gap-4 border border-rule bg-paper p-6">
+    <form action={onSubmit} className="contact-form grid gap-4">
       <label className="grid gap-1 text-sm">
         姓名
         <input required name="name" className="form-control" />

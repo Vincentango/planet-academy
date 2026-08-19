@@ -12,12 +12,15 @@ const ITEMS = [
 
 export function ParadigmNav() {
   return (
-    <nav className="container-wide flex flex-wrap gap-x-6 gap-y-2 border-y border-rule py-3.5" aria-label="范式章节">
-      {ITEMS.map((item) => (
-        <Link key={item.href} href={item.href} className="nav-cat text-sm">
-          {item.label}
-        </Link>
-      ))}
+    <nav className="container-wide" aria-label="范式章节">
+      <div className="nav-pill flex-wrap">
+        {ITEMS.map((item, i) => (
+          <span key={item.href} className="flex items-center">
+            {i > 0 ? <span className="nav-pill__rule hidden md:block" aria-hidden="true" /> : null}
+            <Link href={item.href}>{item.label}</Link>
+          </span>
+        ))}
+      </div>
     </nav>
   )
 }
