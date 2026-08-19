@@ -104,7 +104,7 @@ export default async function HomePage() {
         </article>
       </section>
 
-      <section className="mosaic-bleed">
+      <section className="container-wide">
         <div className="mosaic">
           <article className="mosaic__tile mosaic__tile--v1">
             <SampleVideo

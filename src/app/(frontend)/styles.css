@@ -866,11 +866,6 @@ h1, h2, h3, h4 {
 }
 
 
-.mosaic-bleed {
-  width: 100%;
-  margin: 1.25rem 0 0;
-}
-
 .mosaic {
   display: grid;
   gap: 0;
