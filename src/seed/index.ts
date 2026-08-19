@@ -1,5 +1,6 @@
 import type { Payload } from 'payload'
 import { CONCEPTS } from '@/lib/taxonomies'
+import { COURSE_LAB_BY_SLUG, LABS, type LabSlug } from '@/lib/labs'
 
 type IdMap = Record<string, number | string>
 
@@ -80,6 +81,7 @@ async function seedCourses(payload: Payload, ids: IdMap) {
       title: '盲盒课程',
       subtitle: '把“惊喜”做成可设计的价值体验',
       slug: 'manghe',
+      lab: 'interaction' as const,
       sampleFlag: true,
       featured: true,
       gradeMin: 3,
@@ -114,6 +116,7 @@ async function seedCourses(payload: Payload, ids: IdMap) {
       title: '河流特攻队',
       subtitle: '把一条身边的河变成可论证的系统问题',
       slug: 'heliu-tegongdui',
+      lab: 'earth' as const,
       sampleFlag: true,
       featured: true,
       gradeMin: 6,
@@ -149,6 +152,7 @@ async function seedCourses(payload: Payload, ids: IdMap) {
       title: '碳索校园',
       subtitle: '把校园能耗变成可行动的低碳问题',
       slug: 'tansuo-xiaoyuan',
+      lab: 'earth' as const,
       sampleFlag: true,
       featured: true,
       gradeMin: 7,
@@ -182,6 +186,7 @@ async function seedCourses(payload: Payload, ids: IdMap) {
       title: '火星基地',
       subtitle: '在极端约束中设计人类如何共同生活',
       slug: 'huoxing-jidi',
+      lab: 'embodied' as const,
       sampleFlag: true,
       featured: true,
       gradeMin: 8,
@@ -232,6 +237,7 @@ async function seedCourses(payload: Payload, ids: IdMap) {
         totalHours: course.totalHours,
         subjects: [...course.subjects],
         drivingQuestion: course.drivingQuestion,
+        lab: course.lab,
         paradigmVersion: 'B1.0',
         primaryX: ids[course.primaryX],
         secondaryX: 'secondaryX' in course ? course.secondaryX.map((k) => ids[k]) : [],
@@ -376,6 +382,325 @@ async function seedProjects(payload: Payload) {
   })
 }
 
+
+const PLACEHOLDER_COURSES: Array<{
+  title: string
+  subtitle: string
+  slug: string
+  lab: LabSlug
+  gradeMin: number
+  gradeMax: number
+  totalHours: number
+  subjects: string[]
+  summary: string
+  drivingQuestion: string
+  primaryX: string
+  secondaryX?: string[]
+  primaryY: string
+  targetC: string[]
+  primaryT: string[]
+  targetL: string
+  teachingArc: string
+  domainPathways: string[]
+  trackAffinity: string[]
+  materials: string
+  hardware: string
+  software: string
+  safety: string
+  assessments: string
+  evidence: string
+}> = [
+  {
+    title: '规则与公平',
+    subtitle: '用一场可见的博弈理解规则如何分配机会',
+    slug: 'guize-yugongping',
+    lab: 'logic',
+    gradeMin: 6,
+    gradeMax: 9,
+    totalHours: 24,
+    subjects: ['数学', '人文社科'],
+    summary: '学生设计并修订一套课堂博弈规则，观察策略如何改变结果，区分“赢得比赛”与“规则是否公平”。示例课程。',
+    drivingQuestion: '一套看起来人人都能玩的规则，怎样才能被证明对所有参与者仍然公平？',
+    primaryX: 'X8',
+    primaryY: 'Y4',
+    targetC: ['C1', 'C4'],
+    primaryT: ['T3', 'T4'],
+    targetL: 'L3',
+    teachingArc: 'ARC1',
+    domainPathways: ['A6'],
+    trackAffinity: ['TRACK3'],
+    materials: '规则卡、计分表、角色牌。',
+    hardware: '不适用。',
+    software: '可选表格工具。',
+    safety: '竞争情境需提供退出与心理安全协议；不针对个人输赢做公开羞辱。',
+    assessments: '规则修订说明、公平性论证、同伴评审。',
+    evidence: '规则 v1/v2、对局记录、公平性论证海报。',
+  },
+  {
+    title: '十五分钟街区',
+    subtitle: '把日常出行半径做成可设计的城市问题',
+    slug: 'shiwufenzhong-jiequ',
+    lab: 'city',
+    gradeMin: 7,
+    gradeMax: 10,
+    totalHours: 32,
+    subjects: ['人文社科', '综合实践'],
+    summary: '学生测绘自己的十五分钟生活圈，识别服务缺口，提出一个可被社区讨论的微型公共方案。示例课程。',
+    drivingQuestion: '如果只能在步行十五分钟内安排生活，我们的街区还缺什么，谁被排除在外？',
+    primaryX: 'X2',
+    primaryY: 'Y3',
+    targetC: ['C4', 'C6'],
+    primaryT: ['T1', 'T7'],
+    targetL: 'L3',
+    teachingArc: 'ARC5',
+    domainPathways: ['A5'],
+    trackAffinity: ['TRACK5'],
+    materials: '街区底图、观察记录表、访谈提纲。',
+    hardware: '可选手机拍照；不采集精确住址。',
+    software: '简报与协作文档。',
+    safety: '户外观察须结伴并避开危险路段；影像默认匿名；不公开可识别未成年人。',
+    assessments: '地图完整性、方案可行性、利益相关者沟通。',
+    evidence: '生活圈地图、访谈纪要、方案对比、发布反馈。',
+  },
+  {
+    title: '校园食物地图',
+    subtitle: '从一顿午餐看见土地、劳动与选择',
+    slug: 'xiaoyuan-shiwu-ditu',
+    lab: 'agri',
+    gradeMin: 3,
+    gradeMax: 6,
+    totalHours: 16,
+    subjects: ['科学', '综合实践'],
+    summary: '小学生追踪午餐中的一种食物回到产地与季节，做成一张可讲解的校园食物地图。示例课程。',
+    drivingQuestion: '今天盘子里的食物，是从哪块土地、经过谁的手，才来到校园的？',
+    primaryX: 'X3',
+    primaryY: 'Y5',
+    targetC: ['C5', 'C3'],
+    primaryT: ['T3', 'T4'],
+    targetL: 'L2',
+    teachingArc: 'ARC2',
+    domainPathways: ['A4'],
+    trackAffinity: ['TRACK3'],
+    materials: '食材卡、季节表、地图打印纸。',
+    hardware: '不适用。',
+    software: '可选绘图工具。',
+    safety: '食物过敏须提前申报；不鼓励品尝不明来源食材；田间参观须成人监护。',
+    assessments: '食物来源记录、地图讲解、同伴提问回应。',
+    evidence: '食物旅程卡、校园食物地图、讲解记录。',
+  },
+  {
+    title: '口述史工作坊',
+    subtitle: '让一段地方记忆被听见，也被质疑',
+    slug: 'koushushi-gongzuofang',
+    lab: 'culture',
+    gradeMin: 7,
+    gradeMax: 9,
+    totalHours: 24,
+    subjects: ['语文', '人文社科'],
+    summary: '学生采访一位同意参与的长辈或社区成员，整理口述，并对照第二手材料区分记忆、叙事与证据。示例课程。',
+    drivingQuestion: '一段被讲述的过去，哪些部分可以被核验，哪些必须被当作叙事来理解？',
+    primaryX: 'X7',
+    primaryY: 'Y5',
+    targetC: ['C3', 'C5'],
+    primaryT: ['T4', 'T3'],
+    targetL: 'L3',
+    teachingArc: 'ARC1',
+    domainPathways: ['A6'],
+    trackAffinity: ['TRACK4'],
+    materials: '知情同意书、访谈提纲、转写稿纸。',
+    hardware: '可选录音设备（须同意）；不公开原声除非另有授权。',
+    software: '文档与时间线工具。',
+    safety: '必须书面知情同意；可随时撤回；不采集敏感身份信息；公开文本默认匿名。',
+    assessments: '访谈伦理检查、叙事与证据对照、成果发布。',
+    evidence: '同意书、转写摘录、对照表、发布文本。',
+  },
+  {
+    title: '公共墙绘',
+    subtitle: '把一面墙做成可讨论的公共表达',
+    slug: 'gonggong-qianghui',
+    lab: 'art',
+    gradeMin: 3,
+    gradeMax: 6,
+    totalHours: 16,
+    subjects: ['艺术', '综合实践'],
+    summary: '学生为校园或社区一面被允许的墙面提出主题、草图与材料方案，并在真实约束下完成一次公共表达。示例课程。',
+    drivingQuestion: '一面人人都会路过的墙，怎样说话才既有表达、又不剥夺别人的墙？',
+    primaryX: 'X5',
+    primaryY: 'Y3',
+    targetC: ['C2', 'C3'],
+    primaryT: ['T1', 'T4'],
+    targetL: 'L2',
+    teachingArc: 'ARC3',
+    domainPathways: ['A6'],
+    trackAffinity: ['TRACK4'],
+    materials: '草图纸、色卡、被批准的涂料或可移除材料。',
+    hardware: '刷具；高处作业禁止。',
+    software: '可选绘图工具。',
+    safety: '只在批准墙面施工；使用无毒材料；避免高处与封闭空间；不绘制攻击性肖像。',
+    assessments: '主题论证、草图迭代、现场实施与复盘。',
+    evidence: '草图版本、材料清单、过程照片、观众反馈。',
+  },
+  {
+    title: '桌面机构工坊',
+    subtitle: '让一个机构在桌面上可被看见、被修好',
+    slug: 'zhuomian-jigou-gongfang',
+    lab: 'making',
+    gradeMin: 7,
+    gradeMax: 9,
+    totalHours: 32,
+    subjects: ['信息技术', '综合实践'],
+    summary: '学生设计一个解决具体动作问题的桌面机构，完成原型、测试与一次公开的故障复盘。示例课程。',
+    drivingQuestion: '如果只用桌面尺度的材料，怎样做出一个能稳定完成指定动作的机构？',
+    primaryX: 'X9',
+    primaryY: 'Y3',
+    targetC: ['C2', 'C4'],
+    primaryT: ['T1', 'T5'],
+    targetL: 'L3',
+    teachingArc: 'ARC3',
+    domainPathways: ['A2'],
+    trackAffinity: ['TRACK2'],
+    materials: '卡纸、木条、橡胶筋、连接件、测量尺。',
+    hardware: '可选微型电机（低压）；禁止改装市电。',
+    software: '可选简易建模或记录表。',
+    safety: '刀具与热熔胶须教师在场；运动部件加防护；不使用锐利金属边。',
+    assessments: '机构图、测试记录、迭代说明、发布答辩。',
+    evidence: '机构图、原型、测试视频或照片、故障复盘。',
+  },
+]
+
+async function conceptIdMap(payload: Payload): Promise<IdMap> {
+  const ids: IdMap = {}
+  const concepts = await payload.find({ collection: 'concepts', limit: 200, overrideAccess: true })
+  for (const doc of concepts.docs) {
+    const item = doc as { id: number | string; shortCode?: string; code?: string }
+    if (item.shortCode) ids[item.shortCode] = item.id
+    if (item.code) ids[item.code] = item.id
+  }
+  return ids
+}
+
+async function createPublishedCourse(
+  payload: Payload,
+  ids: IdMap,
+  course: (typeof PLACEHOLDER_COURSES)[number] | {
+    title: string
+    subtitle: string
+    slug: string
+    lab: LabSlug
+    gradeMin: number
+    gradeMax: number
+    totalHours: number
+    subjects: string[]
+    summary: string
+    drivingQuestion: string
+    primaryX: string
+    secondaryX?: string[]
+    primaryY: string
+    targetC: string[]
+    primaryT: string[]
+    targetL: string
+    teachingArc: string
+    domainPathways: string[]
+    trackAffinity: string[]
+    materials: string
+    hardware: string
+    software: string
+    safety: string
+    assessments: string
+    evidence: string
+  },
+) {
+  return payload.create({
+    collection: 'courses',
+    overrideAccess: true,
+    draft: false,
+    data: {
+      title: course.title,
+      subtitle: course.subtitle,
+      slug: course.slug,
+      summary: course.summary,
+      sampleFlag: true,
+      featured: false,
+      gradeMin: course.gradeMin,
+      gradeMax: course.gradeMax,
+      totalHours: course.totalHours,
+      subjects: [...course.subjects],
+      drivingQuestion: course.drivingQuestion,
+      lab: course.lab,
+      paradigmVersion: 'B1.0',
+      primaryX: ids[course.primaryX],
+      secondaryX: course.secondaryX?.map((k) => ids[k]) || [],
+      primaryY: ids[course.primaryY],
+      targetC: course.targetC.map((k) => ids[k]),
+      primaryT: course.primaryT.map((k) => ids[k]),
+      targetL: ids[course.targetL],
+      teachingArc: ids[course.teachingArc],
+      domainPathways: course.domainPathways.map((k) => ids[k]),
+      trackAffinity: course.trackAffinity.map((k) => ids[k]),
+      materials: course.materials,
+      hardware: course.hardware,
+      software: course.software,
+      safety: course.safety,
+      assessments: course.assessments,
+      evidence: course.evidence,
+      seo: { title: `${course.title} · 星球学院`, description: course.summary },
+      status: 'published',
+    },
+  })
+}
+
+async function ensureCourseLabs(payload: Payload) {
+  const ids = await conceptIdMap(payload)
+  if (!Object.keys(ids).length) {
+    payload.logger.warn('术语库尚未就绪，跳过研究室课程补齐。')
+    return
+  }
+
+  const existing = await payload.find({ collection: 'courses', limit: 200, overrideAccess: true })
+  for (const doc of existing.docs) {
+    const course = doc as { id: number | string; slug?: string; lab?: string | null }
+    const mapped = course.slug ? COURSE_LAB_BY_SLUG[course.slug] : undefined
+    if (mapped && course.lab !== mapped) {
+      await payload.update({
+        collection: 'courses',
+        id: course.id,
+        overrideAccess: true,
+        data: { lab: mapped },
+      })
+    }
+  }
+
+  const after = await payload.find({ collection: 'courses', limit: 200, overrideAccess: true })
+  const have = new Set(
+    after.docs
+      .map((doc) => (doc as { lab?: string | null }).lab)
+      .filter((lab): lab is string => Boolean(lab)),
+  )
+
+  for (const lab of LABS) {
+    if (have.has(lab.slug)) continue
+    const draft = PLACEHOLDER_COURSES.find((item) => item.lab === lab.slug)
+    if (!draft) continue
+    const found = await payload.find({
+      collection: 'courses',
+      where: { slug: { equals: draft.slug } },
+      limit: 1,
+      overrideAccess: true,
+    })
+    if (found.docs[0]) {
+      await payload.update({
+        collection: 'courses',
+        id: found.docs[0].id,
+        overrideAccess: true,
+        data: { lab: draft.lab, status: 'published' },
+      })
+      continue
+    }
+    await createPublishedCourse(payload, ids, draft)
+    payload.logger.info(`已补齐研究室课程：${lab.name} / ${draft.title}`)
+  }
+}
+
 export async function seedIfEmpty(payload: Payload) {
   await ensureAdmin(payload)
   const users = await payload.find({ collection: 'users', limit: 0, overrideAccess: true })
@@ -403,6 +728,7 @@ export async function seedIfEmpty(payload: Payload) {
   } else {
     payload.logger.info('术语库已存在，跳过完整种子。')
   }
+  await ensureCourseLabs(payload)
 }
 
 export async function runSeed() {

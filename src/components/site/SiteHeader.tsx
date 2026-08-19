@@ -3,9 +3,8 @@
 import Link from 'next/link'
 
 const NAV = [
-  { href: '/paradigm', label: '教育范式' },
-  { href: '/courses', label: '课程中心' },
-  { href: '/projects', label: '项目成果' },
+  { href: '/', label: '首页' },
+  { href: '/labs', label: '星球研究室' },
   { href: '/about', label: '关于' },
 ]
 
@@ -25,8 +24,9 @@ export function SiteHeader() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <Link href="/contact" className="btn-ghost no-underline">联系</Link>
-          <Link href="/contact" className="btn-ink no-underline">合作</Link>
+          <Link href="/contact" className="btn-ghost no-underline">
+            联系
+          </Link>
         </div>
       </div>
       <nav className="container-wide flex gap-5 overflow-x-auto border-t border-rule py-2.5 text-sm md:hidden" aria-label="移动导航">
@@ -35,6 +35,9 @@ export function SiteHeader() {
             {item.label}
           </Link>
         ))}
+        <Link href="/contact" className="nav-cat whitespace-nowrap">
+          联系
+        </Link>
       </nav>
     </header>
   )

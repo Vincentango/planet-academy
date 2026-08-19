@@ -18,3 +18,5 @@ export function gradeBand(min?: number | null, max?: number | null) {
   const band = a <= 6 && b <= 6 ? '小学' : a >= 7 && a <= 9 && b <= 9 ? '初中' : a >= 10 ? '高中' : '跨学段'
   return `${band} · ${a}-${b} 年级`
 }
+
+export { gradeBandLabel, matchingGradeBands } from './labs'

@@ -15,18 +15,14 @@ Next.js App Router, Payload CMS 3, PostgreSQL, Tailwind.
 ## 页面
 
 - / 首页
-- /paradigm 总览
-- /paradigm/why
-- /paradigm/capabilities
-- /paradigm/xyz
-- /paradigm/teaching-arcs
-- /paradigm/assessment
-- /paradigm/ecosystem
-- /courses 与 /courses/[slug]
+- /labs 星球研究室
+- /labs/[slug] 研究室课程
+- /courses/[slug] 课程详情（三书签）
+- /paradigm 及子页（旧路径保留）
 - /projects /about /contact /privacy
 - /admin
 
-导航：首页 | 教育范式 | 课程中心 | 项目成果 | 关于我们
+导航：首页 | 星球研究室 | 关于 / 联系
 
 ## 治理
 

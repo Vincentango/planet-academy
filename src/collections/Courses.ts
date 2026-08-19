@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { LAB_SELECT_OPTIONS } from '../lib/labs'
 
 const conceptRel = (name: string, label: string, family: string, hasMany = false, required = false) => ({
   name,
@@ -15,7 +16,7 @@ export const Courses: CollectionConfig = {
   labels: { singular: '课程', plural: '课程' },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'gradeMin', 'primaryX', 'primaryY', 'totalHours', 'status'],
+    defaultColumns: ['title', 'lab', 'gradeMin', 'primaryX', 'primaryY', 'totalHours', 'status'],
     group: '课程',
   },
   access: { read: () => true },
@@ -57,6 +58,13 @@ export const Courses: CollectionConfig = {
                 { label: '外语', value: '外语' },
                 { label: '劳动/综合实践', value: '综合实践' },
               ],
+            },
+            {
+              name: 'lab',
+              type: 'select',
+              label: '所属研究室',
+              options: LAB_SELECT_OPTIONS,
+              admin: { description: '九个星球研究室之一。公开站按研究室展示课程，不再按语数英分科。' },
             },
           ],
         },
