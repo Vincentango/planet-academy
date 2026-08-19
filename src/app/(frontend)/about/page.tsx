@@ -16,7 +16,7 @@ export default function AboutPage() {
         <p>本站第一阶段提供理念展示、课程档案、Payload CMS、数据库与媒体上传（图片与视频）。不提供完整 LMS、支付、SIS、社交或学生账号。</p>
         <p>B1.0 为唯一范式母本。C1.3 仅以 <code className="text-ink">c13_*</code> 字段补充工程化信息，不得覆盖 B1.0，也不得把 C1.3 真实世界强度称为 T 技能。</p>
         <p>
-          如需合作或课程共创，请前往 <Link href="/contact" className="text-lime">联系与合作</Link>。
+          如需合作或课程共创，请前往 <Link href="/contact" className="link-accent">联系与合作</Link>。
         </p>
       </section>
     </>

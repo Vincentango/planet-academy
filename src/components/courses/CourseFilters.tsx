@@ -42,7 +42,7 @@ export function CourseFilters({
     router.push(`/courses?${next.toString()}`)
   }
 
-  const selectClass = 'w-full rounded-xl border border-line bg-elevated px-3 py-2 text-sm text-ink'
+  const selectClass = 'form-control'
   const grades = [
     { value: '', label: '全部年级' },
     { value: '1-6', label: '小学 1-6' },
@@ -57,7 +57,7 @@ export function CourseFilters({
   ]
 
   return (
-    <form className="grid gap-3 rounded-2xl border border-line bg-card p-4 md:grid-cols-4" onSubmit={(e) => e.preventDefault()}>
+    <form className="grid gap-3 border border-rule bg-paper p-5 md:grid-cols-4" onSubmit={(e) => e.preventDefault()}>
       <label className="md:col-span-2">
         <span className="mb-1 block text-xs text-muted">搜索</span>
         <input
@@ -118,7 +118,7 @@ export function CourseFilters({
         </select>
       </label>
       <div className="flex items-end">
-        <button type="button" className="text-sm text-lime" onClick={() => router.push('/courses')}>
+        <button type="button" className="link-accent bg-transparent p-0 text-sm" onClick={() => router.push('/courses')}>
           清空筛选
         </button>
       </div>

@@ -24,13 +24,13 @@ export default async function ProjectsPage() {
       />
       <section className="container-wide grid gap-4 pb-16 md:grid-cols-2">
         {projects.length ? projects.map((p) => (
-          <article key={p.slug} className="rounded-2xl border border-line bg-card p-5">
-            <h2 className="text-xl font-semibold">{p.title}</h2>
+          <article key={p.slug} className="explain-item border border-rule">
+            <h2 className="headline text-xl">{p.title}</h2>
             <p className="mt-3 leading-7 text-muted">{p.summary}</p>
             {p.processNote ? <p className="mt-3 text-sm text-muted">{p.processNote}</p> : null}
           </article>
         )) : (
-          <p className="text-muted">数据库尚未连接或还没有发布成果。可先查看 <Link href="/courses" className="text-lime">示例课程</Link>。</p>
+          <p className="text-muted">数据库尚未连接或还没有发布成果。可先查看 <Link href="/courses" className="link-accent">示例课程</Link>。</p>
         )}
       </section>
     </>

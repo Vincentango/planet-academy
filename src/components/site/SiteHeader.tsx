@@ -1,43 +1,50 @@
+'use client'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 const NAV = [
-  { href: '/', label: '首页' },
   { href: '/paradigm', label: '教育范式' },
   { href: '/courses', label: '课程中心' },
   { href: '/projects', label: '项目成果' },
-  { href: '/about', label: '关于我们' },
+  { href: '/about', label: '关于' },
 ]
 
 export function SiteHeader() {
+  const pathname = usePathname()
+  const [scrolled, setScrolled] = useState(false)
+  const inverted = pathname === '/' && !scrolled
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
-    <header className="sticky top-0 z-40 border-b border-line/80 bg-[color-mix(in_srgb,var(--bg)_82%,transparent)] backdrop-blur-md">
-      <div className="container-wide flex items-center justify-between gap-4 py-3">
-        <Link href="/" className="flex items-center gap-3 no-underline">
-          <span className="grid h-9 w-9 place-items-center rounded-full border border-lime/40 bg-forest text-[0.7rem] font-semibold tracking-wide text-lime">
-            星
-          </span>
-          <span className="leading-tight">
-            <span className="block text-sm font-semibold tracking-[0.18em]">星球学院</span>
-            <span className="block text-[10px] tracking-[0.22em] text-muted">PLANET ACADEMY</span>
-          </span>
+    <header className={inverted ? 'site-header site-header--teal' : 'site-header site-header--white'}>
+      <div className="container-wide flex items-center justify-between gap-6 py-3">
+        <Link href="/" className="no-underline">
+          <span className="wordmark text-[1.35rem] md:text-[1.55rem]">星球学院</span>
+          <span className="wordmark mt-0.5 block text-[0.7rem] md:text-[0.78rem]">PLANET ACADEMY</span>
         </Link>
-        <nav className="hidden items-center gap-5 text-sm md:flex" aria-label="主导航">
+        <nav className="hidden items-center gap-7 md:flex" aria-label="主导航">
           {NAV.map((item) => (
-            <Link key={item.href} href={item.href} className="text-ink/90 no-underline hover:text-lime">
+            <Link key={item.href} href={item.href} className="nav-cat">
               {item.label}
             </Link>
           ))}
         </nav>
-        <Link
-          href="/contact"
-          className="rounded-full bg-lime px-3 py-1.5 text-xs font-semibold text-[#102016] no-underline"
-        >
-          联系合作
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link href="/contact" className="btn-ghost no-underline">联系</Link>
+          <Link href="/contact" className="btn-mint no-underline">合作</Link>
+        </div>
       </div>
-      <nav className="container-wide flex gap-4 overflow-x-auto pb-3 text-xs text-muted md:hidden" aria-label="移动导航">
+      <nav className="container-wide flex gap-5 overflow-x-auto border-t border-white/20 py-2.5 text-sm md:hidden" aria-label="移动导航">
         {NAV.map((item) => (
-          <Link key={item.href} href={item.href} className="whitespace-nowrap no-underline">
+          <Link key={item.href} href={item.href} className="nav-cat whitespace-nowrap">
             {item.label}
           </Link>
         ))}
