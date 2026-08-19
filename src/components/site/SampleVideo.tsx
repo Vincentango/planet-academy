@@ -1,7 +1,16 @@
-export function SampleVideo({ src, label }: { src: string; label: string }) {
+export function SampleVideo({
+  src,
+  label,
+  title,
+  caption,
+}: {
+  src: string
+  label: string
+  title?: string
+  caption?: string
+}) {
   return (
-    <div className="gsd-split__media">
-      <span className="gsd-split__caption chip-yellow">{label}</span>
+    <div className="mosaic__media">
       <video
         src={src}
         autoPlay
@@ -12,6 +21,13 @@ export function SampleVideo({ src, label }: { src: string; label: string }) {
         preload="metadata"
         aria-label={label}
       />
+      <span className="mosaic__chip chip-yellow">{label}</span>
+      {title || caption ? (
+        <div className="mosaic__overlay">
+          {title ? <p className="mosaic__title">{title}</p> : null}
+          {caption ? <p className="mosaic__caption">{caption}</p> : null}
+        </div>
+      ) : null}
     </div>
   )
 }

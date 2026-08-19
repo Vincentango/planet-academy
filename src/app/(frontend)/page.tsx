@@ -104,23 +104,41 @@ export default async function HomePage() {
         </article>
       </section>
 
-      <section className="container-wide grid gap-4 py-6">
-        {CLIPS.map((clip) => (
-          <article key={clip.src} className="gsd-split">
-            <SampleVideo src={clip.src} label={clip.label} />
-            <div className="gsd-split__copy">
-              <p className="kicker">示例影像</p>
-              <h2 className="headline mt-3 text-2xl md:text-3xl">{clip.title}</h2>
-              <p className="dek mt-3 max-w-md text-sm md:text-base">{clip.body}</p>
-            </div>
+      <section className="mosaic-bleed">
+        <div className="mosaic">
+          <article className="mosaic__tile mosaic__tile--v1">
+            <SampleVideo
+              src={CLIPS[0].src}
+              label={CLIPS[0].label}
+              title={CLIPS[0].title}
+              caption={CLIPS[0].body}
+            />
           </article>
-        ))}
-        <div className="grid gap-4 md:grid-cols-3">
-          {LINES.map((line) => (
-            <aside key={line.text} className={`highlighter ${line.tone}`}>
-              <p>{line.text}</p>
-            </aside>
-          ))}
+          <aside className="mosaic__tile mosaic__tile--t1 highlighter highlighter--yellow">
+            <p>{LINES[0].text}</p>
+          </aside>
+          <article className="mosaic__tile mosaic__tile--v2">
+            <SampleVideo
+              src={CLIPS[1].src}
+              label={CLIPS[1].label}
+              title={CLIPS[1].title}
+              caption={CLIPS[1].body}
+            />
+          </article>
+          <aside className="mosaic__tile mosaic__tile--t2 highlighter highlighter--peach">
+            <p>{LINES[1].text}</p>
+          </aside>
+          <article className="mosaic__tile mosaic__tile--v3">
+            <SampleVideo
+              src={CLIPS[2].src}
+              label={CLIPS[2].label}
+              title={CLIPS[2].title}
+              caption={CLIPS[2].body}
+            />
+          </article>
+          <aside className="mosaic__tile mosaic__tile--t3 highlighter highlighter--charcoal">
+            <p>{LINES[2].text}</p>
+          </aside>
         </div>
       </section>
 
