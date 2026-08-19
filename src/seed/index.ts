@@ -728,8 +728,13 @@ export async function seedIfEmpty(payload: Payload) {
   } else {
     payload.logger.info('术语库已存在，跳过完整种子。')
   }
-  await ensureCourseLabs(payload)
+  try {
+    await ensureCourseLabs(payload)
+  } catch (err) {
+    payload.logger.error(err, '研究室课程补齐失败')
+  }
 }
+
 
 export async function runSeed() {
   const { getPayload } = await import('payload')
