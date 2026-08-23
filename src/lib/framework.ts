@@ -241,7 +241,15 @@ export const COURSE_SCENE_BY_SLUG: Record<string, SceneSlug> = Object.fromEntrie
 
 export const FALLBACK_FEATURED = LIVE
 
-export function getScene(slug: string) {
+export type SceneView = {
+  slug: string
+  name: string
+  nameEn?: string
+  focus?: string
+  code?: string
+}
+
+export function getScene(slug: string): SceneView | null {
   if (slug === ALL_COURSES.slug) return ALL_COURSES
   return SCENES.find((scene) => scene.slug === slug) ?? null
 }
