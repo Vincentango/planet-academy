@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 
+import { Wordmark } from './Wordmark'
+
 const NAV = [
   { href: '/', label: '首页' },
   { href: '/philosophy', label: '理念' },
@@ -13,11 +15,8 @@ export function SiteHeader() {
   return (
     <header className="site-header site-header--white">
       <div className="container-wide flex items-center justify-between gap-4 py-3.5">
-        <Link href="/" className="no-underline">
-          <span className="wordmark text-[1.3rem] md:text-[1.5rem]">星球学院</span>
-          <span className="wordmark mt-0.5 block text-[0.68rem] md:text-[0.76rem] tracking-[0.08em]">
-            CRADLE-X
-          </span>
+        <Link href="/" className="no-underline text-ink" aria-label="星球学院 CRADLE-X">
+          <Wordmark className="text-[1.3rem] md:text-[1.5rem] text-black" />
         </Link>
         <nav className="nav-pill hidden md:flex" aria-label="主导航">
           {NAV.map((item, i) => (

@@ -318,12 +318,40 @@ article.band-black { border-radius: var(--radius); }
 }
 
 .wordmark {
-  display: block;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: max-content;
   font-family: var(--font-display);
   font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 0.9;
+  letter-spacing: 0;
+  line-height: 0.95;
   text-transform: none;
+  color: inherit;
+}
+
+.wordmark-zh {
+  display: block;
+  white-space: nowrap;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.wordmark-en {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 0.12em;
+  font-size: 0.46em;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.wordmark-en__ch {
+  flex: 0 0 auto;
 }
 
 .nav-pill {

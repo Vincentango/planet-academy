@@ -1,5 +1,7 @@
 import Link from 'next/link'
 
+import { Wordmark } from './Wordmark'
+
 export function SiteFooter() {
   return (
     <footer className="site-footer">
@@ -23,8 +25,7 @@ export function SiteFooter() {
       </div>
       <div className="container-wide grid gap-10 pb-16 pt-4 md:grid-cols-12">
         <div className="md:col-span-5">
-          <p className="wordmark text-3xl text-white">星球学院</p>
-          <p className="wordmark mt-1 text-sm text-white">CRADLE-X</p>
+          <Wordmark className="text-3xl text-white" />
           <p className="mt-4 text-xs text-white/55">公开成果默认匿名</p>
         </div>
         <div className="md:col-span-3">
