@@ -3,7 +3,7 @@ import type { CollectionConfig } from 'payload'
 export const Media: CollectionConfig = {
   slug: 'media',
   labels: { singular: '媒体', plural: '媒体' },
-  admin: { group: '内容', defaultColumns: ['filename', 'alt', 'kind'] },
+  admin: { group: '媒体', defaultColumns: ['filename', 'alt', 'kind'] },
   access: { read: () => true },
   fields: [
     { name: 'alt', type: 'text', required: true, label: '替代文本' },

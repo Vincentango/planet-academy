@@ -8,6 +8,9 @@ import { MediaBlock } from '@/blocks/MediaBlock'
 import { CTA } from '@/blocks/CTA'
 import { Metrics } from '@/blocks/Metrics'
 import { Form } from '@/blocks/Form'
+import { Mosaic } from '@/blocks/Mosaic'
+import { Highlighter } from '@/blocks/Highlighter'
+import { SceneGrid } from '@/blocks/SceneGrid'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -15,7 +18,7 @@ export const Pages: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'status'],
-    group: '内容',
+    group: '页面',
   },
   access: { read: () => true },
   versions: { drafts: true },
@@ -27,7 +30,20 @@ export const Pages: CollectionConfig = {
       name: 'layout',
       type: 'blocks',
       label: '模块',
-      blocks: [Hero, RichText, LogicChain, ConceptGrid, CourseFeed, MediaBlock, CTA, Metrics, Form],
+      blocks: [
+        Hero,
+        Mosaic,
+        Highlighter,
+        SceneGrid,
+        CourseFeed,
+        RichText,
+        LogicChain,
+        ConceptGrid,
+        MediaBlock,
+        CTA,
+        Metrics,
+        Form,
+      ],
     },
     {
       name: 'seo',

@@ -1,14 +1,19 @@
 import type { Metadata } from 'next'
+import { CmsPage } from '@/components/site/CmsPage'
+import { getSiteSettings } from '@/lib/site'
 import Link from 'next/link'
 import { ARCS, FRAMEWORK_LINE, GROWTH_LAYERS, ISSUES, SCENES, STAGES } from '@/lib/framework'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: '关于理念',
   description: '星球学院以真实世界项目课组织学习：三个议题、九个场景、四个学段、五种教学弧、三层成长。',
 }
 
-export default function PhilosophyPage() {
-  return (
+export default async function PhilosophyPage() {
+  const site = await getSiteSettings()
+  const fallback = (
     <>
       <section className="container-wide pb-6 pt-6 md:pt-8">
         <article className="gsd-split">
@@ -116,4 +121,6 @@ export default function PhilosophyPage() {
       </section>
     </>
   )
+
+  return <CmsPage slug="philosophy" fallback={fallback} interaction={site.interaction} />
 }

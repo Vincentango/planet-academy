@@ -3,7 +3,7 @@ import type { Field } from 'payload'
 export const layoutFields: Field[] = [
   {
     type: 'collapsible',
-    label: '布局与主题',
+    label: '视觉与交互',
     admin: { initCollapsed: true },
     fields: [
       { name: 'blockName', type: 'text', label: '后台名称' },
@@ -12,14 +12,41 @@ export const layoutFields: Field[] = [
         type: 'row',
         fields: [
           {
+            name: 'surface',
+            type: 'select',
+            label: '背景',
+            defaultValue: 'paper',
+            options: [
+              { label: '纸色', value: 'paper' },
+              { label: '白面板', value: 'white' },
+              { label: '墨色', value: 'ink' },
+            ],
+          },
+          {
+            name: 'padding',
+            type: 'select',
+            label: '留白',
+            defaultValue: 'normal',
+            options: [
+              { label: '紧凑', value: 'compact' },
+              { label: '常规', value: 'normal' },
+              { label: '宽松', value: 'roomy' },
+            ],
+          },
+        ],
+      },
+      {
+        type: 'row',
+        fields: [
+          {
             name: 'theme',
             type: 'select',
-            label: '主题',
-            defaultValue: 'brand',
+            label: '主题（兼容）',
+            defaultValue: 'light',
             options: [
+              { label: '浅色', value: 'light' },
               { label: '品牌深色', value: 'brand' },
               { label: '深色', value: 'dark' },
-              { label: '浅色', value: 'light' },
               { label: '中性', value: 'neutral' },
             ],
           },
@@ -27,7 +54,7 @@ export const layoutFields: Field[] = [
             name: 'container',
             type: 'select',
             label: '容器',
-            defaultValue: 'content',
+            defaultValue: 'wide',
             options: [
               { label: '窄栏', value: 'narrow' },
               { label: '内容栏', value: 'content' },
@@ -35,55 +62,27 @@ export const layoutFields: Field[] = [
               { label: '通栏', value: 'full' },
             ],
           },
-          {
-            name: 'height',
-            type: 'select',
-            label: '高度预设',
-            defaultValue: 'auto',
-            options: [
-              { label: '自动', value: 'auto' },
-              { label: '小', value: 'small' },
-              { label: '中', value: 'medium' },
-              { label: '大', value: 'large' },
-            ],
-          },
-        ],
-      },
-      {
-        type: 'row',
-        fields: [
-          { name: 'spanDesktop', type: 'number', label: '桌面跨度', min: 1, max: 12, defaultValue: 12 },
-          { name: 'spanTablet', type: 'number', label: '平板跨度', min: 1, max: 12, defaultValue: 12 },
-          { name: 'spanMobile', type: 'number', label: '手机跨度', min: 1, max: 12, defaultValue: 12 },
         ],
       },
       {
         type: 'row',
         fields: [
           {
-            name: 'spacing',
+            name: 'cardFlip',
             type: 'select',
-            label: '间距',
-            defaultValue: 'lg',
+            label: '卡片翻转（覆盖站点默认）',
             options: [
-              { label: '无', value: 'none' },
-              { label: 'XS', value: 'xs' },
-              { label: 'SM', value: 'sm' },
-              { label: 'MD', value: 'md' },
-              { label: 'LG', value: 'lg' },
-              { label: 'XL', value: 'xl' },
+              { label: '跟随站点', value: '' },
+              { label: '悬停', value: 'hover' },
+              { label: '点击', value: 'click' },
+              { label: '静态', value: 'off' },
             ],
           },
           {
-            name: 'alignment',
-            type: 'select',
-            label: '对齐',
-            defaultValue: 'left',
-            options: [
-              { label: '左', value: 'left' },
-              { label: '中', value: 'center' },
-              { label: '右', value: 'right' },
-            ],
+            name: 'autoplay',
+            type: 'checkbox',
+            label: '本段影像自动播放',
+            defaultValue: false,
           },
         ],
       },

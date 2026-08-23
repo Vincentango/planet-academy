@@ -27,6 +27,12 @@ type Course = {
   targetL?: unknown
   modules?: unknown
   seo?: { title?: string | null; description?: string | null } | null
+  tabOutline?: string | null
+  tabOutcomes?: string | null
+  scene?: string | null
+  issue?: string | null
+  stage?: string | null
+  cover?: { url?: string | null } | string | null
 }
 
 type Search = { [key: string]: string | string[] | undefined }
@@ -123,7 +129,8 @@ export default async function CourseDetailPage({
   }
 
   const mapped = DESIGNED_BY_SLUG[course.slug]
-  const lab = mapped ? getScene(mapped.scene) : course.lab ? getScene(course.lab) : null
+  const sceneSlug = (course.scene || course.lab || mapped?.scene) as string | undefined
+  const lab = sceneSlug ? getScene(sceneSlug) : null
   const tags = mapped ? courseTags(mapped) : []
   const growth = list(course.targetC)
   const modules = (Array.isArray(course.modules) ? course.modules : []) as {
@@ -192,6 +199,7 @@ export default async function CourseDetailPage({
               <p className="driving-q">{course.drivingQuestion}</p>
               <h2 className="headline mt-10 text-3xl">纲要</h2>
               <p className="mt-5 max-w-3xl text-base leading-8">{course.summary}</p>
+              {course.tabOutline ? <p className="mt-5 max-w-3xl text-base leading-8">{course.tabOutline}</p> : null}
               {course.subjects?.length ? (
                 <p className="mt-6 text-sm text-muted">学科：{course.subjects.join(' · ')}</p>
               ) : null}
@@ -300,7 +308,7 @@ export default async function CourseDetailPage({
               ))}
             </div>
           ) : (
-            <p className="mt-6 max-w-2xl leading-8 text-muted">此课程尚未公开成果。过程证据与项目故事会在这里出现。</p>
+            <p className="mt-6 max-w-2xl leading-8 text-muted">{course.tabOutcomes || '此课程尚未公开成果。过程证据与项目故事会在这里出现。'}</p>
           )}
           <div className="mt-10 grid gap-4 md:grid-cols-2">
             <article className="outcome-card">

@@ -1,69 +1,29 @@
 import { CourseFlipCard } from '@/components/courses/CourseFlipCard'
 import { SampleVideo } from '@/components/site/SampleVideo'
-import { DESIGNED_BY_SLUG, FALLBACK_FEATURED, FRAMEWORK_LINE } from '@/lib/framework'
-import { payloadClient } from '@/lib/payload'
+import { CmsPage } from '@/components/site/CmsPage'
+import { FRAMEWORK_LINE } from '@/lib/framework'
+import { featuredCourses } from '@/lib/cms-courses'
+import { getSiteSettings } from '@/lib/site'
 import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
 
 const CLIPS = [
-  {
-    src: '/samples/sample-01.mp4',
-    label: '示例影像 01',
-    title: '项目现场',
-    body: '占位影像。待替换为项目现场与学生工作过程。',
-  },
-  {
-    src: '/samples/sample-02.mp4',
-    label: '示例影像 02',
-    title: '项目推进',
-    body: '占位影像。待替换为提出问题、做出东西、用证据说话的过程。',
-  },
-  {
-    src: '/samples/sample-03.mp4',
-    label: '示例影像 03',
-    title: '无边界校园',
-    body: '占位影像。待替换为学习发生在世界里的真实片段。',
-  },
+  { src: '/samples/sample-01.mp4', label: '示例影像 01', title: '项目现场', body: '占位影像。待替换为项目现场与学生工作过程。' },
+  { src: '/samples/sample-02.mp4', label: '示例影像 02', title: '项目推进', body: '占位影像。待替换为提出问题、做出东西、用证据说话的过程。' },
+  { src: '/samples/sample-03.mp4', label: '示例影像 03', title: '无边界校园', body: '占位影像。待替换为学习发生在世界里的真实片段。' },
 ]
 
 const LINES = [
-  {
-    tone: 'highlighter--yellow',
-    text: '当机器能完成大量传统认知任务，教育要守住判断、创造、连接与行动这些不可外包的能力。',
-  },
-  {
-    tone: 'highlighter--peach',
-    text: '在真实议题中看见世界，用认知透镜看清结构，朝人的成长维度前进。',
-  },
-  {
-    tone: 'highlighter--charcoal',
-    text: '以研究室项目推进学习：提出问题、做出东西、用证据说话，而不是只完成一份作业。',
-  },
+  { tone: 'highlighter--yellow', text: '当机器能完成大量传统认知任务，教育要守住判断、创造、连接与行动这些不可外包的能力。' },
+  { tone: 'highlighter--peach', text: '在真实议题中看见世界，用认知透镜看清结构，朝人的成长维度前进。' },
+  { tone: 'highlighter--charcoal', text: '以研究室项目推进学习：提出问题、做出东西、用证据说话，而不是只完成一份作业。' },
 ]
 
 export default async function HomePage() {
-  let courses = FALLBACK_FEATURED
-  try {
-    const payload = await payloadClient()
-    const res = await payload.find({
-      collection: 'courses',
-      where: { status: { equals: 'published' } },
-      limit: 4,
-      depth: 1,
-      sort: '-featured',
-    })
-    if (res.docs.length) {
-      const mapped = res.docs
-        .map((doc) => DESIGNED_BY_SLUG[(doc as { slug?: string }).slug || ''])
-        .filter((item): item is (typeof FALLBACK_FEATURED)[number] => Boolean(item))
-      if (mapped.length) courses = mapped
-    }
-  } catch {
-    courses = FALLBACK_FEATURED
-  }
-
-  return (
+  const site = await getSiteSettings()
+  const courses = await featuredCourses(4)
+  const fallback = (
     <>
       <section className="container-wide pb-6 pt-6 md:pt-8">
         <article className="gsd-split">
@@ -74,92 +34,56 @@ export default async function HomePage() {
           <div className="gsd-split__copy">
             <p className="kicker">星球学院 · CRADLE-X</p>
             <h1 className="headline mt-5 text-4xl md:text-6xl">未来无边界学校</h1>
-            <p className="mt-6 max-w-xl text-xl font-medium leading-8">
-              学习发生在世界里，而不是只发生在教室里。
-            </p>
-            <p className="dek mt-3 max-w-xl text-base">
-              用真实世界项目学习：三个议题、九个场景、四个学段。
-            </p>
+            <p className="mt-6 max-w-xl text-xl font-medium leading-8">学习发生在世界里，而不是只发生在教室里。</p>
+            <p className="dek mt-3 max-w-xl text-base">用真实世界项目学习：三个议题、九个场景、四个学段。</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/scenes" className="btn-ink no-underline">
-                进入九个场景
-              </Link>
-              <Link href="#featured" className="btn-ghost no-underline">
-                查看精选课
-              </Link>
+              <Link href="/scenes" className="btn-ink no-underline">进入九个场景</Link>
+              <Link href="#featured" className="btn-ghost no-underline">查看精选课</Link>
             </div>
           </div>
         </article>
       </section>
-
       <section className="container-wide py-6">
         <article className="panel px-6 py-10 md:px-10 md:py-14">
           <p className="kicker">整体介绍</p>
           <h2 className="headline mt-4 text-3xl md:text-4xl">一所把真实世界当作校园的学校</h2>
           <div className="mt-8 max-w-3xl space-y-6 text-base leading-8 text-muted md:text-lg">
-            <p>
-              星球学院面向未来的学习者、家庭与合作学校。课程不是必修课表，而是可以走进的资源库：在真实世界项目里提出问题、做出东西、用证据说话。
-            </p>
-            <p>
-              学什么，由三个议题穿过九个场景、四个学段。怎么学，走五种教学弧：探究驱动、设计思维、敏捷创造、游戏化探险、社会行动。学会什么，看三层成长：学科素养、方法与技能、可迁移能力。
-            </p>
+            <p>星球学院面向未来的学习者、家庭与合作学校。课程不是必修课表，而是可以走进的资源库：在真实世界项目里提出问题、做出东西、用证据说话。</p>
+            <p>学什么，由三个议题穿过九个场景、四个学段。怎么学，走五种教学弧：探究驱动、设计思维、敏捷创造、游戏化探险、社会行动。学会什么，看三层成长：学科素养、方法与技能、可迁移能力。</p>
             <p className="text-ink font-semibold">{FRAMEWORK_LINE}</p>
           </div>
         </article>
       </section>
-
       <section className="container-wide">
         <div className="mosaic">
           <article className="mosaic__tile mosaic__tile--v1">
-            <SampleVideo
-              src={CLIPS[0].src}
-              label={CLIPS[0].label}
-              title={CLIPS[0].title}
-              caption={CLIPS[0].body}
-            />
+            <SampleVideo src={CLIPS[0].src} label={CLIPS[0].label} title={CLIPS[0].title} caption={CLIPS[0].body} autoplay={site.interaction.videoAutoplay} />
           </article>
-          <aside className="mosaic__tile mosaic__tile--t1 highlighter highlighter--yellow">
-            <p>{LINES[0].text}</p>
-          </aside>
+          <aside className="mosaic__tile mosaic__tile--t1 highlighter highlighter--yellow"><p>{LINES[0].text}</p></aside>
           <article className="mosaic__tile mosaic__tile--v2">
-            <SampleVideo
-              src={CLIPS[1].src}
-              label={CLIPS[1].label}
-              title={CLIPS[1].title}
-              caption={CLIPS[1].body}
-            />
+            <SampleVideo src={CLIPS[1].src} label={CLIPS[1].label} title={CLIPS[1].title} caption={CLIPS[1].body} autoplay={site.interaction.videoAutoplay} />
           </article>
-          <aside className="mosaic__tile mosaic__tile--t2 highlighter highlighter--peach">
-            <p>{LINES[1].text}</p>
-          </aside>
+          <aside className="mosaic__tile mosaic__tile--t2 highlighter highlighter--peach"><p>{LINES[1].text}</p></aside>
           <article className="mosaic__tile mosaic__tile--v3">
-            <SampleVideo
-              src={CLIPS[2].src}
-              label={CLIPS[2].label}
-              title={CLIPS[2].title}
-              caption={CLIPS[2].body}
-            />
+            <SampleVideo src={CLIPS[2].src} label={CLIPS[2].label} title={CLIPS[2].title} caption={CLIPS[2].body} autoplay={site.interaction.videoAutoplay} />
           </article>
-          <aside className="mosaic__tile mosaic__tile--t3 highlighter highlighter--charcoal">
-            <p>{LINES[2].text}</p>
-          </aside>
+          <aside className="mosaic__tile mosaic__tile--t3 highlighter highlighter--charcoal"><p>{LINES[2].text}</p></aside>
         </div>
       </section>
-
       <section id="featured" className="container-wide py-10 pb-16">
         <p className="kicker">课程精选</p>
         <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
           <h2 className="headline text-3xl md:text-4xl">从项目进入学校</h2>
-          <Link href="/scenes" className="text-sm font-semibold no-underline">
-            进入资源库
-          </Link>
+          <Link href="/scenes" className="text-sm font-semibold no-underline">进入资源库</Link>
         </div>
         <div className="course-grid mt-8">
           {courses.slice(0, 4).map((course, i) => (
-            <CourseFlipCard key={course.slug} course={course} tone={i} />
+            <CourseFlipCard key={course.slug} course={course} tone={i} mode={site.interaction.cardFlip} />
           ))}
         </div>
       </section>
     </>
   )
+
+  return <CmsPage slug="home" fallback={fallback} interaction={site.interaction} courses={courses} />
 }

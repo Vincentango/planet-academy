@@ -1,6 +1,7 @@
 import type { Payload } from 'payload'
 import { CONCEPTS } from '@/lib/taxonomies'
 import { COURSE_LAB_BY_SLUG, LABS, type LabSlug } from '@/lib/labs'
+import { ensurePublicComposer } from './public-content'
 
 type IdMap = Record<string, number | string>
 
@@ -662,17 +663,18 @@ export async function seedIfEmpty(payload: Payload) {
     for (const item of CONCEPTS) await upsertConcept(payload, ids, item)
     await seedCourses(payload, ids)
     await seedPages(payload)
+    await ensurePublicComposer(payload)
     await seedProjects(payload)
     await payload.updateGlobal({
       slug: 'site-settings',
       overrideAccess: true,
       data: {
         siteName: '星球学院',
-        siteNameEn: 'PLANET ACADEMY',
+        siteNameEn: 'CRADLE-X',
         tagline: '面向 AI 时代的 K-12 未来创新教育范式',
         footerNote: 'B1.0 为唯一范式母本。C1.3 仅以 c13_* 字段补充工程化信息。公开成果默认匿名。',
         contactEmail: 'hello@planetacad.one',
-        paradigmVersion: 'B1.0',
+        paradigmVersion: 'B3.0',
         paradigmDate: '2026',
       },
     })
@@ -684,6 +686,11 @@ export async function seedIfEmpty(payload: Payload) {
     await ensureCourseLabs(payload)
   } catch (err) {
     payload.logger.error(err, '研究室课程补齐失败')
+  }
+  try {
+    await ensurePublicComposer(payload)
+  } catch (err) {
+    payload.logger.error(err, '公开页面/站点设置补齐失败')
   }
 }
 

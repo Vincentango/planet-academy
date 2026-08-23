@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import { CmsPage } from '@/components/site/CmsPage'
+import { getSiteSettings } from '@/lib/site'
 import Link from 'next/link'
 import { ALL_COURSES, SCENES } from '@/lib/framework'
 
@@ -9,8 +11,9 @@ export const metadata: Metadata = {
   description: '九个真实世界场景，是资源库的浏览脊骨，不是必修课表。',
 }
 
-export default function ScenesPage() {
-  return (
+export default async function ScenesPage() {
+  const site = await getSiteSettings()
+  const fallback = (
     <>
       <section className="container-wide pb-8 pt-12">
         <p className="kicker">NINE SCENES</p>
@@ -41,4 +44,6 @@ export default function ScenesPage() {
       </section>
     </>
   )
+
+  return <CmsPage slug="scenes" fallback={fallback} interaction={site.interaction} />
 }

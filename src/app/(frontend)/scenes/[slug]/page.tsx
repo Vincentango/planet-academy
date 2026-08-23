@@ -7,12 +7,12 @@ import {
   ARCS,
   ISSUES,
   STAGES,
-  catalogForScene,
   filterCatalog,
   getScene,
   resolveSceneSlug,
   type BrowseTagKey,
 } from '@/lib/framework'
+import { catalogWithCms } from '@/lib/cms-courses'
 
 type Search = { [key: string]: string | string[] | undefined }
 
@@ -67,7 +67,7 @@ export default async function SceneDetailPage({
     { key: 'arc', label: '教学弧', options: ARCS.map((item) => ({ value: item.id, label: item.name })) },
   ]
 
-  const shown = filterCatalog(catalogForScene(resolved), current)
+  const shown = filterCatalog(await catalogWithCms(resolved), current)
 
   return (
     <>

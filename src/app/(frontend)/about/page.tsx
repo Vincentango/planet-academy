@@ -1,11 +1,16 @@
 import type { Metadata } from 'next'
+import { CmsPage } from '@/components/site/CmsPage'
+import { getSiteSettings } from '@/lib/site'
 import Link from 'next/link'
 import { PageHero } from '@/components/site/PageHero'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: '关于我们' }
 
-export default function AboutPage() {
-  return (
+export default async function AboutPage() {
+  const site = await getSiteSettings()
+  const fallback = (
     <>
       <PageHero
         eyebrow="关于星球学院"
@@ -21,4 +26,6 @@ export default function AboutPage() {
       </section>
     </>
   )
+
+  return <CmsPage slug="about" fallback={fallback} interaction={site.interaction} />
 }

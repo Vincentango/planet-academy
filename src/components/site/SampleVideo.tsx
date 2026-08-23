@@ -3,17 +3,19 @@ export function SampleVideo({
   label,
   title,
   caption,
+  autoplay = false,
 }: {
   src: string
   label: string
   title?: string
   caption?: string
+  autoplay?: boolean
 }) {
   return (
     <div className="mosaic__media">
       <video
         src={src}
-        autoPlay
+        autoPlay={autoplay}
         muted
         loop
         playsInline

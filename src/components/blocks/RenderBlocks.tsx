@@ -1,20 +1,65 @@
 import type { ReactNode } from 'react'
 import Link from 'next/link'
 import { CourseCard } from '@/components/courses/CourseCard'
-import { conceptLabel } from '@/lib/payload'
+import { CourseFlipCard } from '@/components/courses/CourseFlipCard'
 import { ContactForm } from '@/components/site/ContactForm'
-import { HeroCarousel } from '@/components/site/HeroCarousel'
+import { SampleVideo } from '@/components/site/SampleVideo'
+import { conceptLabel } from '@/lib/payload'
+import { SCENES, type CatalogCourse } from '@/lib/framework'
+import { mediaUrl, type SiteInteraction } from '@/lib/site'
 
-function wrap(block: Record<string, unknown>, children: ReactNode, band = 'bg-paper') {
-  const container = String(block.container || 'content')
-  const spacing = String(block.spacing || 'lg')
-  const align = String(block.alignment || 'left')
-  const pad = { none: 'py-0', xs: 'py-4', sm: 'py-6', md: 'py-10', lg: 'py-14', xl: 'py-16' }[spacing] || 'py-14'
-  const box = `container-${container}`
+function surfaceClass(block: Record<string, unknown>) {
+  const s = String(block.surface || '')
+  if (s === 'white') return 'bg-white'
+  if (s === 'ink') return 'band-black'
+  return ''
+}
+
+function padClass(block: Record<string, unknown>) {
+  const p = String(block.padding || 'normal')
+  return { compact: 'py-4', normal: 'py-6', roomy: 'py-14' }[p] || 'py-6'
+}
+
+function wrap(block: Record<string, unknown>, children: ReactNode) {
+  const container = String(block.container || 'wide')
+  const box = `container-${container === 'full' ? 'full' : container}`
+  const id = block.anchor ? String(block.anchor) : undefined
   return (
-    <section className={`${pad} ${band}`}>
-      <div className={`${box} ${align === 'center' ? 'text-center' : 'text-left'}`}>{children}</div>
+    <section id={id} className={`${padClass(block)} ${surfaceClass(block)}`}>
+      <div className={box}>{children}</div>
     </section>
+  )
+}
+
+function btnClass(style?: string) {
+  if (style === 'ghost' || style === 'secondary') return 'btn-ghost no-underline'
+  return 'btn-ink no-underline'
+}
+
+function lexicalPlain(node: unknown): string {
+  if (!node) return ''
+  if (typeof node === 'string') return node
+  if (typeof node !== 'object') return ''
+  const n = node as { text?: string; children?: unknown[] }
+  if (n.text) return n.text
+  return (n.children || []).map(lexicalPlain).join('')
+}
+
+function ActionRow({
+  actions,
+}: {
+  actions?: { label?: string; href?: string; visible?: boolean; style?: string }[]
+}) {
+  const shown = (actions || []).filter((a) => a.visible !== false && a.label && a.href)
+  if (!shown.length) return null
+  return (
+    <div className="mt-8 flex flex-wrap gap-3">
+      {shown.map((a) => (
+        <Link key={`${a.href}-${a.label}`} href={a.href!} className={btnClass(a.style)}>
+          {a.label}
+        </Link>
+      ))}
+    </div>
   )
 }
 
@@ -22,172 +67,297 @@ export function RenderBlocks({
   blocks,
   courses = [],
   concepts = [],
+  interaction,
 }: {
   blocks: Record<string, unknown>[]
-  courses?: Record<string, unknown>[]
+  courses?: CatalogCourse[]
   concepts?: Record<string, unknown>[]
+  interaction: SiteInteraction
 }) {
   return (
     <>
       {blocks.map((block, i) => {
         const type = String(block.blockType || '')
+        const key = String(block.id || i)
+
         if (type === 'hero') {
+          const variant = String(block.variant || 'split')
+          const actions = (block.actions as { label?: string; href?: string; visible?: boolean; style?: string }[]) || []
+          const media = mediaUrl(block.media)
+          if (variant === 'stacked') {
+            return (
+              <section key={key} className="container-wide pb-8 pt-12">
+                {block.eyebrow ? <p className="kicker">{String(block.eyebrow)}</p> : null}
+                <h1 className="headline mt-4 max-w-4xl text-5xl md:text-7xl">{String(block.heading || '')}</h1>
+                {block.dek ? <p className="mt-6 max-w-xl text-xl font-medium leading-8">{String(block.dek)}</p> : null}
+                {block.subheading ? <p className="dek mt-3 max-w-2xl text-lg">{String(block.subheading)}</p> : null}
+                <ActionRow actions={actions} />
+              </section>
+            )
+          }
           return (
-            <section key={i} className="hero-page">
-              <div className="promo-strip">
-                <p className="container-wide py-2.5">B1.0 正式基线 →</p>
-              </div>
-              <div className="container-wide grid gap-6 py-10 md:grid-cols-[1.25fr_0.75fr] md:items-stretch">
-                <article className="hero-card">
-                  <p className="kicker">教育范式</p>
-                  <p className="mt-3"><span className="badge-new">范式</span></p>
-                  <h1 className="headline mt-4 text-4xl md:text-[3.4rem] md:leading-[1.05]">{String(block.heading || '')}</h1>
-                  {block.subheading ? <p className="dek mt-5 text-base md:text-lg">{String(block.subheading)}</p> : null}
-                  <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3">
-                    {((block.actions as { label: string; href: string }[]) || []).map((a) => (
-                      <Link key={a.href} href={a.href} className="link-accent text-sm font-semibold">
-                        {a.label}
-                      </Link>
-                    ))}
-                  </div>
-                </article>
-                <HeroCarousel />
+            <section key={key} className="container-wide pb-6 pt-6 md:pt-8">
+              <article className="gsd-split">
+                <div className={`gsd-split__media ${media ? '' : 'gsd-split__media--hero'}`}>
+                  {media ? (
+                    media.match(/\.(mp4|webm|mov)(\?|$)/i) ? (
+                      <video src={media} muted playsInline loop={Boolean(block.autoplay)} autoPlay={Boolean(block.autoplay)} />
+                    ) : (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={media} alt="" />
+                    )
+                  ) : (
+                    <>
+                      <span className="gsd-split__caption chip-yellow">{String(block.mediaCaption || 'CRADLE-X')}</span>
+                      <p className="headline text-5xl text-white md:text-6xl">{String(block.mediaTitle || '星球学院')}</p>
+                    </>
+                  )}
+                </div>
+                <div className="gsd-split__copy">
+                  {block.eyebrow ? <p className="kicker">{String(block.eyebrow)}</p> : null}
+                  <h1 className="headline mt-5 text-4xl md:text-6xl">{String(block.heading || '')}</h1>
+                  {block.dek ? <p className="mt-6 max-w-xl text-xl font-medium leading-8">{String(block.dek)}</p> : null}
+                  {block.subheading ? <p className="dek mt-3 max-w-xl text-base">{String(block.subheading)}</p> : null}
+                  <ActionRow actions={actions} />
+                </div>
+              </article>
+            </section>
+          )
+        }
+
+        if (type === 'mosaic') {
+          const items = (block.items as Record<string, unknown>[]) || []
+          const autoplay = Boolean(block.autoplay) || interaction.videoAutoplay
+          return (
+            <section key={key} className="container-wide">
+              <div className="mosaic">
+                {items.map((item, n) => {
+                  const kind = String(item.kind || 'media')
+                  if (kind === 'line') {
+                    return (
+                      <aside key={n} className={`mosaic__tile highlighter highlighter--${String(item.tone || 'yellow')}`}>
+                        <p>{String(item.body || item.title || '')}</p>
+                      </aside>
+                    )
+                  }
+                  const src = mediaUrl(item.media, String(item.url || ''))
+                  return (
+                    <article key={n} className="mosaic__tile">
+                      {src ? (
+                        <SampleVideo
+                          src={src}
+                          label={String(item.label || '影像')}
+                          title={item.title ? String(item.title) : undefined}
+                          caption={item.body ? String(item.body) : undefined}
+                          autoplay={autoplay || Boolean(item.playInPlace)}
+                        />
+                      ) : (
+                        <div className="mosaic__media">
+                          <span className="mosaic__chip chip-yellow">{String(item.label || '')}</span>
+                          <div className="mosaic__overlay">
+                            <p className="mosaic__title">{String(item.title || '')}</p>
+                            <p className="mosaic__caption">{String(item.body || '')}</p>
+                          </div>
+                        </div>
+                      )}
+                    </article>
+                  )
+                })}
               </div>
             </section>
           )
         }
-        if (type === 'logicChain') {
-          // Homepage hero already carries WHY/WHAT/HOW/PROVE as the carousel.
-          return null
+
+        if (type === 'highlighter') {
+          return (
+            <section key={key} className="container-wide py-4">
+              <aside className={`highlighter highlighter--${String(block.tone || 'yellow')} p-8`}>
+                <p>{String(block.text || '')}</p>
+              </aside>
+            </section>
+          )
         }
+
+        if (type === 'sceneGrid') {
+          const overrides = (block.items as { slug?: string; blurb?: string; visible?: boolean }[]) || []
+          const bySlug = new Map(overrides.map((o) => [o.slug, o]))
+          const list = SCENES.filter((scene) => bySlug.get(scene.slug)?.visible !== false)
+          return (
+            <section key={key} className="container-wide pb-16">
+              {block.kicker ? <p className="kicker">{String(block.kicker)}</p> : null}
+              {block.heading ? <h2 className="headline mt-3 text-3xl">{String(block.heading)}</h2> : null}
+              {block.intro ? <p className="dek mt-4 max-w-2xl">{String(block.intro)}</p> : null}
+              <div className="lab-grid mt-6">
+                {list.map((scene) => (
+                  <Link key={scene.slug} href={`/scenes/${scene.slug}`} className="lab-card">
+                    <p className="kicker">
+                      {scene.code} · {scene.nameEn}
+                    </p>
+                    <h2 className="headline mt-3 text-3xl">{scene.name}</h2>
+                    <p className="mt-4 text-sm leading-7 text-muted">{bySlug.get(scene.slug)?.blurb || scene.focus}</p>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )
+        }
+
+        if (type === 'courseFeed') {
+          const limit = Number(block.limit || 4)
+          const shown = courses.slice(0, limit)
+          const display = String(block.display || 'flip')
+          const flip = display === 'static' ? 'off' : interaction.cardFlip
+          return (
+            <section key={key} id={String(block.anchor || 'featured')} className="container-wide py-10 pb-16">
+              {block.kicker ? <p className="kicker">{String(block.kicker)}</p> : null}
+              <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
+                <h2 className="headline text-3xl md:text-4xl">{String(block.heading || '从项目进入学校')}</h2>
+                {block.moreHref ? (
+                  <Link href={String(block.moreHref)} className="text-sm font-semibold no-underline">
+                    {String(block.moreLabel || '进入资源库')}
+                  </Link>
+                ) : null}
+              </div>
+              {block.intro ? <p className="dek mt-3">{String(block.intro)}</p> : null}
+              <div className="course-grid mt-8">
+                {shown.map((course, n) => (
+                  <CourseFlipCard key={course.slug} course={course} tone={n} mode={flip} />
+                ))}
+              </div>
+            </section>
+          )
+        }
+
+        if (type === 'cta') {
+          const extra = (block.buttons as { label?: string; href?: string; visible?: boolean; style?: string }[]) || []
+          const buttons = [
+            ...(block.buttonLabel && block.buttonHref
+              ? [{ label: String(block.buttonLabel), href: String(block.buttonHref), visible: true, style: 'primary' }]
+              : []),
+            ...extra,
+          ]
+          return (
+            <section key={key} className="container-wide pb-16 pt-6">
+              <article className="band-black p-8 md:p-12">
+                {block.kicker ? <p className="kicker text-white/55">{String(block.kicker)}</p> : null}
+                <h2 className="headline mt-3 text-3xl text-white">{String(block.heading || '')}</h2>
+                {block.body ? <p className="mt-5 max-w-2xl text-sm leading-7 text-white/80">{String(block.body)}</p> : null}
+                <ActionRow actions={buttons} />
+              </article>
+            </section>
+          )
+        }
+
+        if (type === 'metrics') {
+          const items = (block.items as { value: string; label: string; note?: string }[]) || []
+          return (
+            <div key={key}>
+              {wrap(
+                block,
+                <div className="grid gap-4 md:grid-cols-3">
+                  {items.map((item) => (
+                    <article key={item.label} className="panel px-6 py-8">
+                      <p className="kicker">{item.value}</p>
+                      <h3 className="headline mt-3 text-2xl">{item.label}</h3>
+                      {item.note ? <p className="mt-3 text-sm leading-7 text-muted">{item.note}</p> : null}
+                    </article>
+                  ))}
+                </div>,
+              )}
+            </div>
+          )
+        }
+
+        if (type === 'form') {
+          return (
+            <section key={key} className="container-wide py-14">
+              <div className="panel px-6 py-10 md:px-10">
+                <h2 className="headline text-3xl">{String(block.heading || '联系')}</h2>
+                {block.intro ? <p className="dek mt-3">{String(block.intro)}</p> : null}
+                <div className="mt-8">
+                  <ContactForm />
+                </div>
+              </div>
+            </section>
+          )
+        }
+
+        if (type === 'mediaBlock') {
+          const items = (block.items as { media?: unknown; caption?: string }[]) || []
+          return (
+            <div key={key}>
+              {wrap(
+                block,
+                <>
+                  {block.heading ? <h2 className="headline text-3xl">{String(block.heading)}</h2> : null}
+                  <div className="mt-4 grid gap-4 md:grid-cols-2">
+                    {items.map((item, n) => {
+                      const src = mediaUrl(item.media)
+                      return (
+                        <figure key={n}>
+                          {src ? (
+                            src.match(/\.(mp4|webm|mov)/i) ? (
+                              <video src={src} controls playsInline className="w-full rounded-[var(--radius)]" />
+                            ) : (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img src={src} alt={item.caption || ''} className="w-full rounded-[var(--radius)]" />
+                            )
+                          ) : null}
+                          {item.caption ? <figcaption className="dek mt-2">{item.caption}</figcaption> : null}
+                        </figure>
+                      )
+                    })}
+                  </div>
+                  {block.caption ? <p className="dek mt-3">{String(block.caption)}</p> : null}
+                </>,
+              )}
+            </div>
+          )
+        }
+
+        if (type === 'richText') {
+          const body = lexicalPlain(block.body)
+          return (
+            <section key={key} className="container-wide py-6">
+              <article className="panel px-6 py-10 md:px-10 md:py-14">
+                {block.heading ? <h2 className="headline text-3xl md:text-4xl">{String(block.heading)}</h2> : null}
+                {body ? (
+                  <div className="mt-8 max-w-3xl space-y-6 text-base leading-8 text-muted md:text-lg">
+                    {body.split('\n\n').map((p, n) => (
+                      <p key={n}>{p}</p>
+                    ))}
+                  </div>
+                ) : null}
+              </article>
+            </section>
+          )
+        }
+
         if (type === 'conceptGrid') {
           const family = String(block.family || '')
           const items = concepts.filter((c) => String((c as { family?: string }).family) === family)
           return (
-            <section key={i} className="band-grey py-16">
-              <div className="container-wide collection-rule">
-                <p className="badge-collection">Collection</p>
-                <div className="mt-4 flex items-end justify-between gap-4">
-                  <h2 className="section-head mb-0 border-0 pt-0">{String(block.heading || 'C1–C6')}</h2>
-                  <Link href="/paradigm/capabilities" className="hidden text-sm font-semibold no-underline md:inline">查看全部</Link>
-                </div>
-                {block.intro ? <p className="dek mt-3 max-w-3xl">{String(block.intro)}</p> : null}
-                <div className="mt-8 grid gap-4 md:grid-cols-3">
-                  {items.map((raw, n) => {
-                    const c = raw as { shortCode?: string; name?: string; layer?: string; shortDefinition?: string; id?: string }
-                    return (
-                      <article key={String(c.id || c.shortCode)} className="explain-item">
-                        <p className="kicker">• {n + 1} / {items.length}</p>
-                        <p className="kicker mt-2">{c.shortCode} · {c.layer}</p>
-                        <h3 className="headline mt-2 text-xl">{c.name}</h3>
-                        <p className="dek mt-2 text-sm">{c.shortDefinition}</p>
-                      </article>
-                    )
-                  })}
-                </div>
-              </div>
-            </section>
-          )
-        }
-        if (type === 'courseFeed') {
-          const shown = courses.slice(0, Math.min(3, Number(block.limit || 4)))
-          return (
-            <section key={i} className="band-grey py-16">
-              <div className="container-wide collection-rule">
-                <p className="badge-collection">Collection</p>
-                <div className="mt-4 flex items-end justify-between gap-4">
-                  <h2 className="section-head mb-0 border-0 pt-0">Most Popular / 精选课程</h2>
-                  <div className="hidden gap-1 md:flex">
-                    <span className="arrow-btn" aria-hidden>←</span>
-                    <span className="arrow-btn">→</span>
-                  </div>
-                </div>
-                {block.intro ? <p className="dek mt-3">{String(block.intro)}</p> : null}
-                <div className="mt-8 grid gap-4 md:grid-cols-3">
-                  {shown.map((course) => (
-                    <CourseCard key={String((course as { slug?: string }).slug)} course={course as never} />
-                  ))}
-                </div>
-              </div>
-            </section>
-          )
-        }
-        if (type === 'cta') {
-          return (
-            <section key={i} className="band-black">
-              <div className="container-wide grid gap-8 py-16 md:grid-cols-2 md:items-end">
-                <div>
-                  <p className="kicker text-white/55">Magazine</p>
-                  <p className="mt-3 text-sm tracking-[0.16em] text-white/70">B1.0 范式专刊</p>
-                  <h2 className="headline mt-4 text-4xl text-white">{String(block.heading || '阅读教育范式')}</h2>
-                </div>
-                <div>
-                  {block.body ? <p className="text-sm leading-7 text-white/80">{String(block.body)}</p> : null}
-                  <Link href={String(block.buttonHref || '/paradigm')} className="btn-white mt-6 no-underline">
-                    {String(block.buttonLabel || '阅读教育范式')}
-                  </Link>
-                </div>
-              </div>
-            </section>
-          )
-        }
-        if (type === 'metrics') {
-          const items = (block.items as { value: string; label: string; note?: string }[]) || []
-          return (
-            <div key={i}>
-              {wrap(block, (
-                <div className="grid gap-6 border-y border-rule md:grid-cols-4">
-                  {items.map((item) => (
-                    <article key={item.label} className="py-6">
-                      <p className="headline text-3xl">{item.value}</p>
-                      <p className="mt-2 font-semibold">{item.label}</p>
-                      {item.note ? <p className="dek mt-2 text-sm">{item.note}</p> : null}
+            <section key={key} className="container-wide py-10">
+              <h2 className="headline text-3xl">{String(block.heading || '')}</h2>
+              {block.intro ? <p className="dek mt-3 max-w-3xl">{String(block.intro)}</p> : null}
+              <div className="mt-8 grid gap-4 md:grid-cols-3">
+                {items.map((raw) => {
+                  const c = raw as { shortCode?: string; name?: string; layer?: string; shortDefinition?: string; id?: string }
+                  return (
+                    <article key={String(c.id || c.shortCode)} className="panel px-5 py-6">
+                      <p className="kicker">{c.shortCode} · {c.layer}</p>
+                      <h3 className="headline mt-2 text-xl">{c.name}</h3>
+                      <p className="dek mt-2 text-sm">{c.shortDefinition}</p>
                     </article>
-                  ))}
-                </div>
-              ), 'band-grey')}
-            </div>
-          )
-        }
-        if (type === 'form') {
-          return (
-            <section key={i} className="band-grey py-14">
-              <div className="container-wide grid gap-8 md:grid-cols-[1fr_0.9fr]">
-                <div>
-                  <p className="badge-collection">Newsletter</p>
-                  <h2 className="headline mt-4 text-3xl">{String(block.heading || '联系')}</h2>
-                  {block.intro ? <p className="dek mt-3">{String(block.intro)}</p> : null}
-                </div>
-                <ContactForm />
+                  )
+                })}
               </div>
             </section>
           )
         }
-        if (type === 'mediaBlock') {
-          return (
-            <div key={i}>
-              {wrap(block, (
-                <>
-                  {block.heading ? <h2 className="headline text-3xl">{String(block.heading)}</h2> : null}
-                  <div className="story-media mt-4"><span>图</span></div>
-                  {block.caption ? <p className="dek mt-3">{String(block.caption)}</p> : null}
-                </>
-              ))}
-            </div>
-          )
-        }
-        if (type === 'richText') {
-          return (
-            <div key={i}>
-              {wrap(block, (
-                <>
-                  {block.heading ? <h2 className="headline text-3xl">{String(block.heading)}</h2> : null}
-                  <p className="dek mt-3">正文请在后台使用结构化富文本维护。</p>
-                </>
-              ))}
-            </div>
-          )
-        }
+
+        if (type === 'logicChain') return null
+
         return null
       })}
     </>
@@ -197,3 +367,5 @@ export function RenderBlocks({
 export function unusedConceptLabel(doc: unknown) {
   return conceptLabel(doc)
 }
+
+export { CourseCard }
