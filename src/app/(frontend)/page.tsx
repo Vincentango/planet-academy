@@ -1,6 +1,6 @@
 import { CourseFlipCard } from '@/components/courses/CourseFlipCard'
 import { SampleVideo } from '@/components/site/SampleVideo'
-import { FALLBACK_FEATURED } from '@/lib/labs'
+import { DESIGNED_BY_SLUG, FALLBACK_FEATURED, FRAMEWORK_LINE } from '@/lib/framework'
 import { payloadClient } from '@/lib/payload'
 import Link from 'next/link'
 
@@ -54,7 +54,10 @@ export default async function HomePage() {
       sort: '-featured',
     })
     if (res.docs.length) {
-      courses = res.docs as unknown as typeof FALLBACK_FEATURED
+      const mapped = res.docs
+        .map((doc) => DESIGNED_BY_SLUG[(doc as { slug?: string }).slug || ''])
+        .filter((item): item is (typeof FALLBACK_FEATURED)[number] => Boolean(item))
+      if (mapped.length) courses = mapped
     }
   } catch {
     courses = FALLBACK_FEATURED
@@ -75,7 +78,7 @@ export default async function HomePage() {
               学习发生在世界里，而不是只发生在教室里。
             </p>
             <p className="dek mt-3 max-w-xl text-base">
-              九个研究室连接真实议题、认知方法与人的成长。
+              用真实世界项目学习：三个议题、九个场景、四个学段。
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/labs" className="btn-ink no-underline">
@@ -95,11 +98,12 @@ export default async function HomePage() {
           <h2 className="headline mt-4 text-3xl md:text-4xl">一所把真实世界当作校园的学校</h2>
           <div className="mt-8 max-w-3xl space-y-6 text-base leading-8 text-muted md:text-lg">
             <p>
-              星球学院面向未来的学习者、家庭与合作学校。我们不把知识关在分科教室里，而把它放进可以行走、测量、争论和制作的现场。
+              星球学院面向未来的学习者、家庭与合作学校。课程不是必修课表，而是可以走进的资源库：在真实世界项目里提出问题、做出东西、用证据说话。
             </p>
             <p>
-              公开门户先讲清这所学校是谁、为何存在；课程则收在星球研究室里。这里不是学习管理系统，而是一所无边界学校的门厅。
+              学什么，由三个议题穿过九个场景、四个学段。怎么学，走五种教学弧：探究驱动、设计思维、敏捷创造、游戏化探险、社会行动。学会什么，看三层成长：学科素养、方法与技能、可迁移能力。
             </p>
+            <p className="text-ink font-semibold">{FRAMEWORK_LINE}</p>
           </div>
         </article>
       </section>
@@ -147,7 +151,7 @@ export default async function HomePage() {
         <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
           <h2 className="headline text-3xl md:text-4xl">从项目进入学校</h2>
           <Link href="/labs" className="text-sm font-semibold no-underline">
-            全部研究室
+            进入资源库
           </Link>
         </div>
         <div className="course-grid mt-8">

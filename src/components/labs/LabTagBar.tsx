@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import { labFilterHref, type LabTagKey } from '@/lib/labs'
+import { browseFilterHref, type BrowseTagKey } from '@/lib/framework'
 
 export type TagGroup = {
-  key: LabTagKey
+  key: BrowseTagKey
   label: string
   options: { value: string; label: string }[]
 }
@@ -14,13 +14,11 @@ export function LabTagBar({
 }: {
   slug: string
   groups: TagGroup[]
-  current: Partial<Record<LabTagKey, string>>
+  current: Partial<Record<BrowseTagKey, string>>
 }) {
-  const visible = groups.filter((group) => group.options.length > 0)
-
   return (
     <div className="lab-tags">
-      {visible.map((group) => (
+      {groups.map((group) => (
         <div key={group.key} className="lab-tags__row">
           <p className="lab-tags__label">{group.label}</p>
           <div className="lab-tags__chips">
@@ -29,7 +27,7 @@ export function LabTagBar({
               return (
                 <Link
                   key={option.value}
-                  href={labFilterHref(slug, current, group.key, option.value)}
+                  href={browseFilterHref(slug, current, group.key, option.value)}
                   className="tag-chip"
                   data-active={active ? 'true' : 'false'}
                   prefetch={false}

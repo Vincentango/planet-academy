@@ -64,7 +64,7 @@ export const Courses: CollectionConfig = {
               type: 'select',
               label: '所属研究室',
               options: LAB_SELECT_OPTIONS,
-              admin: { description: '九个星球研究室之一。公开站按研究室展示课程，不再按语数英分科。' },
+              admin: { description: 'B3.0 九个场景之一。公开浏览脊骨是场景，不是语数英分科。' },
             },
           ],
         },

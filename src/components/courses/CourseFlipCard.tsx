@@ -1,16 +1,14 @@
 import Link from 'next/link'
-import { gradeBandLabel } from '@/lib/labs'
-import type { LabCourseCardData } from '@/components/courses/LabCourseCard'
+import { courseTags, type CatalogCourse } from '@/lib/framework'
 
 export function CourseFlipCard({
   course,
   tone = 0,
 }: {
-  course: LabCourseCardData
+  course: CatalogCourse
   tone?: number
 }) {
-  const grade = gradeBandLabel(course.gradeMin, course.gradeMax)
-  const subjects = (course.subjects || []).slice(0, 3)
+  const tags = courseTags(course)
 
   return (
     <Link href={`/courses/${course.slug}`} className="flip-card" data-tone={tone % 4}>
@@ -24,9 +22,8 @@ export function CourseFlipCard({
           <p className="kicker text-white/55">课程标签</p>
           <h3 className="headline mt-3 text-2xl text-white">{course.title}</h3>
           <ul className="flip-tags mt-auto">
-            <li>{grade}</li>
-            {subjects.map((subject) => (
-              <li key={subject}>{subject}</li>
+            {tags.map((tag) => (
+              <li key={tag}>{tag}</li>
             ))}
             {course.totalHours ? <li>{course.totalHours} 课时</li> : null}
           </ul>

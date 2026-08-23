@@ -81,7 +81,7 @@ async function seedCourses(payload: Payload, ids: IdMap) {
       title: '盲盒课程',
       subtitle: '把“惊喜”做成可设计的价值体验',
       slug: 'manghe',
-      lab: 'interaction' as const,
+      lab: 'culture-arts' as const,
       sampleFlag: true,
       featured: true,
       gradeMin: 3,
@@ -116,7 +116,7 @@ async function seedCourses(payload: Payload, ids: IdMap) {
       title: '河流特攻队',
       subtitle: '把一条身边的河变成可论证的系统问题',
       slug: 'heliu-tegongdui',
-      lab: 'earth' as const,
+      lab: 'nature-ecology' as const,
       sampleFlag: true,
       featured: true,
       gradeMin: 6,
@@ -152,7 +152,7 @@ async function seedCourses(payload: Payload, ids: IdMap) {
       title: '碳索校园',
       subtitle: '把校园能耗变成可行动的低碳问题',
       slug: 'tansuo-xiaoyuan',
-      lab: 'earth' as const,
+      lab: 'climate-energy' as const,
       sampleFlag: true,
       featured: true,
       gradeMin: 7,
@@ -186,7 +186,7 @@ async function seedCourses(payload: Payload, ids: IdMap) {
       title: '火星基地',
       subtitle: '在极端约束中设计人类如何共同生活',
       slug: 'huoxing-jidi',
-      lab: 'embodied' as const,
+      lab: 'digital-intel' as const,
       sampleFlag: true,
       featured: true,
       gradeMin: 8,
@@ -670,35 +670,7 @@ async function ensureCourseLabs(payload: Payload) {
     }
   }
 
-  const after = await payload.find({ collection: 'courses', limit: 200, overrideAccess: true })
-  const have = new Set(
-    after.docs
-      .map((doc) => (doc as { lab?: string | null }).lab)
-      .filter((lab): lab is string => Boolean(lab)),
-  )
-
-  for (const lab of LABS) {
-    if (have.has(lab.slug)) continue
-    const draft = PLACEHOLDER_COURSES.find((item) => item.lab === lab.slug)
-    if (!draft) continue
-    const found = await payload.find({
-      collection: 'courses',
-      where: { slug: { equals: draft.slug } },
-      limit: 1,
-      overrideAccess: true,
-    })
-    if (found.docs[0]) {
-      await payload.update({
-        collection: 'courses',
-        id: found.docs[0].id,
-        overrideAccess: true,
-        data: { lab: draft.lab, status: 'published' },
-      })
-      continue
-    }
-    await createPublishedCourse(payload, ids, draft)
-    payload.logger.info(`已补齐研究室课程：${lab.name} / ${draft.title}`)
-  }
+  payload.logger.info('已按 B3.0 场景回写四门已发布示例课，不批量创建 108 门 Payload 课程。')
 }
 
 export async function seedIfEmpty(payload: Payload) {

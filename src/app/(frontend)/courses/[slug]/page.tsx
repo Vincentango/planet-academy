@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getLab, gradeBandLabel } from '@/lib/labs'
+import { DESIGNED_BY_SLUG, FRAMEWORK_LINE, GROWTH_LAYERS, courseTags, getScene, stageLabelFromGrades } from '@/lib/framework'
 import { conceptLabel, payloadClient } from '@/lib/payload'
 
 type Course = {
@@ -105,9 +105,26 @@ export default async function CourseDetailPage({
   } catch {
     course = course
   }
-  if (!course) notFound()
+  if (!course) {
+    const seed = DESIGNED_BY_SLUG[slug]
+    if (!seed) {
+      return (
+        <article className="container-wide py-16">
+          <p className="kicker">星球研究室</p>
+          <h1 className="headline mt-4 text-4xl">课程尚未开放</h1>
+          <p className="dek mt-4 max-w-xl">这门课还在设计，目前没有可浏览的详情。请回到场景页查看已开放课程。</p>
+          <p className="mt-8">
+            <Link href="/labs" className="btn-ink no-underline">返回星球研究室</Link>
+          </p>
+        </article>
+      )
+    }
+    notFound()
+  }
 
-  const lab = course.lab ? getLab(course.lab) : null
+  const mapped = DESIGNED_BY_SLUG[course.slug]
+  const lab = mapped ? getScene(mapped.scene) : course.lab ? getScene(course.lab) : null
+  const tags = mapped ? courseTags(mapped) : []
   const growth = list(course.targetC)
   const modules = (Array.isArray(course.modules) ? course.modules : []) as {
     id?: string
@@ -132,7 +149,7 @@ export default async function CourseDetailPage({
             '课程'
           )}
           {' · '}
-          {gradeBandLabel(course.gradeMin, course.gradeMax)}
+          {stageLabelFromGrades(course.gradeMin, course.gradeMax)}
           {course.totalHours ? ` · ${course.totalHours} 课时` : ''}
           {course.sampleFlag ? ' · 示例课程' : ''}
         </p>
@@ -159,7 +176,19 @@ export default async function CourseDetailPage({
         <section className="container-wide pt-4">
           <div className="course-overview">
             <div className="course-main">
-              <p className="kicker">驱动性问题</p>
+              <p className="kicker">课程理念 · B3.0</p>
+              <p className="mt-3 max-w-3xl text-base leading-8">
+                这是一门真实世界项目课：学生在议题、场景与学段的交叉里做事，而不是先背一张课表。
+              </p>
+              <p className="mt-3 max-w-3xl text-sm font-semibold leading-7">{FRAMEWORK_LINE}</p>
+              {tags.length ? (
+                <ul className="lab-course-card__tags">
+                  {tags.map((tag) => (
+                    <li key={tag}>{tag}</li>
+                  ))}
+                </ul>
+              ) : null}
+              <p className="kicker mt-10">驱动性问题</p>
               <p className="driving-q">{course.drivingQuestion}</p>
               <h2 className="headline mt-10 text-3xl">纲要</h2>
               <p className="mt-5 max-w-3xl text-base leading-8">{course.summary}</p>
@@ -168,22 +197,30 @@ export default async function CourseDetailPage({
               ) : null}
             </div>
             <aside className="course-side">
-              <p className="kicker">学生成长维度</p>
-              <h2 className="headline mt-2 text-2xl">C1–C6</h2>
+              <p className="kicker">三层成长</p>
+              <h2 className="headline mt-2 text-2xl">学会什么</h2>
               <ol className="mt-6 space-y-5">
-                {growth.length ? (
-                  growth.map((item) => (
-                    <li key={item.shortCode}>
-                      <p className="font-semibold">
-                        {item.shortCode} {item.name}
-                      </p>
-                      {item.shortDefinition ? <p className="mt-1 text-sm leading-7 text-muted">{item.shortDefinition}</p> : null}
-                    </li>
-                  ))
-                ) : (
-                  <li className="text-sm text-muted">此课程尚未标注成长维度。</li>
-                )}
+                {GROWTH_LAYERS.map((layer) => (
+                  <li key={layer.id}>
+                    <p className="font-semibold">{layer.name}</p>
+                  </li>
+                ))}
               </ol>
+              {growth.length ? (
+                <>
+                  <p className="kicker mt-10">能力标注</p>
+                  <ol className="mt-4 space-y-5">
+                    {growth.map((item) => (
+                      <li key={item.shortCode}>
+                        <p className="font-semibold">
+                          {item.shortCode} {item.name}
+                        </p>
+                        {item.shortDefinition ? <p className="mt-1 text-sm leading-7 text-muted">{item.shortDefinition}</p> : null}
+                      </li>
+                    ))}
+                  </ol>
+                </>
+              ) : null}
               <p className="mt-8 text-xs leading-6 text-muted">
                 {conceptLabel(course.teachingArc).shortCode
                   ? `教学弧 ${conceptLabel(course.teachingArc).shortCode} ${conceptLabel(course.teachingArc).name}`

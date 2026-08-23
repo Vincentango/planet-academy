@@ -1,39 +1,45 @@
 import Link from 'next/link'
-import { gradeBandLabel } from '@/lib/labs'
+import { courseTags, getStage, type CatalogCourse } from '@/lib/framework'
 
-export type LabCourseCardData = {
-  title: string
-  slug: string
-  subtitle?: string | null
-  gradeMin?: number | null
-  gradeMax?: number | null
-  totalHours?: number | null
-  subjects?: string[] | null
-  sampleFlag?: boolean | null
-}
+export type LabCourseCardData = CatalogCourse
 
-export function LabCourseCard({ course }: { course: LabCourseCardData }) {
-  const grade = gradeBandLabel(course.gradeMin, course.gradeMax)
-  const subjects = (course.subjects || []).slice(0, 3)
-
-  return (
-    <Link href={`/courses/${course.slug}`} className="lab-course-card">
-      <aside className="lab-course-card__rail" aria-label="年级">
-        <span>{grade}</span>
+export function LabCourseCard({ course }: { course: CatalogCourse }) {
+  const tags = courseTags(course)
+  const rail = course.designed ? getStage(course.stage)?.label || '' : '筹备中'
+  const inner = (
+    <>
+      <aside className="lab-course-card__rail" aria-label={course.designed ? '学段' : '筹备中'}>
+        <span>{rail}</span>
       </aside>
       <div className="lab-course-card__body">
         <div className="flex flex-wrap items-center gap-2">
-          {course.totalHours ? <p className="kicker">{course.totalHours} 课时</p> : null}
-          {course.sampleFlag ? <p className="kicker">示例</p> : null}
+          {course.designed && course.totalHours ? <p className="kicker">{course.totalHours} 课时</p> : null}
+          {course.designed ? <p className="kicker">已开放</p> : <p className="kicker">筹备中</p>}
         </div>
         <h3 className="headline mt-2 text-2xl">{course.title}</h3>
         {course.subtitle ? <p className="dek mt-2 text-sm">{course.subtitle}</p> : null}
-        <ul className="lab-course-card__tags">
-          {subjects.map((subject) => (
-            <li key={subject}>{subject}</li>
-          ))}
-        </ul>
+        {tags.length ? (
+          <ul className="lab-course-card__tags">
+            {tags.map((tag) => (
+              <li key={tag}>{tag}</li>
+            ))}
+          </ul>
+        ) : null}
       </div>
-    </Link>
+    </>
+  )
+
+  if (course.designed) {
+    return (
+      <Link href={`/courses/${course.slug}`} className="lab-course-card">
+        {inner}
+      </Link>
+    )
+  }
+
+  return (
+    <div className="lab-course-card lab-course-card--muted" aria-disabled="true">
+      {inner}
+    </div>
   )
 }

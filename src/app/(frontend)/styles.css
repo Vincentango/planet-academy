@@ -613,6 +613,19 @@ h1, h2, h3, h4 {
   box-shadow: 0 0 0 2px var(--yellow);
 }
 
+.lab-course-card--muted {
+  opacity: 0.62;
+  pointer-events: none;
+}
+
+.lab-course-card--muted .lab-course-card__rail {
+  background: #d7d1c6;
+}
+
+.lab-course-card--muted:hover {
+  box-shadow: none;
+}
+
 .lab-course-card__rail {
   display: grid;
   place-items: center;
