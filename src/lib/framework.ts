@@ -304,7 +304,7 @@ export function browseFilterHref(
     if (selected) next.set(item, selected)
   }
   const qs = next.toString()
-  return qs ? `/labs/${slug}?${qs}` : `/labs/${slug}`
+  return qs ? `/scenes/${slug}?${qs}` : `/scenes/${slug}`
 }
 
 export function filterCatalog(
@@ -331,10 +331,17 @@ export function courseTags(course: CatalogCourse) {
   return tags
 }
 
-export const LAB_SELECT_OPTIONS = SCENES.map((scene) => ({
-  label: scene.name,
-  value: scene.slug,
-}))
+export const LAB_SELECT_OPTIONS = [
+  { label: '地球科学', value: 'earth' },
+  { label: '交互设计', value: 'interaction' },
+  { label: '具身智能', value: 'embodied' },
+  { label: '逻辑博弈', value: 'logic' },
+  { label: '未来都市', value: 'city' },
+  { label: '未来农业', value: 'agri' },
+  { label: '文化传承', value: 'culture' },
+  { label: '艺术设计', value: 'art' },
+  { label: '智能制造', value: 'making' },
+]
 
 /** Compatibility aliases while admin/seed still say “lab”. */
 export const LABS = SCENES

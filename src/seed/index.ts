@@ -650,27 +650,7 @@ async function createPublishedCourse(
 }
 
 async function ensureCourseLabs(payload: Payload) {
-  const ids = await conceptIdMap(payload)
-  if (!Object.keys(ids).length) {
-    payload.logger.warn('术语库尚未就绪，跳过研究室课程补齐。')
-    return
-  }
-
-  const existing = await payload.find({ collection: 'courses', limit: 200, overrideAccess: true })
-  for (const doc of existing.docs) {
-    const course = doc as { id: number | string; slug?: string; lab?: string | null }
-    const mapped = course.slug ? COURSE_LAB_BY_SLUG[course.slug] : undefined
-    if (mapped && course.lab !== mapped) {
-      await payload.update({
-        collection: 'courses',
-        id: course.id,
-        overrideAccess: true,
-        data: { lab: mapped },
-      })
-    }
-  }
-
-  payload.logger.info('已按 B3.0 场景回写四门已发布示例课，不批量创建 108 门 Payload 课程。')
+  payload.logger.info('公开浏览使用 B3.0 静态目录；不改写生产 courses.lab 枚举，不创建 108 门 Payload 课程。')
 }
 
 export async function seedIfEmpty(payload: Payload) {

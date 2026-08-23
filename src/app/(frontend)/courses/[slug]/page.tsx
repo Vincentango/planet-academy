@@ -110,11 +110,11 @@ export default async function CourseDetailPage({
     if (!seed) {
       return (
         <article className="container-wide py-16">
-          <p className="kicker">星球研究室</p>
+          <p className="kicker">场景</p>
           <h1 className="headline mt-4 text-4xl">课程尚未开放</h1>
           <p className="dek mt-4 max-w-xl">这门课还在设计，目前没有可浏览的详情。请回到场景页查看已开放课程。</p>
           <p className="mt-8">
-            <Link href="/labs" className="btn-ink no-underline">返回星球研究室</Link>
+            <Link href="/scenes" className="btn-ink no-underline">返回场景</Link>
           </p>
         </article>
       )
@@ -142,7 +142,7 @@ export default async function CourseDetailPage({
         <div className="panel px-6 py-10 md:px-10">
         <p className="kicker">
           {lab ? (
-            <Link href={`/labs/${lab.slug}`} className="no-underline">
+            <Link href={`/scenes/${lab.slug}`} className="no-underline">
               {lab.name}
             </Link>
           ) : (

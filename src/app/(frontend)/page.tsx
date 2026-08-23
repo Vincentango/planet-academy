@@ -10,8 +10,8 @@ const CLIPS = [
   {
     src: '/samples/sample-01.mp4',
     label: '示例影像 01',
-    title: '研究室现场',
-    body: '占位影像。待替换为研究室现场与学生工作过程。',
+    title: '项目现场',
+    body: '占位影像。待替换为项目现场与学生工作过程。',
   },
   {
     src: '/samples/sample-02.mp4',
@@ -81,8 +81,8 @@ export default async function HomePage() {
               用真实世界项目学习：三个议题、九个场景、四个学段。
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/labs" className="btn-ink no-underline">
-                进入星球研究室
+              <Link href="/scenes" className="btn-ink no-underline">
+                进入九个场景
               </Link>
               <Link href="#featured" className="btn-ghost no-underline">
                 查看精选课
@@ -150,7 +150,7 @@ export default async function HomePage() {
         <p className="kicker">课程精选</p>
         <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
           <h2 className="headline text-3xl md:text-4xl">从项目进入学校</h2>
-          <Link href="/labs" className="text-sm font-semibold no-underline">
+          <Link href="/scenes" className="text-sm font-semibold no-underline">
             进入资源库
           </Link>
         </div>

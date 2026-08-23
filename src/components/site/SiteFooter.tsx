@@ -6,10 +6,10 @@ export function SiteFooter() {
       <div className="container-wide grid gap-4 py-10 md:grid-cols-2">
         <div className="footer-cta">
           <p className="max-w-md text-sm leading-7">
-            星球学院是一所未来无边界学校。公开门户先定位学校，再进入星球研究室的课程。
+            星球学院是一所未来无边界学校。公开门户先定位学校，再进入九个场景里的课程。
           </p>
-          <Link href="/labs" className="btn-ink mt-6 no-underline">
-            进入星球研究室
+          <Link href="/scenes" className="btn-ink mt-6 no-underline">
+            进入九个场景
           </Link>
         </div>
         <div className="footer-cta">
@@ -36,8 +36,13 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
-              <Link href="/labs" className="no-underline hover:opacity-70">
-                星球研究室
+              <Link href="/philosophy" className="no-underline hover:opacity-70">
+                理念
+              </Link>
+            </li>
+            <li>
+              <Link href="/scenes" className="no-underline hover:opacity-70">
+                场景
               </Link>
             </li>
             <li>

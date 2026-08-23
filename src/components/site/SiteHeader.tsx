@@ -4,7 +4,8 @@ import Link from 'next/link'
 
 const NAV = [
   { href: '/', label: '首页' },
-  { href: '/labs', label: '星球研究室' },
+  { href: '/philosophy', label: '理念' },
+  { href: '/scenes', label: '场景' },
   { href: '/about', label: '关于' },
 ]
 
