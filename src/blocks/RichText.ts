@@ -6,7 +6,8 @@ export const RichText: Block = {
   labels: { singular: '富文本', plural: '富文本' },
   fields: [
     ...layoutFields,
-    { name: 'heading', type: 'text', label: '标题' },
+    { name: 'kicker', type: 'text', label: '眉题' },
+    { name: 'heading', type: 'textarea', label: '标题' },
     { name: 'body', type: 'richText', label: '正文', required: true },
   ],
 }

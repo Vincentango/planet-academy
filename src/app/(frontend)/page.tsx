@@ -1,7 +1,6 @@
 import { CourseFlipCard } from '@/components/courses/CourseFlipCard'
 import { SampleVideo } from '@/components/site/SampleVideo'
 import { CmsPage } from '@/components/site/CmsPage'
-import { FRAMEWORK_LINE } from '@/lib/framework'
 import { featuredCourses } from '@/lib/cms-courses'
 import { getSiteSettings } from '@/lib/site'
 import Link from 'next/link'
@@ -15,7 +14,7 @@ const CLIPS = [
 ]
 
 const LINES = [
-  { tone: 'highlighter--yellow', text: '当机器能完成大量传统认知任务，教育要守住判断、创造、连接与行动这些不可外包的能力。' },
+  { tone: 'highlighter--yellow', text: 'Committed to Educational\nSharing and Equity\n推动课程内容到基础设施再到\n运营模式的多维度升级' },
   { tone: 'highlighter--peach', text: '在真实议题中看见世界，用认知透镜看清结构，朝人的成长维度前进。' },
   { tone: 'highlighter--charcoal', text: '以研究室项目推进学习：提出问题、做出东西、用证据说话，而不是只完成一份作业。' },
 ]
@@ -34,8 +33,6 @@ export default async function HomePage() {
           <div className="gsd-split__copy">
             <p className="kicker">星球学院 · CRADLE-X</p>
             <h1 className="headline mt-5 text-4xl md:text-6xl">未来无边界学校</h1>
-            <p className="mt-6 max-w-xl text-xl font-medium leading-8">学习发生在世界里，而不是只发生在教室里。</p>
-            <p className="dek mt-3 max-w-xl text-base">用真实世界项目学习：三个议题、九个场景、四个学段。</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/scenes" className="btn-ink no-underline">进入九个场景</Link>
               <Link href="#featured" className="btn-ghost no-underline">查看精选课</Link>
@@ -46,11 +43,12 @@ export default async function HomePage() {
       <section className="container-wide py-6">
         <article className="panel px-6 py-10 md:px-10 md:py-14">
           <p className="kicker">整体介绍</p>
-          <h2 className="headline mt-4 text-3xl md:text-4xl">一所把真实世界当作校园的学校</h2>
+          <h2 className="headline mt-4 whitespace-pre-line text-3xl md:text-4xl">{`Driving Interdisciplinary
+Integration with
+Emergent Technology`}</h2>
           <div className="mt-8 max-w-3xl space-y-6 text-base leading-8 text-muted md:text-lg">
-            <p>星球学院面向未来的学习者、家庭与合作学校。课程不是必修课表，而是可以走进的资源库：在真实世界项目里提出问题、做出东西、用证据说话。</p>
-            <p>学什么，由三个议题穿过九个场景、四个学段。怎么学，走五种教学弧：探究驱动、设计思维、敏捷创造、游戏化探险、社会行动。学会什么，看三层成长：学科素养、方法与技能、可迁移能力。</p>
-            <p className="text-ink font-semibold">{FRAMEWORK_LINE}</p>
+            <p>以前沿科技构建跨学科融合课程体系</p>
+            <p>以真实世界问题驱动项目制学习方式</p>
           </div>
         </article>
       </section>
@@ -59,15 +57,15 @@ export default async function HomePage() {
           <article className="mosaic__tile mosaic__tile--v1">
             <SampleVideo src={CLIPS[0].src} label={CLIPS[0].label} title={CLIPS[0].title} caption={CLIPS[0].body} autoplay={site.interaction.videoAutoplay} />
           </article>
-          <aside className="mosaic__tile mosaic__tile--t1 highlighter highlighter--yellow"><p>{LINES[0].text}</p></aside>
+          <aside className="mosaic__tile mosaic__tile--t1 highlighter highlighter--yellow"><p className="whitespace-pre-line">{LINES[0].text}</p></aside>
           <article className="mosaic__tile mosaic__tile--v2">
             <SampleVideo src={CLIPS[1].src} label={CLIPS[1].label} title={CLIPS[1].title} caption={CLIPS[1].body} autoplay={site.interaction.videoAutoplay} />
           </article>
-          <aside className="mosaic__tile mosaic__tile--t2 highlighter highlighter--peach"><p>{LINES[1].text}</p></aside>
+          <aside className="mosaic__tile mosaic__tile--t2 highlighter highlighter--peach"><p className="whitespace-pre-line">{LINES[1].text}</p></aside>
           <article className="mosaic__tile mosaic__tile--v3">
             <SampleVideo src={CLIPS[2].src} label={CLIPS[2].label} title={CLIPS[2].title} caption={CLIPS[2].body} autoplay={site.interaction.videoAutoplay} />
           </article>
-          <aside className="mosaic__tile mosaic__tile--t3 highlighter highlighter--charcoal"><p>{LINES[2].text}</p></aside>
+          <aside className="mosaic__tile mosaic__tile--t3 highlighter highlighter--charcoal"><p className="whitespace-pre-line">{LINES[2].text}</p></aside>
         </div>
       </section>
       <section id="featured" className="container-wide py-10 pb-16">

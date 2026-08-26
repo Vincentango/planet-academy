@@ -40,9 +40,12 @@ function lexicalPlain(node: unknown): string {
   if (!node) return ''
   if (typeof node === 'string') return node
   if (typeof node !== 'object') return ''
-  const n = node as { text?: string; children?: unknown[] }
+  const n = node as { type?: string; text?: string; children?: unknown[]; root?: unknown }
   if (n.text) return n.text
-  return (n.children || []).map(lexicalPlain).join('')
+  if (n.root) return lexicalPlain(n.root)
+  const children = n.children || []
+  const sep = n.type === 'root' ? '\n\n' : ''
+  return children.map(lexicalPlain).join(sep)
 }
 
 function ActionRow({
@@ -136,7 +139,7 @@ export function RenderBlocks({
                   if (kind === 'line') {
                     return (
                       <aside key={n} className={`mosaic__tile highlighter highlighter--${String(item.tone || 'yellow')}`}>
-                        <p>{String(item.body || item.title || '')}</p>
+                        <p className="whitespace-pre-line">{String(item.body || item.title || '')}</p>
                       </aside>
                     )
                   }
@@ -172,7 +175,7 @@ export function RenderBlocks({
           return (
             <section key={key} className="container-wide py-4">
               <aside className={`highlighter highlighter--${String(block.tone || 'yellow')} p-8`}>
-                <p>{String(block.text || '')}</p>
+                <p className="whitespace-pre-line">{String(block.text || '')}</p>
               </aside>
             </section>
           )
@@ -320,11 +323,16 @@ export function RenderBlocks({
           return (
             <section key={key} className="container-wide py-6">
               <article className="panel px-6 py-10 md:px-10 md:py-14">
-                {block.heading ? <h2 className="headline text-3xl md:text-4xl">{String(block.heading)}</h2> : null}
+                {block.kicker ? <p className="kicker">{String(block.kicker)}</p> : null}
+                {block.heading ? (
+                  <h2 className={`headline whitespace-pre-line text-3xl md:text-4xl${block.kicker ? ' mt-4' : ''}`}>
+                    {String(block.heading)}
+                  </h2>
+                ) : null}
                 {body ? (
                   <div className="mt-8 max-w-3xl space-y-6 text-base leading-8 text-muted md:text-lg">
                     {body.split('\n\n').map((p, n) => (
-                      <p key={n}>{p}</p>
+                      <p key={n} className="whitespace-pre-line">{p}</p>
                     ))}
                   </div>
                 ) : null}

@@ -26,8 +26,8 @@ const HOME_LAYOUT = [
     variant: 'split',
     eyebrow: '星球学院 · CRADLE-X',
     heading: '未来无边界学校',
-    dek: '学习发生在世界里，而不是只发生在教室里。',
-    subheading: '用真实世界项目学习：三个议题、九个场景、四个学段。',
+    dek: '',
+    subheading: '',
     mediaCaption: 'CRADLE-X',
     mediaTitle: '星球学院',
     surface: 'paper',
@@ -40,9 +40,10 @@ const HOME_LAYOUT = [
   },
   {
     blockType: 'richText',
-    heading: '一所把真实世界当作校园的学校',
+    kicker: '整体介绍',
+    heading: 'Driving Interdisciplinary\nIntegration with\nEmergent Technology',
     body: rich(
-      '星球学院面向未来的学习者、家庭与合作学校。课程不是必修课表，而是可以走进的资源库：在真实世界项目里提出问题、做出东西、用证据说话。\n\n学什么，由三个议题穿过九个场景、四个学段。怎么学，走五种教学弧：探究驱动、设计思维、敏捷创造、游戏化探险、社会行动。学会什么，看三层成长：学科素养、方法与技能、可迁移能力。\n\n学什么＝议题×场景×学段；怎么学＝五种教学弧；学会什么＝三层成长',
+      '以前沿科技构建跨学科融合课程体系\n\n以真实世界问题驱动项目制学习方式',
     ),
     surface: 'paper',
     padding: 'normal',
@@ -63,7 +64,7 @@ const HOME_LAYOUT = [
       {
         kind: 'line',
         tone: 'yellow',
-        body: '当机器能完成大量传统认知任务，教育要守住判断、创造、连接与行动这些不可外包的能力。',
+        body: 'Committed to Educational\nSharing and Equity\n推动课程内容到基础设施再到\n运营模式的多维度升级',
       },
       {
         kind: 'media',
@@ -83,7 +84,7 @@ const HOME_LAYOUT = [
         url: '/samples/sample-03.mp4',
         label: '示例影像 03',
         title: '无边界校园',
-        body: '占位影像。待替换为学习发生在世界里的真实片段。',
+        body: '占位影像。待替换为无边界校园的真实片段。',
         playInPlace: true,
       },
       {
@@ -228,10 +229,16 @@ export async function ensurePublicComposer(payload: Payload) {
     if (existing.docs[0]) {
       const doc = existing.docs[0] as { id: string | number; layout?: { blockType?: string }[] }
       const types = new Set((doc.layout || []).map((b) => b.blockType))
+      const layoutText = JSON.stringify(doc.layout || [])
+      const homeCopyStale =
+        page.slug === 'home' &&
+        ['学习发生在世界里', '当机器能完成大量传统认知任务', '一所把真实世界当作校园的学校'].some((s) =>
+          layoutText.includes(s),
+        )
       const stale =
         !doc.layout ||
         !doc.layout.length ||
-        (page.slug === 'home' && !types.has('mosaic')) ||
+        (page.slug === 'home' && (!types.has('mosaic') || homeCopyStale)) ||
         (page.slug === 'scenes' && !types.has('sceneGrid')) ||
         (page.slug === 'philosophy' && !types.has('sceneGrid'))
       if (stale) {
