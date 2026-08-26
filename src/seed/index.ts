@@ -425,13 +425,15 @@ async function seedCourses(payload: Payload, ids: IdMap) {
       subtitle: '把一条身边的河变成可论证的系统问题',
       slug: 'heliu-tegongdui',
       lab: 'nature-ecology' as const,
+      labTitle: '地球科学研究室',
       system: 'fusion',
       sampleFlag: true,
       featured: true,
       gradeMin: 6,
       gradeMax: 9,
       totalHours: 32,
-      subjects: ['科学', '人文社科'],
+      subjects: ['科学探究', '工程设计', '智能硬件'],
+      research: '学生走进真实河流开展水质调查，设计水质监测或垃圾清理装置，形成可持续的河流治理解决方案。',
       summary:
         '学生以系统透镜与证据透镜调查校园或社区邻近水体，区分观察、推断与价值主张，形成可公开的河流问题论证。示例课程。',
       drivingQuestion: '我们身边的这条河，究竟发生了什么？哪些变化可以被证据支持，哪些只是传闻？',
@@ -462,13 +464,15 @@ async function seedCourses(payload: Payload, ids: IdMap) {
       subtitle: '把校园能耗变成可行动的低碳问题',
       slug: 'tansuo-xiaoyuan',
       lab: 'climate-energy' as const,
+      labTitle: '地球科学研究室',
       system: 'fusion',
       sampleFlag: true,
       featured: true,
       gradeMin: 7,
       gradeMax: 11,
       totalHours: 32,
-      subjects: ['科学', '数学', '综合实践'],
+      subjects: ['科学探究', '数据分析', '智能硬件'],
+      research: '学生调查校园碳排放，研发智能照明、自动浇水和分类垃圾桶等低碳产品，并提出校园改造建议。',
       summary:
         '学生调查校园能源使用，用系统视角识别高碳环节，设计可验证的低碳行动并评估影响。示例课程。主 X1，领域路径为能源低碳。',
       drivingQuestion: '如果要把我们的校园变成一座更低碳的微型地球系统，最先应该改哪里，凭什么？',
@@ -981,6 +985,14 @@ const COURSE_SYSTEM_BY_SLUG: Record<string, 'interest' | 'fusion' | 'pioneer'> =
   'ai-xinwenchuang-gaoduan': 'interest',
   'ai-shengtai-kapai': 'interest',
   'ai-celue-zhuoyou-yueqiu': 'interest',
+  'chongqing-jiaotong-ai': 'fusion',
+  'xunhuan-dushi-nongchang': 'fusion',
+  'liti-gongyuan-chengshi': 'fusion',
+  'shikong-yunsuan-shequ': 'fusion',
+  'hanzi-lishi-chuancheng': 'fusion',
+  'hanzi-duoyang-fangyan': 'fusion',
+  'hanzi-wenhua-pengzhuang': 'fusion',
+  'hanzi-shikong-tansuo': 'fusion',
   'heliu-tegongdui': 'fusion',
   'tansuo-xiaoyuan': 'fusion',
   'guize-yugongping': 'fusion',
@@ -988,6 +1000,233 @@ const COURSE_SYSTEM_BY_SLUG: Record<string, 'interest' | 'fusion' | 'pioneer'> =
   'koushushi-gongzuofang': 'fusion',
   'huoxing-jidi': 'pioneer',
   'zhuomian-jigou-gongfang': 'pioneer',
+}
+
+const FUSION_EXTRAS: Array<{
+  title: string
+  subtitle: string
+  slug: string
+  lab: LabSlug
+  labTitle: string
+  research: string
+  issue: 'nature' | 'tech' | 'people'
+  scene: LabSlug
+  stage: 'g1-3' | 'g4-6' | 'g7-9' | 'g10-12'
+  gradeMin: number
+  gradeMax: number
+  totalHours: number
+  subjects: string[]
+}> = [
+  {
+    title: '重庆立体交通与AI系统设计',
+    subtitle: '用AI视觉与控制逻辑搭建立体交通智能系统',
+    slug: 'chongqing-jiaotong-ai',
+    lab: 'digital-intel',
+    labTitle: '具身智能研究室',
+    research: '学生以重庆山地交通为真实情境，运用AI视觉、传感器与控制逻辑搭建立体交通智能系统。',
+    issue: 'tech',
+    scene: 'digital-intel',
+    stage: 'g7-9',
+    gradeMin: 7,
+    gradeMax: 9,
+    totalHours: 32,
+    subjects: ['逻辑推理', '系统思维', '智能硬件'],
+  },
+  {
+    title: '可持续未来：循环经济都市农场',
+    subtitle: '把循环、种植和物联网做成一座都市农场',
+    slug: 'xunhuan-dushi-nongchang',
+    lab: 'food-agri-water',
+    labTitle: '未来农业研究室',
+    research: '学生围绕城市食物供应与废弃物处理，设计并搭建融合循环经济、立体种植和物联网控制的未来都市农场。',
+    issue: 'nature',
+    scene: 'food-agri-water',
+    stage: 'g7-9',
+    gradeMin: 7,
+    gradeMax: 9,
+    totalHours: 32,
+    subjects: ['科学探究', '系统思维', '智能硬件'],
+  },
+  {
+    title: '立体公园城市',
+    subtitle: '把居住、交通、绿化与公共服务叠进一座立体城市',
+    slug: 'liti-gongyuan-chengshi',
+    lab: 'city-community',
+    labTitle: '未来都市研究室',
+    research: '学生通过空间规划、结构实验和生态能源计算，设计一座集居住、交通、绿化与公共服务于一体的立体城市。',
+    issue: 'tech',
+    scene: 'city-community',
+    stage: 'g7-9',
+    gradeMin: 7,
+    gradeMax: 9,
+    totalHours: 32,
+    subjects: ['系统思维', '工程设计', '数据分析'],
+  },
+  {
+    title: '时空运算：学校出发的社区再造',
+    subtitle: '用数据和交互模型重做校园与社区的时段服务',
+    slug: 'shikong-yunsuan-shequ',
+    lab: 'city-community',
+    labTitle: '未来都市研究室',
+    research: '学生调查校园与社区的时空利用情况，用数据和交互模型设计能够在不同时段服务不同人群的未来社区。',
+    issue: 'people',
+    scene: 'city-community',
+    stage: 'g7-9',
+    gradeMin: 7,
+    gradeMax: 9,
+    totalHours: 32,
+    subjects: ['数据分析', '系统思维', '交互设计'],
+  },
+  {
+    title: '汉字博物馆·历史传承',
+    subtitle: '从符号、甲骨文到造纸，看见汉字如何推动文明',
+    slug: 'hanzi-lishi-chuancheng',
+    lab: 'culture-arts',
+    labTitle: '文化传承研究室',
+    research: '学生从早期符号、甲骨文、书体演变和造纸工艺入手，理解汉字如何记录并推动人类文明发展。',
+    issue: 'nature',
+    scene: 'culture-arts',
+    stage: 'g7-9',
+    gradeMin: 7,
+    gradeMax: 9,
+    totalHours: 24,
+    subjects: ['文化理解', '科学探究', '审美表达'],
+  },
+  {
+    title: '汉字博物馆·多样方言',
+    subtitle: '用采集、声调和地图理解语言与地域文化',
+    slug: 'hanzi-duoyang-fangyan',
+    lab: 'culture-arts',
+    labTitle: '文化传承研究室',
+    research: '学生通过方言采集、声调分析、地域地图和朗诵展示，探究语言与地理、历史及地域文化之间的联系。',
+    issue: 'people',
+    scene: 'culture-arts',
+    stage: 'g7-9',
+    gradeMin: 7,
+    gradeMax: 9,
+    totalHours: 24,
+    subjects: ['文化理解', '数据分析', '叙事表达'],
+  },
+  {
+    title: '汉字博物馆·文化碰撞',
+    subtitle: '比较汉字在不同文化中的冲突、适应与创新',
+    slug: 'hanzi-wenhua-pengzhuang',
+    lab: 'culture-arts',
+    labTitle: '文化传承研究室',
+    research: '学生比较汉字在不同地区和文化中的演变，通过分析、讨论与视觉设计理解文字交流中的冲突、适应与创新。',
+    issue: 'people',
+    scene: 'culture-arts',
+    stage: 'g10-12',
+    gradeMin: 7,
+    gradeMax: 12,
+    totalHours: 24,
+    subjects: ['文化理解', '逻辑推理', '审美表达'],
+  },
+  {
+    title: '汉字博物馆·时空探索',
+    subtitle: '用AI字体与互动装置让濒危文字重新被看见',
+    slug: 'hanzi-shikong-tansuo',
+    lab: 'culture-arts',
+    labTitle: '文化传承研究室',
+    research: '学生围绕东巴文、女书等濒危文字，利用AI字体设计与互动装置探索传统文字在数字时代的保护与新生。',
+    issue: 'tech',
+    scene: 'culture-arts',
+    stage: 'g7-9',
+    gradeMin: 7,
+    gradeMax: 9,
+    totalHours: 24,
+    subjects: ['文化理解', 'AI创作', '交互设计'],
+  },
+]
+
+const FUSION_EXISTING_UPDATES = [
+  {
+    slug: 'heliu-tegongdui',
+    lab: 'nature-ecology' as const,
+    labTitle: '地球科学研究室',
+    research: '学生走进真实河流开展水质调查，设计水质监测或垃圾清理装置，形成可持续的河流治理解决方案。',
+    subjects: ['科学探究', '工程设计', '智能硬件'],
+  },
+  {
+    slug: 'tansuo-xiaoyuan',
+    lab: 'climate-energy' as const,
+    labTitle: '地球科学研究室',
+    research: '学生调查校园碳排放，研发智能照明、自动浇水和分类垃圾桶等低碳产品，并提出校园改造建议。',
+    subjects: ['科学探究', '数据分析', '智能硬件'],
+  },
+]
+
+async function ensureFusionCourses(payload: Payload) {
+  for (const item of FUSION_EXISTING_UPDATES) {
+    const res = await payload.find({
+      collection: 'courses',
+      where: { slug: { equals: item.slug } },
+      limit: 5,
+      overrideAccess: true,
+      depth: 0,
+    })
+    for (const doc of res.docs) {
+      await payload.update({
+        collection: 'courses',
+        id: doc.id,
+        overrideAccess: true,
+        data: {
+          lab: item.lab,
+          labTitle: item.labTitle,
+          research: item.research,
+          subjects: item.subjects,
+          system: 'fusion',
+          scene: item.lab,
+        },
+      })
+    }
+  }
+
+  for (const course of FUSION_EXTRAS) {
+    const res = await payload.find({
+      collection: 'courses',
+      where: { slug: { equals: course.slug } },
+      limit: 1,
+      overrideAccess: true,
+      depth: 0,
+    })
+    const data = {
+      title: course.title,
+      subtitle: course.subtitle,
+      slug: course.slug,
+      summary: course.research,
+      drivingQuestion: course.research,
+      sampleFlag: true,
+      featured: false,
+      gradeMin: course.gradeMin,
+      gradeMax: course.gradeMax,
+      totalHours: course.totalHours,
+      subjects: [...course.subjects],
+      lab: course.lab,
+      labTitle: course.labTitle,
+      research: course.research,
+      system: 'fusion' as const,
+      scene: course.scene,
+      issue: course.issue,
+      stage: course.stage,
+      status: 'published' as const,
+    }
+    if (res.docs[0]) {
+      await payload.update({
+        collection: 'courses',
+        id: res.docs[0].id,
+        overrideAccess: true,
+        data,
+      })
+    } else {
+      await payload.create({
+        collection: 'courses',
+        overrideAccess: true,
+        draft: false,
+        data,
+      })
+    }
+  }
 }
 
 async function ensureCourseLabs(payload: Payload) {
@@ -1064,6 +1303,11 @@ export async function seedIfEmpty(payload: Payload) {
     await ensureCourseSystems(payload)
   } catch (err) {
     payload.logger.error(err, '课程体系字段补齐失败')
+  }
+  try {
+    await ensureFusionCourses(payload)
+  } catch (err) {
+    payload.logger.error(err, '融合体系课程补齐失败')
   }
   try {
     await retireOldInterestCourses(payload)

@@ -3,6 +3,7 @@ import {
   CURRICULUM_FALLBACK,
   DESIGNED_BY_SLUG,
   FALLBACK_FEATURED,
+  FUSION_TAB_SLUGS,
   inferSystem,
   type CatalogCourse,
   type CourseSystem,
@@ -122,14 +123,15 @@ export async function curriculumCourses(): Promise<CatalogCourse[]> {
   for (const course of cms.filter((item) => item.designed)) {
     const seed = bySlug.get(course.slug)
     if (course.slug === 'manghe' || course.slug === 'xiaoyuan-shiwu-ditu' || course.slug === 'gonggong-qianghui') continue
+    const fusionSeed = Boolean(seed && (FUSION_TAB_SLUGS as readonly string[]).includes(course.slug))
     const next = {
       ...seed,
       ...course,
       cover: course.cover || seed?.cover,
-      research: course.research || seed?.research || course.subtitle,
-      lab: course.lab || seed?.lab,
-      system: course.system || seed?.system,
-      subjects: course.subjects?.length ? course.subjects : seed?.subjects,
+      research: fusionSeed ? seed?.research || course.research || course.subtitle : course.research || seed?.research || course.subtitle,
+      lab: fusionSeed ? seed?.lab || course.lab : course.lab || seed?.lab,
+      system: fusionSeed ? 'fusion' : course.system || seed?.system,
+      subjects: fusionSeed && seed?.subjects?.length ? seed.subjects : course.subjects?.length ? course.subjects : seed?.subjects,
     }
     bySlug.set(course.slug, { ...next, system: inferSystem(next) })
   }
