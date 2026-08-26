@@ -50,7 +50,7 @@ export default async function HomePage() {
       <section id="featured" className="container-wide py-10 pb-16">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <p className="kicker">课程精选</p>
-          <Link href="/scenes" className="text-sm font-semibold no-underline">进入资源库</Link>
+          <Link href="/curriculum" className="text-sm font-semibold no-underline">进入资源库</Link>
         </div>
         <div className="course-grid mt-8">
           {courses.slice(0, 4).map((course, i) => (

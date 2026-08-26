@@ -120,7 +120,7 @@ export default async function CourseDetailPage({
           <h1 className="headline mt-4 text-4xl">课程尚未开放</h1>
           <p className="dek mt-4 max-w-xl">这门课还在设计，目前没有可浏览的详情。请回到场景页查看已开放课程。</p>
           <p className="mt-8">
-            <Link href="/scenes" className="btn-ink no-underline">返回场景</Link>
+            <Link href="/curriculum" className="btn-ink no-underline">返回课程体系</Link>
           </p>
         </article>
       )

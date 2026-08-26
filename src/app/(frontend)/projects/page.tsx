@@ -30,7 +30,7 @@ export default async function ProjectsPage() {
             {p.processNote ? <p className="mt-3 text-sm text-muted">{p.processNote}</p> : null}
           </article>
         )) : (
-          <p className="text-muted">数据库尚未连接或还没有发布成果。可先查看 <Link href="/scenes" className="link-accent">九个场景</Link>。</p>
+          <p className="text-muted">数据库尚未连接或还没有发布成果。可先查看 <Link href="/curriculum" className="link-accent">课程体系</Link>。</p>
         )}
       </section>
     </>

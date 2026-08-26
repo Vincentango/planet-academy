@@ -29,7 +29,9 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      { source: '/labs', destination: '/scenes', permanent: true },
+      { source: '/philosophy', destination: '/curriculum', permanent: true },
+      { source: '/scenes', destination: '/curriculum', permanent: true },
+      { source: '/labs', destination: '/curriculum', permanent: true },
       { source: '/labs/all', destination: '/scenes/all', permanent: true },
       { source: '/labs/:slug', destination: '/scenes/:slug', permanent: true },
     ]

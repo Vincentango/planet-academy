@@ -74,7 +74,7 @@ export default async function SceneDetailPage({
       <section className="container-wide pb-6 pt-12">
         <article className="panel px-6 py-10 md:px-10">
           <p className="kicker">
-            <Link href="/scenes" className="no-underline">
+            <Link href="/curriculum" className="no-underline">
               场景
             </Link>
             {' / '}

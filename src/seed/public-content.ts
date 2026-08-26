@@ -58,7 +58,7 @@ const HOME_LAYOUT = [
     kicker: '课程精选',
     heading: '',
     moreLabel: '进入资源库',
-    moreHref: '/scenes',
+    moreHref: '/curriculum',
     mode: 'featured',
     limit: 4,
     display: 'flip',
@@ -237,11 +237,11 @@ export async function ensurePublicComposer(payload: Payload) {
     patch.footerNote = '星球学院是一所未来无边界学校。公开门户先定位学校，再进入九个场景里的课程。公开成果默认匿名。'
   }
   if (!settings.paradigmVersion) patch.paradigmVersion = 'B3.0'
-  if (!nav || !nav.length) {
+  const navText = JSON.stringify(nav || [])
+  if (!nav || !nav.length || navText.includes('/philosophy') || navText.includes('/scenes"') || navText.includes('理念')) {
     patch.nav = [
       { label: '首页', href: '/', visible: true },
-      { label: '理念', href: '/philosophy', visible: true },
-      { label: '场景', href: '/scenes', visible: true },
+      { label: '课程体系', href: '/curriculum', visible: true },
       { label: '关于', href: '/about', visible: true },
     ]
   }

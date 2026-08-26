@@ -6,7 +6,6 @@ export function visibleNav(nav: NavItem[]) {
 
 export const DEFAULT_NAV: NavItem[] = [
   { label: '首页', href: '/', visible: true },
-  { label: '理念', href: '/philosophy', visible: true },
-  { label: '场景', href: '/scenes', visible: true },
+  { label: '课程体系', href: '/curriculum', visible: true },
   { label: '关于', href: '/about', visible: true },
 ]

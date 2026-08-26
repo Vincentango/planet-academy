@@ -7,8 +7,7 @@ import { visibleNav, type NavItem } from '@/lib/site-public'
 export function SiteHeader({ nav = [] }: { nav?: NavItem[] }) {
   const items = visibleNav(nav.length ? nav : [
     { label: '首页', href: '/', visible: true },
-    { label: '理念', href: '/philosophy', visible: true },
-    { label: '场景', href: '/scenes', visible: true },
+    { label: '课程体系', href: '/curriculum', visible: true },
     { label: '关于', href: '/about', visible: true },
   ])
 
