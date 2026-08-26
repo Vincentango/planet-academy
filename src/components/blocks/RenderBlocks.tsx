@@ -4,6 +4,7 @@ import { CourseCard } from '@/components/courses/CourseCard'
 import { CourseFlipCard } from '@/components/courses/CourseFlipCard'
 import { ContactForm } from '@/components/site/ContactForm'
 import { SampleVideo } from '@/components/site/SampleVideo'
+import { VideoQuotePlayer } from '@/components/site/VideoQuotePlayer'
 import { conceptLabel } from '@/lib/payload'
 import { SCENES, type CatalogCourse } from '@/lib/framework'
 import { mediaUrl, type SiteInteraction } from '@/lib/site'
@@ -136,14 +137,11 @@ export function RenderBlocks({
           const src = mediaUrl(block.media, String(block.url || '/samples/home-quote.mp4'))
           return (
             <section key={key} className="container-wide py-2">
-              <article className="video-quote">
-                <video src={src} autoPlay muted loop playsInline />
-                <div className="video-quote__veil" />
-                <div className="video-quote__copy">
-                  {block.english ? <p className="video-quote__en">{String(block.english)}</p> : null}
-                  {block.chinese ? <p className="video-quote__zh">{String(block.chinese)}</p> : null}
-                </div>
-              </article>
+              <VideoQuotePlayer
+                src={src}
+                english={block.english ? String(block.english) : undefined}
+                chinese={block.chinese ? String(block.chinese) : undefined}
+              />
             </section>
           )
         }

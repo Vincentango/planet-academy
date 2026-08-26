@@ -1,5 +1,6 @@
 import { CourseFlipCard } from '@/components/courses/CourseFlipCard'
 import { CmsPage } from '@/components/site/CmsPage'
+import { VideoQuotePlayer } from '@/components/site/VideoQuotePlayer'
 import { featuredCourses } from '@/lib/cms-courses'
 import { getSiteSettings } from '@/lib/site'
 import Link from 'next/link'
@@ -40,14 +41,11 @@ export default async function HomePage() {
         </article>
       </section>
       <section className="container-wide py-2">
-        <article className="video-quote">
-          <video src="/samples/home-quote.mp4" autoPlay muted loop playsInline />
-          <div className="video-quote__veil" />
-          <div className="video-quote__copy">
-            <p className="video-quote__en">Committed to Educational Sharing and Equity</p>
-            <p className="video-quote__zh">推动课程内容到基础设施再到运营模式的多维度升级</p>
-          </div>
-        </article>
+        <VideoQuotePlayer
+          src="/samples/home-quote.mp4"
+          english="Committed to Educational Sharing and Equity"
+          chinese="推动课程内容到基础设施再到运营模式的多维度升级"
+        />
       </section>
       <section id="featured" className="container-wide py-10 pb-16">
         <div className="flex flex-wrap items-end justify-between gap-4">

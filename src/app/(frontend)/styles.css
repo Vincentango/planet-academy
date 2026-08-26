@@ -1120,6 +1120,7 @@ html[data-motion='reduce'] .flip-card__inner {
   border-radius: var(--radius);
   min-height: 22rem;
   background: #111;
+  cursor: pointer;
 }
 @media (min-width: 768px) {
   .video-quote { min-height: 30rem; }
@@ -1178,4 +1179,35 @@ html[data-motion='reduce'] .flip-card__inner {
   display: block;
   width: 100%;
   height: auto;
+}
+
+.video-quote-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.25rem 1.5rem;
+  background: rgba(10, 10, 10, 0.88);
+}
+.video-quote-modal video {
+  width: min(96vw, 72rem);
+  max-height: 86vh;
+  background: #000;
+  border-radius: 0.75rem;
+}
+.video-quote-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: 0;
+  background: #fff;
+  color: #111;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  cursor: pointer;
 }
