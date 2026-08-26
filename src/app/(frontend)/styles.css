@@ -96,14 +96,14 @@ a {
 }
 
 .hero-en {
-  margin: 0.9rem 0 0;
-  font-family: var(--font-sans);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  line-height: 1.4;
+  margin: 1rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.6vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--ink);
 }
 
 .dek {
@@ -1112,4 +1112,70 @@ html[data-motion='reduce'] .flip-card__inner {
 }
 .intro-ed__zh p + p {
   margin-top: 0.55rem;
+}
+
+.video-quote {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  min-height: 22rem;
+  background: #111;
+}
+@media (min-width: 768px) {
+  .video-quote { min-height: 30rem; }
+}
+.video-quote video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.video-quote__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,.42) 100%);
+}
+.video-quote__copy {
+  position: relative;
+  z-index: 1;
+  min-height: 22rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem 1.6rem 2.2rem;
+  color: #fff;
+}
+@media (min-width: 768px) {
+  .video-quote__copy {
+    min-height: 30rem;
+    padding: 2.75rem 2.75rem 2.9rem;
+  }
+}
+.video-quote__en,
+.video-quote__zh {
+  margin: 0;
+  color: #fff;
+  font-weight: 800;
+}
+.video-quote__en {
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 3.4vw, 2.7rem);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+.video-quote__zh {
+  margin-top: 0.85rem;
+  font-size: clamp(1.05rem, 1.9vw, 1.4rem);
+  letter-spacing: 0.04em;
+  line-height: 1.55;
+}
+.diagram-panel {
+  overflow: hidden;
+}
+.diagram-panel img {
+  display: block;
+  width: 100%;
+  height: auto;
 }

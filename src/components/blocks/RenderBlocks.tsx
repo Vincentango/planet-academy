@@ -132,9 +132,38 @@ export function RenderBlocks({
           )
         }
 
+        if (type === 'videoQuote') {
+          const src = mediaUrl(block.media, String(block.url || '/samples/sample-01.mp4'))
+          return (
+            <section key={key} className="container-wide py-2">
+              <article className="video-quote">
+                <video src={src} autoPlay muted loop playsInline />
+                <div className="video-quote__veil" />
+                <div className="video-quote__copy">
+                  {block.english ? <p className="video-quote__en">{String(block.english)}</p> : null}
+                  {block.chinese ? <p className="video-quote__zh">{String(block.chinese)}</p> : null}
+                </div>
+              </article>
+            </section>
+          )
+        }
+
         if (type === 'mosaic') {
           const items = (block.items as Record<string, unknown>[]) || []
           const autoplay = Boolean(block.autoplay) || interaction.videoAutoplay
+          if (items.length === 1) {
+            const only = items[0]
+            const src = mediaUrl(only.media, String(only.url || ''))
+            if (src && /\.(png|jpe?g|webp|gif|svg)(\?|$)/i.test(src)) {
+              return (
+                <section key={key} className="container-wide py-6">
+                  <article className="panel diagram-panel">
+                    <img src={src} alt={String(only.label || only.title || '')} />
+                  </article>
+                </section>
+              )
+            }
+          }
           return (
             <section key={key} className="container-wide">
               <div className="mosaic">

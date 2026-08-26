@@ -1,22 +1,10 @@
 import { CourseFlipCard } from '@/components/courses/CourseFlipCard'
-import { SampleVideo } from '@/components/site/SampleVideo'
 import { CmsPage } from '@/components/site/CmsPage'
 import { featuredCourses } from '@/lib/cms-courses'
 import { getSiteSettings } from '@/lib/site'
 import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
-
-const CLIPS = [
-  { src: '/samples/sample-01.mp4', label: '示例影像 01', title: '项目现场', body: '占位影像。待替换为项目现场与学生工作过程。' },
-  { src: '/samples/sample-02.mp4', label: '示例影像 02', title: '项目推进', body: '占位影像。待替换为提出问题、做出东西、用证据说话的过程。' },
-  { src: '/samples/sample-03.mp4', label: '示例影像 03', title: '无边界校园', body: '占位影像。待替换为学习发生在世界里的真实片段。' },
-]
-
-const LINES = [
-  { tone: 'highlighter--yellow', text: 'Committed to Educational\nSharing and Equity\n推动课程内容到基础设施再到\n运营模式的多维度升级' },
-  { tone: 'highlighter--charcoal', text: '以研究室项目推进学习：提出问题、做出东西、用证据说话，而不是只完成一份作业。' },
-]
 
 export default async function HomePage() {
   const site = await getSiteSettings()
@@ -51,25 +39,20 @@ export default async function HomePage() {
           </div>
         </article>
       </section>
-      <section className="container-wide">
-        <div className="mosaic">
-          <article className="mosaic__tile mosaic__tile--v1">
-            <SampleVideo src={CLIPS[0].src} label={CLIPS[0].label} title={CLIPS[0].title} caption={CLIPS[0].body} autoplay={site.interaction.videoAutoplay} />
-          </article>
-          <aside className="mosaic__tile mosaic__tile--t1 highlighter highlighter--yellow"><p className="whitespace-pre-line">{LINES[0].text}</p></aside>
-          <article className="mosaic__tile mosaic__tile--v2">
-            <SampleVideo src={CLIPS[1].src} label={CLIPS[1].label} title={CLIPS[1].title} caption={CLIPS[1].body} autoplay={site.interaction.videoAutoplay} />
-          </article>
-          <article className="mosaic__tile mosaic__tile--t2">
-            <div className="mosaic__media mosaic__media--diagram">
-              <img src="/samples/five-pillars.png" alt="pedagogy · space · technology · evaluation · operation" />
-            </div>
-          </article>
-          <article className="mosaic__tile mosaic__tile--v3">
-            <SampleVideo src={CLIPS[2].src} label={CLIPS[2].label} title={CLIPS[2].title} caption={CLIPS[2].body} autoplay={site.interaction.videoAutoplay} />
-          </article>
-          <aside className="mosaic__tile mosaic__tile--t3 highlighter highlighter--charcoal"><p className="whitespace-pre-line">{LINES[1].text}</p></aside>
-        </div>
+      <section className="container-wide py-2">
+        <article className="video-quote">
+          <video src="/samples/sample-01.mp4" autoPlay muted loop playsInline />
+          <div className="video-quote__veil" />
+          <div className="video-quote__copy">
+            <p className="video-quote__en">Committed to Educational Sharing and Equity</p>
+            <p className="video-quote__zh">推动课程内容到基础设施再到运营模式的多维度升级</p>
+          </div>
+        </article>
+      </section>
+      <section className="container-wide py-6">
+        <article className="panel diagram-panel">
+          <img src="/samples/five-pillars.png" alt="pedagogy · space · technology · evaluation · operation" />
+        </article>
       </section>
       <section id="featured" className="container-wide py-10 pb-16">
         <div className="flex flex-wrap items-end justify-between gap-4">

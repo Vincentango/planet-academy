@@ -11,6 +11,7 @@ import { Form } from '@/blocks/Form'
 import { Mosaic } from '@/blocks/Mosaic'
 import { Highlighter } from '@/blocks/Highlighter'
 import { SceneGrid } from '@/blocks/SceneGrid'
+import { VideoQuote } from '@/blocks/VideoQuote'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -33,6 +34,7 @@ export const Pages: CollectionConfig = {
       blocks: [
         Hero,
         Mosaic,
+        VideoQuote,
         Highlighter,
         SceneGrid,
         CourseFeed,

@@ -48,49 +48,20 @@ const HOME_LAYOUT = [
     container: 'wide',
   },
   {
+    blockType: 'videoQuote',
+    url: '/samples/sample-01.mp4',
+    english: 'Committed to Educational Sharing and Equity',
+    chinese: '推动课程内容到基础设施再到运营模式的多维度升级',
+  },
+  {
     blockType: 'mosaic',
-    autoplay: true,
     items: [
-      {
-        kind: 'media',
-        url: '/samples/sample-01.mp4',
-        label: '示例影像 01',
-        title: '项目现场',
-        body: '占位影像。待替换为项目现场与学生工作过程。',
-        playInPlace: true,
-      },
-      {
-        kind: 'line',
-        tone: 'yellow',
-        body: 'Committed to Educational\nSharing and Equity\n推动课程内容到基础设施再到\n运营模式的多维度升级',
-      },
-      {
-        kind: 'media',
-        url: '/samples/sample-02.mp4',
-        label: '示例影像 02',
-        title: '项目推进',
-        body: '占位影像。待替换为提出问题、做出东西、用证据说话的过程。',
-        playInPlace: true,
-      },
       {
         kind: 'media',
         url: '/samples/five-pillars.png',
         label: '',
         title: '',
         body: '',
-      },
-      {
-        kind: 'media',
-        url: '/samples/sample-03.mp4',
-        label: '示例影像 03',
-        title: '无边界校园',
-        body: '占位影像。待替换为无边界校园的真实片段。',
-        playInPlace: true,
-      },
-      {
-        kind: 'line',
-        tone: 'charcoal',
-        body: '以研究室项目推进学习：提出问题、做出东西、用证据说话，而不是只完成一份作业。',
       },
     ],
   },
@@ -232,14 +203,14 @@ export async function ensurePublicComposer(payload: Payload) {
       const layoutText = JSON.stringify(doc.layout || [])
       const homeCopyStale =
         page.slug === 'home' &&
-        (['学习发生在世界里', '当机器能完成大量传统认知任务', '一所把真实世界当作校园的学校', '在真实议题中看见世界', '从项目进入学校', '进入九个场景', '整体介绍', '未来无边界学校'].some((s) =>
+        (['学习发生在世界里', '当机器能完成大量传统认知任务', '一所把真实世界当作校园的学校', '在真实议题中看见世界', '从项目进入学校', '进入九个场景', '整体介绍', '未来无边界学校', 'sample-02', 'sample-03'].some((s) =>
           layoutText.includes(s),
         ) ||
-          !layoutText.includes('editorial'))
+          !layoutText.includes('videoQuote'))
       const stale =
         !doc.layout ||
         !doc.layout.length ||
-        (page.slug === 'home' && (!types.has('mosaic') || homeCopyStale)) ||
+        (page.slug === 'home' && homeCopyStale) ||
         (page.slug === 'scenes' && !types.has('sceneGrid')) ||
         (page.slug === 'philosophy' && !types.has('sceneGrid'))
       if (stale) {
