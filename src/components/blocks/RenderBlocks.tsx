@@ -144,6 +144,16 @@ export function RenderBlocks({
                     )
                   }
                   const src = mediaUrl(item.media, String(item.url || ''))
+                  const isImage = /\.(png|jpe?g|webp|gif|svg)(\?|$)/i.test(src)
+                  if (src && isImage) {
+                    return (
+                      <article key={n} className="mosaic__tile">
+                        <div className="mosaic__media mosaic__media--diagram">
+                          <img src={src} alt={String(item.label || item.title || '')} />
+                        </div>
+                      </article>
+                    )
+                  }
                   return (
                     <article key={n} className="mosaic__tile">
                       {src ? (
@@ -212,9 +222,9 @@ export function RenderBlocks({
           const flip = display === 'static' ? 'off' : interaction.cardFlip
           return (
             <section key={key} id={String(block.anchor || 'featured')} className="container-wide py-10 pb-16">
-              {block.kicker ? <p className="kicker">{String(block.kicker)}</p> : null}
-              <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
-                <h2 className="headline text-3xl md:text-4xl">{String(block.heading || '从项目进入学校')}</h2>
+              <div className="flex flex-wrap items-end justify-between gap-4">
+                {block.kicker ? <p className="kicker">{String(block.kicker)}</p> : null}
+                {block.heading ? <h2 className="headline text-3xl md:text-4xl">{String(block.heading)}</h2> : null}
                 {block.moreHref ? (
                   <Link href={String(block.moreHref)} className="text-sm font-semibold no-underline">
                     {String(block.moreLabel || '进入资源库')}

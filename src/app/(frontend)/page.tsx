@@ -15,7 +15,6 @@ const CLIPS = [
 
 const LINES = [
   { tone: 'highlighter--yellow', text: 'Committed to Educational\nSharing and Equity\n推动课程内容到基础设施再到\n运营模式的多维度升级' },
-  { tone: 'highlighter--peach', text: '在真实议题中看见世界，用认知透镜看清结构，朝人的成长维度前进。' },
   { tone: 'highlighter--charcoal', text: '以研究室项目推进学习：提出问题、做出东西、用证据说话，而不是只完成一份作业。' },
 ]
 
@@ -61,17 +60,20 @@ Emergent Technology`}</h2>
           <article className="mosaic__tile mosaic__tile--v2">
             <SampleVideo src={CLIPS[1].src} label={CLIPS[1].label} title={CLIPS[1].title} caption={CLIPS[1].body} autoplay={site.interaction.videoAutoplay} />
           </article>
-          <aside className="mosaic__tile mosaic__tile--t2 highlighter highlighter--peach"><p className="whitespace-pre-line">{LINES[1].text}</p></aside>
+          <article className="mosaic__tile mosaic__tile--t2">
+            <div className="mosaic__media mosaic__media--diagram">
+              <img src="/samples/five-pillars.png" alt="pedagogy · space · technology · evaluation · operation" />
+            </div>
+          </article>
           <article className="mosaic__tile mosaic__tile--v3">
             <SampleVideo src={CLIPS[2].src} label={CLIPS[2].label} title={CLIPS[2].title} caption={CLIPS[2].body} autoplay={site.interaction.videoAutoplay} />
           </article>
-          <aside className="mosaic__tile mosaic__tile--t3 highlighter highlighter--charcoal"><p className="whitespace-pre-line">{LINES[2].text}</p></aside>
+          <aside className="mosaic__tile mosaic__tile--t3 highlighter highlighter--charcoal"><p className="whitespace-pre-line">{LINES[1].text}</p></aside>
         </div>
       </section>
       <section id="featured" className="container-wide py-10 pb-16">
-        <p className="kicker">课程精选</p>
-        <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
-          <h2 className="headline text-3xl md:text-4xl">从项目进入学校</h2>
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <p className="kicker">课程精选</p>
           <Link href="/scenes" className="text-sm font-semibold no-underline">进入资源库</Link>
         </div>
         <div className="course-grid mt-8">

@@ -962,11 +962,20 @@ html[data-motion='reduce'] .flip-card__inner {
   background: var(--charcoal);
 }
 
-.mosaic__media video {
+.mosaic__media video,
+.mosaic__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.mosaic__media--diagram {
+  background: #d4d4d4;
+}
+
+.mosaic__media--diagram img {
+  object-fit: contain;
 }
 
 .mosaic__chip {

@@ -75,9 +75,11 @@ const HOME_LAYOUT = [
         playInPlace: true,
       },
       {
-        kind: 'line',
-        tone: 'peach',
-        body: '在真实议题中看见世界，用认知透镜看清结构，朝人的成长维度前进。',
+        kind: 'media',
+        url: '/samples/five-pillars.png',
+        label: '',
+        title: '',
+        body: '',
       },
       {
         kind: 'media',
@@ -97,7 +99,7 @@ const HOME_LAYOUT = [
   {
     blockType: 'courseFeed',
     kicker: '课程精选',
-    heading: '从项目进入学校',
+    heading: '',
     moreLabel: '进入资源库',
     moreHref: '/scenes',
     mode: 'featured',
@@ -232,7 +234,7 @@ export async function ensurePublicComposer(payload: Payload) {
       const layoutText = JSON.stringify(doc.layout || [])
       const homeCopyStale =
         page.slug === 'home' &&
-        ['学习发生在世界里', '当机器能完成大量传统认知任务', '一所把真实世界当作校园的学校'].some((s) =>
+        ['学习发生在世界里', '当机器能完成大量传统认知任务', '一所把真实世界当作校园的学校', '在真实议题中看见世界', '从项目进入学校'].some((s) =>
           layoutText.includes(s),
         )
       const stale =
