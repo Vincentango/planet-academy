@@ -1079,15 +1079,12 @@ html[data-motion='reduce'] .flip-card__inner {
 }
 .intro-ed__en span {
   display: block;
-}
-.intro-ed__soft {
-  margin: 0.42em 0 0.18em;
-  font-size: 0.42em;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  line-height: 1.2;
-  text-transform: uppercase;
-  color: var(--muted);
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-transform: none;
+  color: inherit;
 }
 .intro-ed__zh {
   margin: 1.35rem 0 0;

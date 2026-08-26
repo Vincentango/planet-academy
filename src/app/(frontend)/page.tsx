@@ -41,7 +41,7 @@ export default async function HomePage() {
           <div className="intro-ed__grid">
             <h2 className="intro-ed__en">
               <span>Driving Interdisciplinary</span>
-              <span className="intro-ed__soft">Integration with</span>
+              <span>Integration with</span>
               <span>Emergent Technology</span>
             </h2>
             <div className="intro-ed__zh">

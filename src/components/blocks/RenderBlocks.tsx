@@ -346,9 +346,7 @@ export function RenderBlocks({
                   <div className="intro-ed__grid">
                     <h2 className="intro-ed__en">
                       {headingLines.map((line) => (
-                        <span key={line} className={/integration with/i.test(line) ? 'intro-ed__soft' : undefined}>
-                          {line}
-                        </span>
+                        <span key={line}>{line}</span>
                       ))}
                     </h2>
                     {body ? (
