@@ -121,6 +121,14 @@ export const LEGACY_LAB_TO_SCENE: Record<string, SceneSlug> = {
   making: 'making-engineering',
 }
 
+export const SYSTEMS = [
+  { id: 'interest', name: '兴趣体系' },
+  { id: 'fusion', name: '融合体系' },
+  { id: 'pioneer', name: '拔创体系' },
+] as const
+
+export type CourseSystem = (typeof SYSTEMS)[number]['id']
+
 export type CatalogCourse = {
   slug: string
   title: string
@@ -134,6 +142,9 @@ export type CatalogCourse = {
   gradeMax?: number
   totalHours?: number
   subjects?: string[]
+  system?: CourseSystem
+  cover?: string
+  research?: string
 }
 
 const LIVE: CatalogCourse[] = [
@@ -146,6 +157,9 @@ const LIVE: CatalogCourse[] = [
     scene: 'nature-ecology',
     stage: 'g7-9',
     arc: 'inquiry',
+    system: 'fusion',
+    cover: '/samples/courses/heliu-tegongdui.svg',
+    research: '沿一条身边的河做观察、取证与论证，把传闻压成可公开的系统问题。',
     gradeMin: 7,
     gradeMax: 9,
     totalHours: 32,
@@ -160,6 +174,9 @@ const LIVE: CatalogCourse[] = [
     scene: 'climate-energy',
     stage: 'g7-9',
     arc: 'action',
+    system: 'fusion',
+    cover: '/samples/courses/tansuo-xiaoyuan.svg',
+    research: '测绘校园能耗，提出可验证的低碳行动，并评估它对整座微型地球系统的影响。',
     gradeMin: 7,
     gradeMax: 11,
     totalHours: 32,
@@ -174,6 +191,9 @@ const LIVE: CatalogCourse[] = [
     scene: 'digital-intel',
     stage: 'g10-12',
     arc: 'design',
+    system: 'pioneer',
+    cover: '/samples/courses/huoxing-jidi.svg',
+    research: '在水、氧、能源与治理的极限约束里，设计不能交给机器单独决定的共同生活规则。',
     gradeMin: 8,
     gradeMax: 12,
     totalHours: 48,
@@ -188,6 +208,9 @@ const LIVE: CatalogCourse[] = [
     scene: 'culture-arts',
     stage: 'g4-6',
     arc: 'agile',
+    system: 'interest',
+    cover: '/samples/courses/manghe.svg',
+    research: '为真实同伴设计一款主题盲盒，把惊喜、成本与公平做成可测试的开箱体验。',
     gradeMin: 3,
     gradeMax: 6,
     totalHours: 16,
@@ -230,16 +253,146 @@ export const CATALOG: CatalogCourse[] = SCENES.flatMap((scene) =>
   ),
 )
 
-export const DESIGNED_BY_SLUG = Object.fromEntries(LIVE.map((course) => [course.slug, course])) as Record<
-  string,
-  CatalogCourse
->
+const CURRICULUM_EXTRAS: CatalogCourse[] = [
+  {
+    slug: 'xiaoyuan-shiwu-ditu',
+    title: '校园食物地图',
+    subtitle: '从一顿午餐看见土地、劳动与选择',
+    designed: true,
+    issue: 'nature',
+    scene: 'food-agri-water',
+    stage: 'g4-6',
+    arc: 'inquiry',
+    gradeMin: 3,
+    gradeMax: 6,
+    totalHours: 16,
+    subjects: ['科学', '综合实践'],
+    system: 'interest',
+    cover: '/samples/courses/xiaoyuan-shiwu-ditu.svg',
+    research: '追踪午餐里的一种食物回到产地与季节，做成一张可讲解的校园食物地图。',
+  },
+  {
+    slug: 'gonggong-qianghui',
+    title: '公共墙绘',
+    subtitle: '把一面墙做成可讨论的公共表达',
+    designed: true,
+    issue: 'people',
+    scene: 'culture-arts',
+    stage: 'g4-6',
+    arc: 'agile',
+    gradeMin: 3,
+    gradeMax: 6,
+    totalHours: 16,
+    subjects: ['艺术', '综合实践'],
+    system: 'interest',
+    cover: '/samples/courses/gonggong-qianghui.svg',
+    research: '为一面被允许的墙提出主题、草图与材料方案，在真实约束下完成一次公共表达。',
+  },
+  {
+    slug: 'guize-yugongping',
+    title: '规则与公平',
+    subtitle: '用一场可见的博弈理解规则如何分配机会',
+    designed: true,
+    issue: 'people',
+    scene: 'economy-governance',
+    stage: 'g7-9',
+    arc: 'game',
+    gradeMin: 6,
+    gradeMax: 9,
+    totalHours: 24,
+    subjects: ['数学', '人文社科'],
+    system: 'fusion',
+    cover: '/samples/courses/guize-yugongping.svg',
+    research: '设计并修订一套课堂博弈规则，观察策略如何改变结果，区分赢得比赛与规则是否公平。',
+  },
+  {
+    slug: 'shiwufenzhong-jiequ',
+    title: '十五分钟街区',
+    subtitle: '把日常出行半径做成可设计的城市问题',
+    designed: true,
+    issue: 'people',
+    scene: 'city-community',
+    stage: 'g7-9',
+    arc: 'action',
+    gradeMin: 7,
+    gradeMax: 10,
+    totalHours: 32,
+    subjects: ['人文社科', '综合实践'],
+    system: 'fusion',
+    cover: '/samples/courses/shiwufenzhong-jiequ.svg',
+    research: '测绘十五分钟生活圈，识别服务缺口，提出一个可被社区讨论的微型公共方案。',
+  },
+  {
+    slug: 'koushushi-gongzuofang',
+    title: '口述史工作坊',
+    subtitle: '让一段地方记忆被听见，也被质疑',
+    designed: true,
+    issue: 'people',
+    scene: 'culture-arts',
+    stage: 'g7-9',
+    arc: 'inquiry',
+    gradeMin: 7,
+    gradeMax: 9,
+    totalHours: 24,
+    subjects: ['语文', '人文社科'],
+    system: 'fusion',
+    cover: '/samples/courses/koushushi-gongzuofang.svg',
+    research: '采访一位同意参与的讲述者，对照第二手材料，区分记忆、叙事与证据。',
+  },
+  {
+    slug: 'zhuomian-jigou-gongfang',
+    title: '桌面机构工坊',
+    subtitle: '让一个机构在桌面上可被看见、被修好',
+    designed: true,
+    issue: 'tech',
+    scene: 'making-engineering',
+    stage: 'g7-9',
+    arc: 'design',
+    gradeMin: 7,
+    gradeMax: 9,
+    totalHours: 32,
+    subjects: ['信息技术', '综合实践'],
+    system: 'pioneer',
+    cover: '/samples/courses/zhuomian-jigou-gongfang.svg',
+    research: '设计一个解决具体动作问题的桌面机构，完成原型、测试与一次公开的故障复盘。',
+  },
+]
+
+export const DESIGNED_BY_SLUG = Object.fromEntries(
+  [...LIVE, ...CURRICULUM_EXTRAS].map((course) => [course.slug, course]),
+) as Record<string, CatalogCourse>
 
 export const COURSE_SCENE_BY_SLUG: Record<string, SceneSlug> = Object.fromEntries(
-  LIVE.map((course) => [course.slug, course.scene]),
+  [...LIVE, ...CURRICULUM_EXTRAS].map((course) => [course.slug, course.scene]),
 ) as Record<string, SceneSlug>
 
 export const FALLBACK_FEATURED = LIVE
+
+export const CURRICULUM_FALLBACK: CatalogCourse[] = [...LIVE, ...CURRICULUM_EXTRAS]
+
+const SYSTEM_BY_SLUG: Record<string, CourseSystem> = Object.fromEntries(
+  CURRICULUM_FALLBACK.filter((course) => course.system).map((course) => [course.slug, course.system as CourseSystem]),
+)
+
+export function getSystem(id?: string | null) {
+  return SYSTEMS.find((item) => item.id === id) ?? null
+}
+
+export function inferSystem(course: Pick<CatalogCourse, 'slug' | 'stage' | 'arc' | 'scene' | 'gradeMin' | 'gradeMax' | 'system'>): CourseSystem {
+  if (course.system && SYSTEMS.some((item) => item.id === course.system)) return course.system
+  const known = SYSTEM_BY_SLUG[course.slug]
+  if (known) return known
+  if (course.stage === 'g10-12' || (course.gradeMin && course.gradeMin >= 10) || course.arc === 'design') return 'pioneer'
+  if (course.stage === 'g1-3' || course.stage === 'g4-6' || (course.gradeMax && course.gradeMax <= 6) || course.arc === 'game' || course.arc === 'agile') {
+    return 'interest'
+  }
+  if (course.scene === 'making-engineering' || course.scene === 'digital-intel') return 'pioneer'
+  return 'fusion'
+}
+
+export function coursesForSystem(list: CatalogCourse[], system: CourseSystem) {
+  return list.filter((course) => inferSystem(course) === system)
+}
 
 export type SceneView = {
   slug: string

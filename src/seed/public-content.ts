@@ -77,7 +77,7 @@ const PHILOSOPHY_LAYOUT = [
     mediaCaption: 'B3.0',
     mediaTitle: '关于理念',
     actions: [
-      { label: '查看九个场景', href: '/scenes', style: 'primary', visible: true },
+      { label: '查看课程体系', href: '/curriculum', style: 'primary', visible: true },
       { label: '联系合作', href: '/contact', style: 'ghost', visible: true },
     ],
   },
@@ -107,8 +107,8 @@ const PHILOSOPHY_LAYOUT = [
     kicker: '三层成长',
     heading: '学会什么',
     body: '学科素养 · 方法与技能 · 可迁移能力。学什么＝议题×场景×学段；怎么学＝五种教学弧；学会什么＝三层成长',
-    buttonLabel: '进入九个场景',
-    buttonHref: '/scenes',
+    buttonLabel: '查看课程体系',
+    buttonHref: '/curriculum',
   },
 ]
 
@@ -187,7 +187,6 @@ export async function ensurePublicComposer(payload: Payload) {
     })
     if (existing.docs[0]) {
       const doc = existing.docs[0] as { id: string | number; layout?: { blockType?: string }[] }
-      const types = new Set((doc.layout || []).map((b) => b.blockType))
       const layoutText = JSON.stringify(doc.layout || [])
       const homeCopyStale =
         page.slug === 'home' &&
@@ -198,9 +197,7 @@ export async function ensurePublicComposer(payload: Payload) {
       const stale =
         !doc.layout ||
         !doc.layout.length ||
-        (page.slug === 'home' && homeCopyStale) ||
-        (page.slug === 'scenes' && !types.has('sceneGrid')) ||
-        (page.slug === 'philosophy' && !types.has('sceneGrid'))
+        (page.slug === 'home' && homeCopyStale)
       if (stale) {
         await payload.update({
           collection: 'pages',
@@ -225,6 +222,25 @@ export async function ensurePublicComposer(payload: Payload) {
     })
   }
 
+  const curriculum = await payload.find({
+    collection: 'pages',
+    where: { slug: { equals: 'curriculum' } },
+    limit: 1,
+    overrideAccess: true,
+  })
+  if (curriculum.docs[0]) {
+    const doc = curriculum.docs[0] as { id: string | number; layout?: { blockType?: string }[] }
+    const layout = (doc.layout || []).filter((b) => b.blockType !== 'sceneGrid')
+    if (layout.length !== (doc.layout || []).length) {
+      await payload.update({
+        collection: 'pages',
+        id: doc.id,
+        overrideAccess: true,
+        data: { layout: layout as never },
+      })
+    }
+  }
+
   const settings = (await payload.findGlobal({ slug: 'site-settings', overrideAccess: true })) as Record<string, unknown>
   const nav = settings.nav as unknown[] | undefined
   const tokens = (settings.tokens as Record<string, string> | undefined) || {}
@@ -233,16 +249,21 @@ export async function ensurePublicComposer(payload: Payload) {
   if (!settings.siteName) patch.siteName = '星球学院'
   if (!settings.siteNameEn || settings.siteNameEn === 'PLANET ACADEMY') patch.siteNameEn = 'CRADLE-X'
   if (!settings.tagline) patch.tagline = '未来无边界学校'
+  const footerDefault = '星球学院是一所未来无边界学校。公开门户先定位学校，再进入课程体系。'
   if (!settings.footerNote) {
-    patch.footerNote = '星球学院是一所未来无边界学校。公开门户先定位学校，再进入九个场景里的课程。'
-  } else if (String(settings.footerNote).includes('公开成果默认匿名')) {
+    patch.footerNote = footerDefault
+  } else if (
+    String(settings.footerNote).includes('公开成果默认匿名') ||
+    String(settings.footerNote).includes('进入九个场景')
+  ) {
     const cleaned = String(settings.footerNote)
       .replace(/公开成果默认匿名[。.]?/g, '')
+      .replace(/进入九个场景里的课程/g, '进入课程体系')
+      .replace(/进入九个场景/g, '进入课程体系')
       .replace(/\s{2,}/g, ' ')
       .replace(/。[。]+/g, '。')
       .trim()
-    patch.footerNote =
-      cleaned || '星球学院是一所未来无边界学校。公开门户先定位学校，再进入九个场景里的课程。'
+    patch.footerNote = cleaned || footerDefault
   }
   if (!settings.paradigmVersion) patch.paradigmVersion = 'B3.0'
   const navText = JSON.stringify(nav || [])

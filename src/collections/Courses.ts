@@ -105,6 +105,17 @@ export const Courses: CollectionConfig = {
                 { label: '社会行动', value: 'action' },
               ],
             },
+            {
+              name: 'system',
+              type: 'select',
+              label: '课程体系',
+              options: [
+                { label: '兴趣体系', value: 'interest' },
+                { label: '融合体系', value: 'fusion' },
+                { label: '拔创体系', value: 'pioneer' },
+              ],
+              admin: { description: '课程体系页三个页签。可随时改派。' },
+            },
             { name: 'tabOutline', type: 'textarea', label: '理念与纲要补充' },
             { name: 'tabOutcomes', type: 'textarea', label: '课程成果说明' },
           ],

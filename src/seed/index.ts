@@ -83,6 +83,7 @@ async function seedCourses(payload: Payload, ids: IdMap) {
       subtitle: '把“惊喜”做成可设计的价值体验',
       slug: 'manghe',
       lab: 'culture-arts' as const,
+      system: 'interest',
       sampleFlag: true,
       featured: true,
       gradeMin: 3,
@@ -118,6 +119,7 @@ async function seedCourses(payload: Payload, ids: IdMap) {
       subtitle: '把一条身边的河变成可论证的系统问题',
       slug: 'heliu-tegongdui',
       lab: 'nature-ecology' as const,
+      system: 'fusion',
       sampleFlag: true,
       featured: true,
       gradeMin: 6,
@@ -154,6 +156,7 @@ async function seedCourses(payload: Payload, ids: IdMap) {
       subtitle: '把校园能耗变成可行动的低碳问题',
       slug: 'tansuo-xiaoyuan',
       lab: 'climate-energy' as const,
+      system: 'fusion',
       sampleFlag: true,
       featured: true,
       gradeMin: 7,
@@ -188,6 +191,7 @@ async function seedCourses(payload: Payload, ids: IdMap) {
       subtitle: '在极端约束中设计人类如何共同生活',
       slug: 'huoxing-jidi',
       lab: 'digital-intel' as const,
+      system: 'pioneer',
       sampleFlag: true,
       featured: true,
       gradeMin: 8,
@@ -239,6 +243,7 @@ async function seedCourses(payload: Payload, ids: IdMap) {
         subjects: [...course.subjects],
         drivingQuestion: course.drivingQuestion,
         lab: course.lab,
+        system: 'system' in course ? course.system : undefined,
         paradigmVersion: 'B1.0',
         primaryX: ids[course.primaryX],
         secondaryX: 'secondaryX' in course ? course.secondaryX.map((k) => ids[k]) : [],
@@ -389,6 +394,7 @@ const PLACEHOLDER_COURSES: Array<{
   subtitle: string
   slug: string
   lab: LabSlug
+  system?: 'interest' | 'fusion' | 'pioneer'
   gradeMin: number
   gradeMax: number
   totalHours: number
@@ -415,6 +421,7 @@ const PLACEHOLDER_COURSES: Array<{
     title: '规则与公平',
     subtitle: '用一场可见的博弈理解规则如何分配机会',
     slug: 'guize-yugongping',
+    system: 'fusion',
     lab: 'economy-governance',
     gradeMin: 6,
     gradeMax: 9,
@@ -441,6 +448,7 @@ const PLACEHOLDER_COURSES: Array<{
     title: '十五分钟街区',
     subtitle: '把日常出行半径做成可设计的城市问题',
     slug: 'shiwufenzhong-jiequ',
+    system: 'fusion',
     lab: 'city-community',
     gradeMin: 7,
     gradeMax: 10,
@@ -467,6 +475,7 @@ const PLACEHOLDER_COURSES: Array<{
     title: '校园食物地图',
     subtitle: '从一顿午餐看见土地、劳动与选择',
     slug: 'xiaoyuan-shiwu-ditu',
+    system: 'interest',
     lab: 'food-agri-water',
     gradeMin: 3,
     gradeMax: 6,
@@ -493,6 +502,7 @@ const PLACEHOLDER_COURSES: Array<{
     title: '口述史工作坊',
     subtitle: '让一段地方记忆被听见，也被质疑',
     slug: 'koushushi-gongzuofang',
+    system: 'fusion',
     lab: 'culture-arts',
     gradeMin: 7,
     gradeMax: 9,
@@ -519,6 +529,7 @@ const PLACEHOLDER_COURSES: Array<{
     title: '公共墙绘',
     subtitle: '把一面墙做成可讨论的公共表达',
     slug: 'gonggong-qianghui',
+    system: 'interest',
     lab: 'culture-arts',
     gradeMin: 3,
     gradeMax: 6,
@@ -545,6 +556,7 @@ const PLACEHOLDER_COURSES: Array<{
     title: '桌面机构工坊',
     subtitle: '让一个机构在桌面上可被看见、被修好',
     slug: 'zhuomian-jigou-gongfang',
+    system: 'pioneer',
     lab: 'making-engineering',
     gradeMin: 7,
     gradeMax: 9,
@@ -628,6 +640,7 @@ async function createPublishedCourse(
       subjects: [...course.subjects],
       drivingQuestion: course.drivingQuestion,
       lab: course.lab,
+      system: course.system,
       paradigmVersion: 'B1.0',
       primaryX: ids[course.primaryX],
       secondaryX: course.secondaryX?.map((k) => ids[k]) || [],
@@ -650,8 +663,32 @@ async function createPublishedCourse(
   })
 }
 
+const COURSE_SYSTEM_BY_SLUG: Record<string, 'interest' | 'fusion' | 'pioneer'> = {
+  manghe: 'interest',
+  'xiaoyuan-shiwu-ditu': 'interest',
+  'gonggong-qianghui': 'interest',
+  'heliu-tegongdui': 'fusion',
+  'tansuo-xiaoyuan': 'fusion',
+  'guize-yugongping': 'fusion',
+  'shiwufenzhong-jiequ': 'fusion',
+  'koushushi-gongzuofang': 'fusion',
+  'huoxing-jidi': 'pioneer',
+  'zhuomian-jigou-gongfang': 'pioneer',
+}
+
 async function ensureCourseLabs(payload: Payload) {
   payload.logger.info('公开浏览使用 B3.0 静态目录；不改写生产 courses.lab 枚举，不创建 108 门 Payload 课程。')
+}
+
+async function ensureCourseSystems(payload: Payload) {
+  const res = await payload.find({ collection: 'courses', limit: 200, overrideAccess: true, depth: 0 })
+  for (const doc of res.docs) {
+    const item = doc as { id: string | number; slug?: string; system?: string }
+    if (!item.slug || item.system) continue
+    const system = COURSE_SYSTEM_BY_SLUG[item.slug]
+    if (!system) continue
+    await payload.update({ collection: 'courses', id: item.id, overrideAccess: true, data: { system } })
+  }
 }
 
 export async function seedIfEmpty(payload: Payload) {
@@ -686,6 +723,11 @@ export async function seedIfEmpty(payload: Payload) {
     await ensureCourseLabs(payload)
   } catch (err) {
     payload.logger.error(err, '研究室课程补齐失败')
+  }
+  try {
+    await ensureCourseSystems(payload)
+  } catch (err) {
+    payload.logger.error(err, '课程体系字段补齐失败')
   }
   try {
     await ensurePublicComposer(payload)

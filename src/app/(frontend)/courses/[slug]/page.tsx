@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
 import { DESIGNED_BY_SLUG, FRAMEWORK_LINE, GROWTH_LAYERS, courseTags, getScene, stageLabelFromGrades } from '@/lib/framework'
 import { conceptLabel, payloadClient } from '@/lib/payload'
 
@@ -118,14 +117,29 @@ export default async function CourseDetailPage({
         <article className="container-wide py-16">
           <p className="kicker">场景</p>
           <h1 className="headline mt-4 text-4xl">课程尚未开放</h1>
-          <p className="dek mt-4 max-w-xl">这门课还在设计，目前没有可浏览的详情。请回到场景页查看已开放课程。</p>
+          <p className="dek mt-4 max-w-xl">这门课还在设计，目前没有可浏览的详情。请回到课程体系查看已开放课程。</p>
           <p className="mt-8">
             <Link href="/curriculum" className="btn-ink no-underline">返回课程体系</Link>
           </p>
         </article>
       )
     }
-    notFound()
+    course = {
+      title: seed.title,
+      subtitle: seed.subtitle,
+      slug: seed.slug,
+      summary: seed.research || seed.subtitle || '',
+      sampleFlag: true,
+      gradeMin: seed.gradeMin,
+      gradeMax: seed.gradeMax,
+      totalHours: seed.totalHours,
+      subjects: seed.subjects,
+      drivingQuestion: seed.research || seed.subtitle,
+      lab: seed.scene,
+      scene: seed.scene,
+      issue: seed.issue,
+      stage: seed.stage,
+    }
   }
 
   const mapped = DESIGNED_BY_SLUG[course.slug]
