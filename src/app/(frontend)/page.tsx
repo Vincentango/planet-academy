@@ -32,17 +32,12 @@ export default async function HomePage() {
           <div className="gsd-split__copy">
             <p className="kicker">星球学院 · CRADLE-X</p>
             <h1 className="headline mt-5 text-4xl md:text-6xl">未来无边界学校</h1>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/scenes" className="btn-ink no-underline">进入九个场景</Link>
-              <Link href="#featured" className="btn-ghost no-underline">查看精选课</Link>
-            </div>
           </div>
         </article>
       </section>
       <section className="container-wide py-6">
         <article className="panel px-6 py-10 md:px-10 md:py-14">
-          <p className="kicker">整体介绍</p>
-          <h2 className="headline mt-4 whitespace-pre-line text-3xl md:text-4xl">{`Driving Interdisciplinary
+          <h2 className="headline whitespace-pre-line text-3xl md:text-4xl">{`Driving Interdisciplinary
 Integration with
 Emergent Technology`}</h2>
           <div className="mt-8 max-w-3xl space-y-6 text-base leading-8 text-muted md:text-lg">
