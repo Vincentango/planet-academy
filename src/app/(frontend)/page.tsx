@@ -49,11 +49,6 @@ export default async function HomePage() {
           </div>
         </article>
       </section>
-      <section className="container-wide py-6">
-        <article className="panel diagram-panel">
-          <img src="/samples/five-pillars.png" alt="pedagogy · space · technology · evaluation · operation" />
-        </article>
-      </section>
       <section id="featured" className="container-wide py-10 pb-16">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <p className="kicker">课程精选</p>
