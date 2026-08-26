@@ -12,13 +12,10 @@ export const metadata: Metadata = {
 export default function CurriculumPage() {
   return (
     <>
-      <section className="container-wide pb-4 pt-8">
-        <p className="kicker">课程体系</p>
-        <h1 className="headline mt-4 text-4xl md:text-6xl">课程体系</h1>
-      </section>
-      <section className="container-wide pb-10">
-        <article className="panel diagram-panel">
-          <img src="/samples/curriculum-system.png" alt="课程体系：pedagogy space technology evaluation operation" />
+      <section className="container-wide pb-10 pt-8">
+        <h1 className="sr-only">课程体系</h1>
+        <article className="panel diagram-panel diagram-panel--ink">
+          <img src="/samples/curriculum-system.png" alt="课程体系：以人工智能为中心的跨学科图谱" />
         </article>
       </section>
       <section className="container-wide pb-16">
