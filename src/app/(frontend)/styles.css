@@ -1240,11 +1240,26 @@ html[data-motion='reduce'] .flip-card__inner {
   border: 0;
 }
 
+.system-tabs.bookmark-bar {
+  width: 100%;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem; /* same as .course-grid */
+  box-sizing: border-box;
+  padding-inline: 0;
+}
+
 .system-tabs .bookmark-tab {
   border: 0;
   background: transparent;
   cursor: pointer;
   font: inherit;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (min-width: 1040px) {
