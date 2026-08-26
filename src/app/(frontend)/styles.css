@@ -1246,32 +1246,28 @@ html[data-motion='reduce'] .flip-card__inner {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  align-items: end;
-  position: relative;
-  isolation: isolate;
   box-sizing: border-box;
   margin: 0;
-  padding: 0.35rem 0 0;
+  padding: 0;
   background: transparent;
   border: 0;
-  border-radius: 0;
-  border-bottom: 2px solid var(--ink);
 }
 
 .system-tab {
   appearance: none;
   border: 0;
-  background: transparent;
+  background: #fff;
   cursor: pointer;
   font: inherit;
   width: 100%;
-  padding: 0;
-  color: var(--ink);
+  min-height: 3.15rem;
+  padding: 0.85rem 1rem;
+  color: var(--muted);
   text-align: center;
-  position: relative;
-  z-index: 1;
-  transform: translateY(0.55rem);
-  transition: transform 160ms ease;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  border-radius: var(--radius-sm);
 }
 
 .system-tab:focus-visible {
@@ -1279,56 +1275,10 @@ html[data-motion='reduce'] .flip-card__inner {
   outline-offset: 3px;
 }
 
-.system-tab__page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 3.15rem;
-  padding: 0.8rem 1rem 0.95rem;
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  clip-path: polygon(0.85rem 0, calc(100% - 0.85rem) 0, 100% 100%, 0 100%);
-  box-shadow: 0 4px 10px rgba(17, 17, 17, 0.08);
-  position: relative;
-}
-
-.system-tab__page::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 11%;
-  width: 0.72rem;
-  height: 0.72rem;
-  background: rgba(17, 17, 17, 0.1);
-  clip-path: polygon(0 0, 100% 0, 100% 100%);
-}
-
-.system-tab[data-system='interest'] .system-tab__page { background: var(--yellow); color: var(--ink); }
-.system-tab[data-system='fusion'] .system-tab__page { background: var(--peach); color: var(--ink); }
-.system-tab[data-system='pioneer'] .system-tab__page { background: var(--charcoal); color: #fff; }
-.system-tab[data-system='pioneer'] .system-tab__page::after { background: rgba(255, 255, 255, 0.14); }
-
-.system-tab[data-active='false'] {
-  z-index: 0;
-}
-
-.system-tab[data-active='false'] .system-tab__page {
-  filter: saturate(0.82) brightness(0.96);
-  box-shadow: 0 2px 5px rgba(17, 17, 17, 0.06);
-}
-
 .system-tab[data-active='true'] {
-  z-index: 3;
-  transform: translateY(2px);
-  margin-bottom: -2px;
-}
-
-.system-tab[data-active='true'] .system-tab__page {
-  min-height: 3.45rem;
-  padding-bottom: 1.15rem;
-  box-shadow: 0 8px 16px rgba(17, 17, 17, 0.12);
-  filter: none;
+  background: var(--yellow);
+  color: var(--ink);
+  font-weight: 700;
 }
 
 .system-page {
@@ -1383,4 +1333,56 @@ html[data-motion='reduce'] .flip-card__inner {
   padding: 1.05rem 1.2rem 1.2rem;
   font-size: 1.55rem;
   line-height: 1.25;
+}
+
+.flip-card[data-face='photo'] .flip-card__back {
+  background: #fff;
+  color: var(--ink);
+  justify-content: center;
+  padding: 1.6rem 1.4rem;
+}
+
+.flip-card__dossier {
+  width: 100%;
+  max-width: 17.5rem;
+  margin: auto;
+  padding: 0.1rem 0 0.1rem 1rem;
+  border-left: 1px solid var(--rule);
+}
+
+.flip-card__lab {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.flip-card__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.7rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.flip-card__pills li {
+  background: #eceae4;
+  color: var(--ink);
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.3rem;
+  font-size: 0.68rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.flip-card__research {
+  margin: 0.8rem 0 0;
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--ink);
 }

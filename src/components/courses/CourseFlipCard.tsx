@@ -21,6 +21,22 @@ export function CourseFlipCard({
   const labName = course.lab || getScene(course.scene)?.name
   const research = course.research || course.subtitle || ''
 
+  const photoBack = (
+    <div className="flip-card__face flip-card__back flip-card__back--photo">
+      <div className="flip-card__dossier">
+        {labName ? <p className="flip-card__lab">{labName}</p> : null}
+        {tags.length ? (
+          <ul className="flip-card__pills">
+            {tags.map((tag) => (
+              <li key={tag}>{tag}</li>
+            ))}
+          </ul>
+        ) : null}
+        {research ? <p className="flip-card__research">{research}</p> : null}
+      </div>
+    </div>
+  )
+
   const inner =
     face === 'photo' ? (
       <div className="flip-card__inner">
@@ -34,23 +50,7 @@ export function CourseFlipCard({
           </div>
           <h3 className="headline flip-card__name">{course.title}</h3>
         </div>
-        <div className="flip-card__face flip-card__back">
-          <p className="kicker text-white/55">研究室</p>
-          <p className="headline mt-2 text-2xl text-white">{labName || '课程'}</p>
-          {tags.length ? (
-            <ul className="flip-tags mt-4">
-              {tags.map((tag) => (
-                <li key={tag}>{tag}</li>
-              ))}
-            </ul>
-          ) : null}
-          {research ? (
-            <>
-              <p className="kicker mt-5 text-white/55">研究</p>
-              <p className="mt-2 text-sm leading-7 text-white/90">{research}</p>
-            </>
-          ) : null}
-        </div>
+        {photoBack}
       </div>
     ) : (
       <div className="flip-card__inner">

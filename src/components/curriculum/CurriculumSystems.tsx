@@ -43,7 +43,7 @@ export function CurriculumSystems({
                 document.getElementById(`${baseId}-${next}`)?.focus()
               }}
             >
-              <span className="system-tab__page">{item.name}</span>
+              {item.name}
             </button>
           )
         })}
