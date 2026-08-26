@@ -9,22 +9,6 @@ export function SiteFooter({ site }: { site?: SiteChrome }) {
 
   return (
     <footer className="site-footer">
-      <div className="container-wide grid gap-4 py-10 md:grid-cols-2">
-        <div className="footer-cta">
-          <p className="max-w-md text-sm leading-7">{s.footerNote || s.tagline}</p>
-          <Link href="/scenes" className="btn-ink mt-6 no-underline">
-            进入九个场景
-          </Link>
-        </div>
-        <div className="footer-cta">
-          <p className="max-w-md text-sm leading-7">
-            第一阶段不提供 LMS、支付或学生账号。旧的范式页仍可访问，但不再作为主路径。
-          </p>
-          <Link href="/contact" className="btn-ink mt-6 no-underline">
-            联系合作
-          </Link>
-        </div>
-      </div>
       <div className="container-wide grid gap-10 pb-16 pt-4 md:grid-cols-12">
         <div className="md:col-span-5">
           <Wordmark className="text-3xl text-white" />
