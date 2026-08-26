@@ -79,20 +79,98 @@ async function seedCourses(payload: Payload, ids: IdMap) {
 
   const courses = [
     {
-      title: '盲盒课程',
-      subtitle: '把“惊喜”做成可设计的价值体验',
-      slug: 'manghe',
-      lab: 'culture-arts' as const,
+      title: '生态机器人智造营·低段',
+      subtitle: '用手作、电路与图形化编程做出会感知的生态机器人',
+      slug: 'shengtai-jiqiren-diduan',
+      lab: 'making-engineering' as const,
+      labTitle: '具身智能研究室',
       system: 'interest',
       sampleFlag: true,
       featured: true,
-      gradeMin: 3,
+      gradeMin: 1,
+      gradeMax: 3,
+      totalHours: 16,
+      subjects: ['科学探究', '工程设计', '智能硬件'],
+      research: '学生通过手工、电路与图形化编程，制作会发光、会追光、会感知植物状态的生态机器人。',
+      summary:
+        '低段学生用手作、电路与图形化编程制作会发光、会追光、会感知植物状态的生态机器人，在具体材料里理解感知与反馈。示例课程。',
+      drivingQuestion: '怎样做出一个会发光、会追光、还能告诉同学们植物是否舒服的小机器人？',
+      primaryX: 'X9',
+      secondaryX: ['X1'],
+      primaryY: 'Y3',
+      targetC: ['C2', 'C4'],
+      primaryT: ['T1', 'T5'],
+      targetL: 'L2',
+      teachingArc: 'ARC3',
+      domainPathways: ['A2'],
+      trackAffinity: ['TRACK2'],
+      materials: '卡纸、导电胶带、LED、光敏电阻、土壤湿度探针、电池盒。',
+      hardware: '低压电路与传感器套件；禁止改装市电。',
+      software: '图形化编程环境；不强制账号。',
+      safety: '刀具与焊接须教师在场；只用低压电池；避免细小零件误吞。',
+      assessments: '原型能否发光/追光/读植物状态，以及一次口头复盘。',
+      evidence: '电路草图、工作原型、测试记录、复盘说明。',
+      modules: [
+        ['感知与发光', 5, '让一个手工机体发出可见信号。', '搭一条安全电路，让机器人在黑暗里发光。', '发光原型', '电路图与照片'],
+        ['追光与转向', 6, '用光敏元件驱动一个简单动作。', '调试追光，记录成功与失败条件。', '追光原型', '测试表'],
+        ['植物状态', 5, '把传感器读数变成同学能懂的提示。', '读取植物干湿并做出提示动作。', '生态机器人 v1', '演示与复盘'],
+      ],
+    },
+    {
+      title: '生态机器人智造营·高段',
+      subtitle: '设计、搭建并调试多传感器生态智能系统',
+      slug: 'shengtai-jiqiren-gaoduan',
+      lab: 'making-engineering' as const,
+      labTitle: '具身智能研究室',
+      system: 'interest',
+      sampleFlag: true,
+      featured: true,
+      gradeMin: 4,
+      gradeMax: 6,
+      totalHours: 24,
+      subjects: ['系统思维', '工程设计', '智能硬件'],
+      research: '学生围绕智能温室、AI气象站和智能回收秤等任务，完成多传感器生态智能系统的设计、搭建与调试。',
+      summary:
+        '高段学生围绕智能温室、AI气象站和智能回收秤，完成多传感器生态智能系统的设计、搭建与调试。示例课程。',
+      drivingQuestion: '如果校园里的温室、气象和回收都要自己说话，怎样设计一套互相配合的传感系统？',
+      primaryX: 'X9',
+      secondaryX: ['X1'],
+      primaryY: 'Y1',
+      targetC: ['C4', 'C2'],
+      primaryT: ['T1', 'T5', 'T7'],
+      targetL: 'L3',
+      teachingArc: 'ARC3',
+      domainPathways: ['A2'],
+      trackAffinity: ['TRACK2'],
+      materials: '多传感器套件、结构件、导线、记录表。',
+      hardware: '低压控制器与传感器；禁止改动校园供电。',
+      software: '图形化或入门文本编程；可选表格记录。',
+      safety: '户外安装须结伴；防水接头由教师检查；不采集可识别个人数据。',
+      assessments: '系统图、联调记录、一次公开演示与故障复盘。',
+      evidence: '系统图、工作原型、调试日志、演示反馈。',
+      modules: [
+        ['系统草图', 6, '先画清传感器如何互相配合。', '选定温室/气象站/回收秤中的一个主任务并画出系统图。', '系统图 v1', '约束清单'],
+        ['搭建与联调', 10, '把多路传感做成可调试的整机。', '完成搭建并记录至少三次失败后的修正。', '联调原型', '调试日志'],
+        ['演示与复盘', 8, '让系统在真实任务里被看见。', '公开演示并修订一版。', '发布版系统', '复盘对照'],
+      ],
+    },
+    {
+      title: 'SDG的IP潮玩盲盒',
+      subtitle: '从可持续议题走到可发布的潮玩产品',
+      slug: 'sdg-ip-manghe',
+      lab: 'culture-arts' as const,
+      labTitle: '艺术设计研究室',
+      system: 'interest',
+      sampleFlag: true,
+      featured: true,
+      gradeMin: 4,
       gradeMax: 6,
       totalHours: 16,
-      subjects: ['艺术', '综合实践'],
+      subjects: ['AI创作', '数字制造', '产品思维'],
+      research: '学生从可持续发展议题出发，完成IP角色、三维模型、实体潮玩、包装及产品发布的完整创作过程。',
       summary:
-        '小学生以敏捷创造弧设计一款面向真实同伴的主题盲盒：从用户惊喜、材料成本到发布反馈，练习设计创作与价值创造。示例课程。',
-      drivingQuestion: '如何为校园里的真实同伴设计一款既有文化表达、又说得清成本与公平的主题盲盒？',
+        '学生从可持续发展议题出发，完成IP角色、三维模型、实体潮玩、包装及产品发布的完整创作过程。示例课程。',
+      drivingQuestion: '一个关于可持续发展的角色，怎样从一张草图变成别人愿意打开的潮玩盲盒？',
       primaryX: 'X5',
       secondaryX: ['X6'],
       primaryY: 'Y3',
@@ -102,16 +180,16 @@ async function seedCourses(payload: Payload, ids: IdMap) {
       teachingArc: 'ARC3',
       domainPathways: ['A6'],
       trackAffinity: ['TRACK4'],
-      materials: '卡纸、色纸、小型包装盒、贴纸、环保填充物；每组预算有上限。',
-      hardware: '不适用（手工与桌面材料为主）。',
-      software: '可选绘图工具；不强制账号。',
-      safety: '避免细小零件误吞；剪刀使用需教师在场；不收集同学肖像用于公开传播。',
-      assessments: '课前：用户访谈笔记。过程：原型迭代记录。总结：发布后同伴反馈与成本复盘。',
-      evidence: '设计草图、材料清单、一次真实用户测试、版本对比说明。',
+      materials: '草图纸、色卡、包装样张、小型打印或手工成型材料。',
+      hardware: '可选桌面三维成型（教师操作）；禁止无人看管的热加工。',
+      software: '绘图与可选生成式图像工具；AI 输出必须经学生改绘与价值判断。',
+      safety: '热加工与刀具须教师在场；不使用同学肖像做公开IP；生成内容须审核。',
+      assessments: '角色论证、模型迭代、包装与发布说明。',
+      evidence: '角色设定、模型版本、包装、发布海报。',
       modules: [
-        ['定义惊喜', 4, '把“好看”转成可验证的用户问题。', '访谈 3 位同伴，写下他们真正期待的开箱瞬间。', '问题定义卡', '访谈笔记'],
-        ['原型与成本', 6, '在材料约束下做出可开箱原型。', '制作第一版盲盒并核算成本。', '可开箱原型 + 成本表', '原型照片与迭代说明'],
-        ['测试发布', 6, '用真实反馈改进，完成小范围发布。', '组织开箱测试，根据反馈改一版后发布。', '发布版盲盒与反馈海报', '用户反馈与复盘'],
+        ['议题与IP', 5, '把可持续发展做成一个可被记住的角色。', '选定一项SDG并画出角色与世界观。', 'IP设定集', '议题说明'],
+        ['模型与潮玩', 6, '让角色变成可被拿在手里的物。', '完成三维或手工模型并试做一版实体。', '潮玩原型', '迭代照片'],
+        ['包装发布', 5, '用包装和开箱完成一次产品发布。', '设计包装并组织小范围发布。', '发布版盲盒', '发布记录'],
       ],
     },
     {
@@ -243,6 +321,8 @@ async function seedCourses(payload: Payload, ids: IdMap) {
         subjects: [...course.subjects],
         drivingQuestion: course.drivingQuestion,
         lab: course.lab,
+        labTitle: 'labTitle' in course ? course.labTitle : undefined,
+        research: 'research' in course ? course.research : undefined,
         system: 'system' in course ? course.system : undefined,
         paradigmVersion: 'B1.0',
         primaryX: ids[course.primaryX],
@@ -664,9 +744,9 @@ async function createPublishedCourse(
 }
 
 const COURSE_SYSTEM_BY_SLUG: Record<string, 'interest' | 'fusion' | 'pioneer'> = {
-  manghe: 'interest',
-  'xiaoyuan-shiwu-ditu': 'interest',
-  'gonggong-qianghui': 'interest',
+  'shengtai-jiqiren-diduan': 'interest',
+  'shengtai-jiqiren-gaoduan': 'interest',
+  'sdg-ip-manghe': 'interest',
   'heliu-tegongdui': 'fusion',
   'tansuo-xiaoyuan': 'fusion',
   'guize-yugongping': 'fusion',
@@ -688,6 +768,28 @@ async function ensureCourseSystems(payload: Payload) {
     const system = COURSE_SYSTEM_BY_SLUG[item.slug]
     if (!system) continue
     await payload.update({ collection: 'courses', id: item.id, overrideAccess: true, data: { system } })
+  }
+}
+
+const RETIRED_INTEREST = ['manghe', 'xiaoyuan-shiwu-ditu', 'gonggong-qianghui']
+
+async function retireOldInterestCourses(payload: Payload) {
+  for (const slug of RETIRED_INTEREST) {
+    const res = await payload.find({
+      collection: 'courses',
+      where: { slug: { equals: slug } },
+      limit: 5,
+      overrideAccess: true,
+      depth: 0,
+    })
+    for (const doc of res.docs) {
+      await payload.update({
+        collection: 'courses',
+        id: doc.id,
+        overrideAccess: true,
+        data: { status: 'archived', featured: false },
+      })
+    }
   }
 }
 
@@ -728,6 +830,11 @@ export async function seedIfEmpty(payload: Payload) {
     await ensureCourseSystems(payload)
   } catch (err) {
     payload.logger.error(err, '课程体系字段补齐失败')
+  }
+  try {
+    await retireOldInterestCourses(payload)
+  } catch (err) {
+    payload.logger.error(err, '旧兴趣课程下架失败')
   }
   try {
     await ensurePublicComposer(payload)

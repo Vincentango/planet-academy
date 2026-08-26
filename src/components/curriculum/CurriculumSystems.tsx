@@ -17,7 +17,7 @@ export function CurriculumSystems({
 
   return (
     <section className="container-wide pb-16">
-      <div className="system-tabs bookmark-bar" role="tablist" aria-label="课程体系">
+      <div className="system-tabs" role="tablist" aria-label="课程体系">
         {SYSTEMS.map((item) => {
           const selected = tab === item.id
           return (
@@ -26,10 +26,11 @@ export function CurriculumSystems({
               id={`${baseId}-${item.id}`}
               type="button"
               role="tab"
-              className="bookmark-tab"
+              className="system-tab"
               aria-selected={selected}
               aria-controls={`${baseId}-panel-${item.id}`}
               tabIndex={selected ? 0 : -1}
+              data-system={item.id}
               data-active={selected ? 'true' : 'false'}
               onClick={() => setTab(item.id)}
               onKeyDown={(event) => {
@@ -42,7 +43,7 @@ export function CurriculumSystems({
                 document.getElementById(`${baseId}-${next}`)?.focus()
               }}
             >
-              {item.name}
+              <span className="system-tab__page">{item.name}</span>
             </button>
           )
         })}
@@ -59,7 +60,7 @@ export function CurriculumSystems({
             hidden={!selected}
           >
             {selected ? (
-              <div className="course-grid curriculum-grid mt-8">
+              <div className="course-grid curriculum-grid system-page">
                 {list.map((course, i) => (
                   <CourseFlipCard key={course.slug} course={course} tone={i} mode={flipMode} face="photo" />
                 ))}

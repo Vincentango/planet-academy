@@ -70,7 +70,8 @@ export function payloadToCatalog(doc: Record<string, unknown>): CatalogCourse | 
     subjects: Array.isArray(doc.subjects) ? (doc.subjects as string[]) : seed?.subjects,
     system: asSystem(doc.system) || seed?.system,
     cover: coverFrom(doc.cover, seed?.cover),
-    research: String(doc.drivingQuestion || seed?.research || doc.subtitle || seed?.subtitle || ''),
+    research: String(doc.research || seed?.research || doc.drivingQuestion || doc.subtitle || seed?.subtitle || ''),
+    lab: String(doc.labTitle || seed?.lab || '') || undefined,
   }
   return { ...draft, system: inferSystem(draft) }
 }
@@ -120,13 +121,17 @@ export async function curriculumCourses(): Promise<CatalogCourse[]> {
   const bySlug = new Map(CURRICULUM_FALLBACK.map((course) => [course.slug, { ...course, system: inferSystem(course) }]))
   for (const course of cms.filter((item) => item.designed)) {
     const seed = bySlug.get(course.slug)
+    if (course.slug === 'manghe' || course.slug === 'xiaoyuan-shiwu-ditu' || course.slug === 'gonggong-qianghui') continue
     const next = {
       ...seed,
       ...course,
       cover: course.cover || seed?.cover,
       research: course.research || seed?.research || course.subtitle,
+      lab: course.lab || seed?.lab,
+      system: course.system || seed?.system,
+      subjects: course.subjects?.length ? course.subjects : seed?.subjects,
     }
     bySlug.set(course.slug, { ...next, system: inferSystem(next) })
   }
-  return [...bySlug.values()]
+  return [...bySlug.values()].filter((course) => course.slug !== 'manghe' && course.slug !== 'xiaoyuan-shiwu-ditu' && course.slug !== 'gonggong-qianghui')
 }

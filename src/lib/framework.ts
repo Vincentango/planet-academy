@@ -145,6 +145,7 @@ export type CatalogCourse = {
   system?: CourseSystem
   cover?: string
   research?: string
+  lab?: string
 }
 
 const LIVE: CatalogCourse[] = [
@@ -200,21 +201,58 @@ const LIVE: CatalogCourse[] = [
     subjects: ['科学', '信息技术', '人文社科'],
   },
   {
-    slug: 'manghe',
-    title: '盲盒课程',
-    subtitle: '把“惊喜”做成可设计的价值体验',
+    slug: 'shengtai-jiqiren-diduan',
+    title: '生态机器人智造营·低段',
+    subtitle: '用手作、电路与图形化编程做出会感知的生态机器人',
+    designed: true,
+    issue: 'tech',
+    scene: 'making-engineering',
+    stage: 'g1-3',
+    arc: 'design',
+    system: 'interest',
+    lab: '具身智能研究室',
+    cover: '/samples/courses/manghe.svg',
+    research: '学生通过手工、电路与图形化编程，制作会发光、会追光、会感知植物状态的生态机器人。',
+    gradeMin: 1,
+    gradeMax: 3,
+    totalHours: 16,
+    subjects: ['科学探究', '工程设计', '智能硬件'],
+  },
+  {
+    slug: 'shengtai-jiqiren-gaoduan',
+    title: '生态机器人智造营·高段',
+    subtitle: '设计、搭建并调试多传感器生态智能系统',
+    designed: true,
+    issue: 'tech',
+    scene: 'making-engineering',
+    stage: 'g4-6',
+    arc: 'design',
+    system: 'interest',
+    lab: '具身智能研究室',
+    cover: '/samples/courses/xiaoyuan-shiwu-ditu.svg',
+    research: '学生围绕智能温室、AI气象站和智能回收秤等任务，完成多传感器生态智能系统的设计、搭建与调试。',
+    gradeMin: 4,
+    gradeMax: 6,
+    totalHours: 24,
+    subjects: ['系统思维', '工程设计', '智能硬件'],
+  },
+  {
+    slug: 'sdg-ip-manghe',
+    title: 'SDG的IP潮玩盲盒',
+    subtitle: '从可持续议题走到可发布的潮玩产品',
     designed: true,
     issue: 'people',
     scene: 'culture-arts',
     stage: 'g4-6',
     arc: 'agile',
     system: 'interest',
-    cover: '/samples/courses/manghe.svg',
-    research: '为真实同伴设计一款主题盲盒，把惊喜、成本与公平做成可测试的开箱体验。',
-    gradeMin: 3,
+    lab: '艺术设计研究室',
+    cover: '/samples/courses/gonggong-qianghui.svg',
+    research: '学生从可持续发展议题出发，完成IP角色、三维模型、实体潮玩、包装及产品发布的完整创作过程。',
+    gradeMin: 4,
     gradeMax: 6,
     totalHours: 16,
-    subjects: ['艺术', '综合实践'],
+    subjects: ['AI创作', '数字制造', '产品思维'],
   },
 ]
 
@@ -254,40 +292,6 @@ export const CATALOG: CatalogCourse[] = SCENES.flatMap((scene) =>
 )
 
 const CURRICULUM_EXTRAS: CatalogCourse[] = [
-  {
-    slug: 'xiaoyuan-shiwu-ditu',
-    title: '校园食物地图',
-    subtitle: '从一顿午餐看见土地、劳动与选择',
-    designed: true,
-    issue: 'nature',
-    scene: 'food-agri-water',
-    stage: 'g4-6',
-    arc: 'inquiry',
-    gradeMin: 3,
-    gradeMax: 6,
-    totalHours: 16,
-    subjects: ['科学', '综合实践'],
-    system: 'interest',
-    cover: '/samples/courses/xiaoyuan-shiwu-ditu.svg',
-    research: '追踪午餐里的一种食物回到产地与季节，做成一张可讲解的校园食物地图。',
-  },
-  {
-    slug: 'gonggong-qianghui',
-    title: '公共墙绘',
-    subtitle: '把一面墙做成可讨论的公共表达',
-    designed: true,
-    issue: 'people',
-    scene: 'culture-arts',
-    stage: 'g4-6',
-    arc: 'agile',
-    gradeMin: 3,
-    gradeMax: 6,
-    totalHours: 16,
-    subjects: ['艺术', '综合实践'],
-    system: 'interest',
-    cover: '/samples/courses/gonggong-qianghui.svg',
-    research: '为一面被允许的墙提出主题、草图与材料方案，在真实约束下完成一次公共表达。',
-  },
   {
     slug: 'guize-yugongping',
     title: '规则与公平',
@@ -390,8 +394,19 @@ export function inferSystem(course: Pick<CatalogCourse, 'slug' | 'stage' | 'arc'
   return 'fusion'
 }
 
+export const INTEREST_TAB_SLUGS = [
+  'shengtai-jiqiren-diduan',
+  'shengtai-jiqiren-gaoduan',
+  'sdg-ip-manghe',
+] as const
+
+const RETIRED_INTEREST_SLUGS = new Set(['manghe', 'xiaoyuan-shiwu-ditu', 'gonggong-qianghui'])
+
 export function coursesForSystem(list: CatalogCourse[], system: CourseSystem) {
-  return list.filter((course) => inferSystem(course) === system)
+  const filtered = list.filter((course) => inferSystem(course) === system && !RETIRED_INTEREST_SLUGS.has(course.slug))
+  if (system !== 'interest') return filtered
+  const bySlug = new Map(filtered.map((course) => [course.slug, course]))
+  return INTEREST_TAB_SLUGS.map((slug) => bySlug.get(slug)).filter((course): course is CatalogCourse => Boolean(course))
 }
 
 export type SceneView = {
@@ -473,6 +488,7 @@ export function filterCatalog(
 }
 
 export function courseTags(course: CatalogCourse) {
+  if (course.subjects?.length) return [...course.subjects]
   const tags: string[] = []
   if (course.issue) tags.push(issueName(course.issue))
   if (course.scene) tags.push(sceneName(course.scene))

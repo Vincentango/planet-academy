@@ -15,10 +15,10 @@ export function CourseFlipCard({
   mode?: 'hover' | 'click' | 'off'
   face?: 'studio' | 'photo'
 }) {
-  const tags = courseTags(course)
+  const tags = course.subjects?.length ? course.subjects : courseTags(course)
   const [flipped, setFlipped] = useState(false)
   const href = `/courses/${course.slug}`
-  const lab = getScene(course.scene)
+  const labName = course.lab || getScene(course.scene)?.name
   const research = course.research || course.subtitle || ''
 
   const inner =
@@ -36,7 +36,7 @@ export function CourseFlipCard({
         </div>
         <div className="flip-card__face flip-card__back">
           <p className="kicker text-white/55">研究室</p>
-          <p className="headline mt-2 text-2xl text-white">{lab?.name || '课程'}</p>
+          <p className="headline mt-2 text-2xl text-white">{labName || '课程'}</p>
           {tags.length ? (
             <ul className="flip-tags mt-4">
               {tags.map((tag) => (
