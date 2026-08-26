@@ -640,7 +640,7 @@ async function createPublishedCourse(
       subjects: [...course.subjects],
       drivingQuestion: course.drivingQuestion,
       lab: course.lab,
-      system: course.system,
+      system: 'system' in course ? course.system : undefined,
       paradigmVersion: 'B1.0',
       primaryX: ids[course.primaryX],
       secondaryX: course.secondaryX?.map((k) => ids[k]) || [],
