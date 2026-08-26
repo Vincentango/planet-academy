@@ -31,7 +31,8 @@ export default async function HomePage() {
           </div>
           <div className="gsd-split__copy">
             <p className="kicker">星球学院 · CRADLE-X</p>
-            <h1 className="headline mt-5 text-4xl md:text-6xl">未来无边界学校</h1>
+            <h1 className="headline mt-5 text-4xl md:text-6xl">无边界未来学校</h1>
+            <p className="hero-en">BORDERLESS FUTURE SCHOOL</p>
           </div>
         </article>
       </section>

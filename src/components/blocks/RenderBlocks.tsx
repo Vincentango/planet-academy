@@ -119,7 +119,11 @@ export function RenderBlocks({
                 <div className="gsd-split__copy">
                   {block.eyebrow ? <p className="kicker">{String(block.eyebrow)}</p> : null}
                   <h1 className="headline mt-5 text-4xl md:text-6xl">{String(block.heading || '')}</h1>
-                  {block.dek ? <p className="mt-6 max-w-xl text-xl font-medium leading-8">{String(block.dek)}</p> : null}
+                  {block.dek ? (
+                    <p className={/^[A-Z][A-Z\s]+$/.test(String(block.dek).trim()) ? 'hero-en' : 'mt-6 max-w-xl text-xl font-medium leading-8'}>
+                      {String(block.dek)}
+                    </p>
+                  ) : null}
                   {block.subheading ? <p className="dek mt-3 max-w-xl text-base">{String(block.subheading)}</p> : null}
                   <ActionRow actions={actions} />
                 </div>
