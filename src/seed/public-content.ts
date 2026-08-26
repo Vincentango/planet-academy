@@ -234,11 +234,30 @@ export async function ensurePublicComposer(payload: Payload) {
   if (!settings.siteNameEn || settings.siteNameEn === 'PLANET ACADEMY') patch.siteNameEn = 'CRADLE-X'
   if (!settings.tagline) patch.tagline = '未来无边界学校'
   if (!settings.footerNote) {
-    patch.footerNote = '星球学院是一所未来无边界学校。公开门户先定位学校，再进入九个场景里的课程。公开成果默认匿名。'
+    patch.footerNote = '星球学院是一所未来无边界学校。公开门户先定位学校，再进入九个场景里的课程。'
+  } else if (String(settings.footerNote).includes('公开成果默认匿名')) {
+    const cleaned = String(settings.footerNote)
+      .replace(/公开成果默认匿名[。.]?/g, '')
+      .replace(/\s{2,}/g, ' ')
+      .replace(/。[。]+/g, '。')
+      .trim()
+    patch.footerNote =
+      cleaned || '星球学院是一所未来无边界学校。公开门户先定位学校，再进入九个场景里的课程。'
   }
   if (!settings.paradigmVersion) patch.paradigmVersion = 'B3.0'
   const navText = JSON.stringify(nav || [])
-  if (!nav || !nav.length || navText.includes('/philosophy') || navText.includes('/scenes"') || navText.includes('理念')) {
+  const navDirty =
+    !nav ||
+    !nav.length ||
+    navText.includes('/philosophy') ||
+    navText.includes('/scenes"') ||
+    navText.includes('理念') ||
+    navText.includes('/paradigm') ||
+    navText.includes('/projects') ||
+    navText.includes('教育范式') ||
+    navText.includes('项目成果') ||
+    navText.includes('档案')
+  if (navDirty) {
     patch.nav = [
       { label: '首页', href: '/', visible: true },
       { label: '课程体系', href: '/curriculum', visible: true },

@@ -12,9 +12,8 @@ export function SiteFooter({ site }: { site?: SiteChrome }) {
       <div className="container-wide grid gap-10 pb-16 pt-4 md:grid-cols-12">
         <div className="md:col-span-5">
           <Wordmark className="text-3xl text-white" />
-          <p className="mt-4 text-xs text-white/55">公开成果默认匿名</p>
         </div>
-        <div className="md:col-span-3">
+        <div className="md:col-span-4">
           <p className="kicker text-white/50">主路径</p>
           <ul className="mt-3 space-y-2 text-sm text-white">
             {items.map((item) => (
@@ -31,22 +30,7 @@ export function SiteFooter({ site }: { site?: SiteChrome }) {
             </li>
           </ul>
         </div>
-        <div className="md:col-span-2">
-          <p className="kicker text-white/50">档案</p>
-          <ul className="mt-3 space-y-2 text-sm text-white">
-            <li>
-              <Link href="/paradigm" className="no-underline hover:opacity-70">
-                教育范式
-              </Link>
-            </li>
-            <li>
-              <Link href="/projects" className="no-underline hover:opacity-70">
-                项目成果
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div className="md:col-span-2">
+        <div className="md:col-span-3">
           <p className="kicker text-white/50">关于</p>
           <ul className="mt-3 space-y-2 text-sm text-white">
             <li>

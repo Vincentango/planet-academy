@@ -672,7 +672,7 @@ export async function seedIfEmpty(payload: Payload) {
         siteName: '星球学院',
         siteNameEn: 'CRADLE-X',
         tagline: '面向 AI 时代的 K-12 未来创新教育范式',
-        footerNote: 'B1.0 为唯一范式母本。C1.3 仅以 c13_* 字段补充工程化信息。公开成果默认匿名。',
+        footerNote: 'B1.0 为唯一范式母本。C1.3 仅以 c13_* 字段补充工程化信息。',
         contactEmail: 'hello@planetacad.one',
         paradigmVersion: 'B3.0',
         paradigmDate: '2026',

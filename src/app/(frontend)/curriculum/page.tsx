@@ -14,7 +14,7 @@ export default function CurriculumPage() {
     <>
       <section className="container-wide pb-10 pt-8">
         <h1 className="sr-only">课程体系</h1>
-        <article className="panel diagram-panel diagram-panel--ink">
+        <article className="curriculum-map">
           <img src="/samples/curriculum-system.png" alt="课程体系：以人工智能为中心的跨学科图谱" />
         </article>
       </section>

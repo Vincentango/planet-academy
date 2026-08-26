@@ -1,11 +1,29 @@
 export type NavItem = { label: string; href: string; visible?: boolean | null }
 
-const DROP = new Set(['/philosophy', '/scenes', '理念', '场景'])
+const DROP = new Set([
+  '/philosophy',
+  '/scenes',
+  '理念',
+  '场景',
+  '/paradigm',
+  '/projects',
+  '档案',
+  '教育范式',
+  '项目成果',
+])
+
+function dropped(item: NavItem) {
+  if (DROP.has(item.href) || DROP.has(item.label)) return true
+  const href = item.href.split('?')[0]
+  if (href === '/paradigm' || href.startsWith('/paradigm/')) return true
+  if (href === '/projects' || href.startsWith('/projects/')) return true
+  return false
+}
 
 export function visibleNav(nav: NavItem[]) {
   const cleaned = nav.filter((item) => {
     if (item.visible === false || !item.label || !item.href) return false
-    if (DROP.has(item.href) || DROP.has(item.label)) return false
+    if (dropped(item)) return false
     return true
   })
   if (!cleaned.some((item) => item.href === '/curriculum' || item.label === '课程体系')) {

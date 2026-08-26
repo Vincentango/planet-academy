@@ -57,7 +57,7 @@ export const DEFAULT_SITE: SiteChrome = {
   siteName: '星球学院',
   siteNameEn: 'CRADLE-X',
   tagline: '未来无边界学校',
-  footerNote: '公开成果默认匿名。第一阶段不提供 LMS、支付或学生账号。',
+  footerNote: '第一阶段不提供 LMS、支付或学生账号。',
   contactEmail: '',
   paradigmVersion: 'B3.0',
   nav: DEFAULT_NAV,
