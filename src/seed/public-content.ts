@@ -49,7 +49,7 @@ const HOME_LAYOUT = [
   },
   {
     blockType: 'videoQuote',
-    url: '/samples/sample-01.mp4',
+    url: '/samples/home-quote.mp4',
     english: 'Committed to Educational Sharing and Equity',
     chinese: '推动课程内容到基础设施再到运营模式的多维度升级',
   },
@@ -203,7 +203,7 @@ export async function ensurePublicComposer(payload: Payload) {
       const layoutText = JSON.stringify(doc.layout || [])
       const homeCopyStale =
         page.slug === 'home' &&
-        (['学习发生在世界里', '当机器能完成大量传统认知任务', '一所把真实世界当作校园的学校', '在真实议题中看见世界', '从项目进入学校', '进入九个场景', '整体介绍', '未来无边界学校', 'sample-02', 'sample-03'].some((s) =>
+        (['学习发生在世界里', '当机器能完成大量传统认知任务', '一所把真实世界当作校园的学校', '在真实议题中看见世界', '从项目进入学校', '进入九个场景', '整体介绍', '未来无边界学校', 'sample-01.mp4', 'sample-02', 'sample-03'].some((s) =>
           layoutText.includes(s),
         ) ||
           !layoutText.includes('videoQuote'))

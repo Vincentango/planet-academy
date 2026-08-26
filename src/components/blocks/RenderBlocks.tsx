@@ -133,7 +133,7 @@ export function RenderBlocks({
         }
 
         if (type === 'videoQuote') {
-          const src = mediaUrl(block.media, String(block.url || '/samples/sample-01.mp4'))
+          const src = mediaUrl(block.media, String(block.url || '/samples/home-quote.mp4'))
           return (
             <section key={key} className="container-wide py-2">
               <article className="video-quote">

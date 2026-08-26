@@ -41,7 +41,7 @@ export default async function HomePage() {
       </section>
       <section className="container-wide py-2">
         <article className="video-quote">
-          <video src="/samples/sample-01.mp4" autoPlay muted loop playsInline />
+          <video src="/samples/home-quote.mp4" autoPlay muted loop playsInline />
           <div className="video-quote__veil" />
           <div className="video-quote__copy">
             <p className="video-quote__en">Committed to Educational Sharing and Equity</p>
