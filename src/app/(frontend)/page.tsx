@@ -36,13 +36,17 @@ export default async function HomePage() {
         </article>
       </section>
       <section className="container-wide py-6">
-        <article className="panel px-6 py-10 md:px-10 md:py-14">
-          <h2 className="headline whitespace-pre-line text-3xl md:text-4xl">{`Driving Interdisciplinary
-Integration with
-Emergent Technology`}</h2>
-          <div className="mt-8 max-w-3xl space-y-6 text-base leading-8 text-muted md:text-lg">
-            <p>以前沿科技构建跨学科融合课程体系</p>
-            <p>以真实世界问题驱动项目制学习方式</p>
+        <article className="panel intro-ed">
+          <div className="intro-ed__grid">
+            <h2 className="intro-ed__en">
+              <span>Driving Interdisciplinary</span>
+              <span className="intro-ed__soft">Integration with</span>
+              <span>Emergent Technology</span>
+            </h2>
+            <div className="intro-ed__zh">
+              <p>以前沿科技构建跨学科融合课程体系</p>
+              <p>以真实世界问题驱动项目制学习方式</p>
+            </div>
           </div>
         </article>
       </section>

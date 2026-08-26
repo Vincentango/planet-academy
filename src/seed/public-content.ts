@@ -38,6 +38,7 @@ const HOME_LAYOUT = [
   {
     blockType: 'richText',
     kicker: '',
+    display: 'editorial',
     heading: 'Driving Interdisciplinary\nIntegration with\nEmergent Technology',
     body: rich(
       '以前沿科技构建跨学科融合课程体系\n\n以真实世界问题驱动项目制学习方式',
@@ -231,9 +232,10 @@ export async function ensurePublicComposer(payload: Payload) {
       const layoutText = JSON.stringify(doc.layout || [])
       const homeCopyStale =
         page.slug === 'home' &&
-        ['学习发生在世界里', '当机器能完成大量传统认知任务', '一所把真实世界当作校园的学校', '在真实议题中看见世界', '从项目进入学校', '进入九个场景', '整体介绍'].some((s) =>
+        (['学习发生在世界里', '当机器能完成大量传统认知任务', '一所把真实世界当作校园的学校', '在真实议题中看见世界', '从项目进入学校', '进入九个场景', '整体介绍'].some((s) =>
           layoutText.includes(s),
-        )
+        ) ||
+          !layoutText.includes('editorial'))
       const stale =
         !doc.layout ||
         !doc.layout.length ||

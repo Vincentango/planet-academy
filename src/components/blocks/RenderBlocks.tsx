@@ -330,6 +330,35 @@ export function RenderBlocks({
 
         if (type === 'richText') {
           const body = lexicalPlain(block.body)
+          const editorial = String(block.display || '') === 'editorial'
+          const headingLines = String(block.heading || '')
+            .split('\n')
+            .map((line) => line.trim())
+            .filter(Boolean)
+          if (editorial) {
+            return (
+              <section key={key} className="container-wide py-6">
+                <article className="panel intro-ed">
+                  <div className="intro-ed__grid">
+                    <h2 className="intro-ed__en">
+                      {headingLines.map((line) => (
+                        <span key={line} className={/integration with/i.test(line) ? 'intro-ed__soft' : undefined}>
+                          {line}
+                        </span>
+                      ))}
+                    </h2>
+                    {body ? (
+                      <div className="intro-ed__zh">
+                        {body.split('\n\n').map((p, n) => (
+                          <p key={n}>{p}</p>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                </article>
+              </section>
+            )
+          }
           return (
             <section key={key} className="container-wide py-6">
               <article className="panel px-6 py-10 md:px-10 md:py-14">

@@ -7,6 +7,16 @@ export const RichText: Block = {
   fields: [
     ...layoutFields,
     { name: 'kicker', type: 'text', label: '眉题' },
+    {
+      name: 'display',
+      type: 'select',
+      label: '排版',
+      defaultValue: 'plain',
+      options: [
+        { label: '常规', value: 'plain' },
+        { label: '杂志栏', value: 'editorial' },
+      ],
+    },
     { name: 'heading', type: 'textarea', label: '标题' },
     { name: 'body', type: 'richText', label: '正文', required: true },
   ],
