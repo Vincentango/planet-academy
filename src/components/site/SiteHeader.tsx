@@ -13,9 +13,9 @@ export function SiteHeader({ nav = [] }: { nav?: NavItem[] }) {
 
   return (
     <header className="site-header site-header--white">
-      <div className="container-wide flex items-center justify-between gap-4 py-3.5">
+      <div className="container-wide flex items-center justify-between gap-6">
         <Link href="/" className="no-underline text-ink" aria-label="星球学院 CRADLE-X">
-          <Wordmark className="text-[1.3rem] md:text-[1.5rem] text-black" />
+          <Wordmark className="text-[1.2rem] md:text-[1.35rem] text-black" />
         </Link>
         <nav className="nav-pill hidden md:flex" aria-label="主导航">
           {items.map((item, i) => (
@@ -29,13 +29,13 @@ export function SiteHeader({ nav = [] }: { nav?: NavItem[] }) {
           联系
         </Link>
       </div>
-      <nav className="container-wide flex gap-2 overflow-x-auto pb-3 md:hidden" aria-label="移动导航">
+      <nav className="container-wide flex gap-5 overflow-x-auto pb-3 md:hidden" aria-label="移动导航">
         {items.map((item) => (
-          <Link key={`${item.href}-${item.label}`} href={item.href} className="nav-cat whitespace-nowrap rounded-full bg-white px-3 py-1.5 text-sm">
+          <Link key={`${item.href}-${item.label}`} href={item.href} className="nav-cat whitespace-nowrap text-sm font-medium">
             {item.label}
           </Link>
         ))}
-        <Link href="/contact" className="nav-cat whitespace-nowrap rounded-full bg-yellow px-3 py-1.5 text-sm">
+        <Link href="/contact" className="nav-cat whitespace-nowrap text-sm font-medium">
           联系
         </Link>
       </nav>

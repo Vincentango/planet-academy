@@ -12,20 +12,20 @@ export default async function HomePage() {
   const courses = await featuredCourses(4)
   const fallback = (
     <>
-      <section className="container-wide pb-6 pt-6 md:pt-8">
+      <section className="container-wide pb-10 pt-10 md:pt-16">
         <article className="gsd-split">
           <div className="gsd-split__media gsd-split__media--hero">
             <span className="gsd-split__caption chip-yellow">CRADLE-X</span>
-            <p className="headline text-5xl text-white md:text-6xl">星球学院</p>
+            <p className="headline text-6xl text-white md:text-7xl">星球学院</p>
           </div>
           <div className="gsd-split__copy">
             <p className="kicker">星球学院 · CRADLE-X</p>
-            <h1 className="headline mt-5 text-4xl md:text-6xl">无边界未来学校</h1>
+            <h1 className="headline mt-6 text-5xl md:text-7xl lg:text-8xl">无边界未来学校</h1>
             <p className="hero-en">BORDERLESS FUTURE SCHOOL</p>
           </div>
         </article>
       </section>
-      <section className="container-wide py-6">
+      <section className="container-wide py-10 md:py-16">
         <article className="panel intro-ed">
           <div className="intro-ed__grid">
             <h2 className="intro-ed__en">
@@ -40,21 +40,21 @@ export default async function HomePage() {
           </div>
         </article>
       </section>
-      <section className="container-wide py-2">
+      <section className="container-wide py-6">
         <VideoQuotePlayer
           src="/samples/home-quote.mp4"
           english="Committed to Educational Sharing and Equity"
           chinese="推动课程内容到基础设施再到运营模式的多维度升级"
         />
       </section>
-      <section id="featured" className="container-wide py-10 pb-16">
+      <section id="featured" className="container-wide py-16 pb-24">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <p className="kicker">课程精选</p>
-          <Link href="/curriculum" className="text-sm font-semibold no-underline">进入资源库</Link>
+          <Link href="/curriculum" className="btn-ghost no-underline">进入资源库</Link>
         </div>
-        <div className="course-grid mt-8">
+        <div className="course-grid mt-10">
           {courses.slice(0, 4).map((course, i) => (
-            <CourseFlipCard key={course.slug} course={course} tone={i} mode={site.interaction.cardFlip} />
+            <CourseFlipCard key={course.slug} course={course} tone={i} mode={site.interaction.cardFlip} face="photo" />
           ))}
         </div>
       </section>

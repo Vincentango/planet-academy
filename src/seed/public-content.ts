@@ -286,13 +286,13 @@ export async function ensurePublicComposer(payload: Payload) {
     ]
   }
   patch.tokens = {
-    paper: tokens.paper || '#EDEDE8',
+    paper: tokens.paper && tokens.paper !== '#EDEDE8' ? tokens.paper : '#F4F1EA',
     ink: tokens.ink || '#111111',
     panel: tokens.panel || '#ffffff',
     chipYellow: tokens.chipYellow || '#f5d84c',
     chipPeach: tokens.chipPeach || '#f5ad6e',
     accent: tokens.accent || '#f5d84c',
-    radius: tokens.radius || '1.75rem',
+    radius: tokens.radius && tokens.radius !== '1.75rem' ? tokens.radius : '0.75rem',
     maxWidth: tokens.maxWidth || '74rem',
   }
   patch.interaction = {

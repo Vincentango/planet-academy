@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #EDEDE8;
-  --paper-warm: #EDEDE8;
+  --paper: #F4F1EA;
+  --paper-warm: #F4F1EA;
   --panel: #ffffff;
   --ink: #111111;
-  --muted: #5c5852;
+  --muted: #6a655e;
   --peach: #f5ad6e;
   --yellow: #f5d84c;
   --amber: #e8a23a;
-  --charcoal: #1b1b19;
-  --sand: #e6e1d6;
+  --charcoal: #111111;
+  --sand: #ebe6dc;
   --black: #111111;
-  --rule: #d8d5cc;
+  --rule: #ddd8ce;
 
   --bg: var(--paper-warm);
   --bg-elevated: var(--panel);
@@ -21,9 +21,9 @@
   --accent: var(--yellow);
   --danger: #c23b22;
 
-  --radius: 1.75rem;
-  --radius-sm: 1rem;
-  --radius-chip: 0.35rem;
+  --radius: 0.75rem;
+  --radius-sm: 0.5rem;
+  --radius-chip: 0.25rem;
   --radius-pill: 999px;
 }
 
@@ -81,34 +81,36 @@ a {
 .kicker {
   margin: 0;
   font-family: var(--font-sans);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
   line-height: 1.4;
+  text-transform: uppercase;
   color: var(--muted);
 }
 
 .headline {
   font-family: var(--font-display);
   font-weight: 800;
-  letter-spacing: -0.035em;
-  line-height: 1.05;
+  letter-spacing: -0.048em;
+  line-height: 0.96;
 }
 
 .hero-en {
-  margin: 1rem 0 0;
+  margin: 1.25rem 0 0;
   font-family: var(--font-display);
-  font-size: clamp(1.2rem, 2.6vw, 1.75rem);
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  line-height: 1.25;
+  font-size: clamp(0.82rem, 1.3vw, 1rem);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.35;
   text-transform: uppercase;
-  color: var(--ink);
+  color: var(--muted);
 }
 
 .dek {
   color: var(--muted);
-  line-height: 1.65;
+  font-size: 0.98rem;
+  line-height: 1.7;
 }
 
 .chip-yellow {
@@ -149,14 +151,14 @@ a {
 }
 
 .section-head {
-  margin: 0 0 1.5rem;
+  margin: 0 0 2rem;
   padding-top: 0;
   border-top: 0;
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2.4rem, 5.4vw, 4rem);
   font-weight: 800;
-  letter-spacing: -0.035em;
-  line-height: 1.05;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
 }
 
 .collection-rule {
@@ -175,13 +177,14 @@ a {
   display: inline-block;
   background: transparent;
   color: inherit;
-  padding: 0.6rem 1.05rem;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  padding: 0.45rem 0;
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0;
   text-decoration: none;
-  border: 1px solid var(--ink);
-  border-radius: var(--radius-pill);
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  border-radius: 0;
 }
 
 .btn-white {
@@ -231,8 +234,13 @@ a {
 
 .panel {
   background: var(--panel);
-  border-radius: var(--radius);
+  border-radius: 0.75rem;
   overflow: hidden;
+}
+.panel.intro-ed {
+  background: transparent;
+  border-radius: 0;
+  overflow: visible;
 }
 
 .hero-page { background: transparent; color: var(--ink); }
@@ -248,11 +256,11 @@ article.band-black { border-radius: var(--radius); }
 }
 
 .hero-card {
-  background: var(--panel);
+  background: transparent;
   color: var(--ink);
   border-top: 0;
-  padding: 1.75rem 1.6rem 2rem;
-  border-radius: var(--radius);
+  padding: 2.5rem 0 2.8rem;
+  border-radius: 0;
 }
 
 .carousel-card {
@@ -322,10 +330,14 @@ article.band-black { border-radius: var(--radius); }
 }
 
 .site-header--white {
-  background: color-mix(in srgb, var(--paper-warm) 88%, transparent);
+  background: color-mix(in srgb, var(--paper-warm) 86%, transparent);
   color: var(--ink);
   border-bottom: 0;
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(12px);
+}
+.site-header .container-wide {
+  padding-top: 1.15rem;
+  padding-bottom: 1.15rem;
 }
 
 .wordmark {
@@ -368,28 +380,27 @@ article.band-black { border-radius: var(--radius); }
 .nav-pill {
   display: flex;
   align-items: center;
-  gap: 0;
-  padding: 0.35rem 0.45rem;
-  background: var(--panel);
-  border-radius: var(--radius-pill);
+  gap: 0.15rem;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
 }
 
 .nav-pill a {
-  padding: 0.45rem 0.95rem;
-  font-size: 0.9rem;
-  font-weight: 600;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.95rem;
+  font-weight: 500;
   text-decoration: none;
-  border-radius: var(--radius-pill);
+  border-radius: 0;
 }
 
 .nav-pill a:hover {
-  background: var(--sand);
+  background: transparent;
+  opacity: 0.55;
 }
 
 .nav-pill__rule {
-  width: 1px;
-  height: 1em;
-  background: var(--rule);
+  display: none;
 }
 
 .nav-cat {
@@ -458,10 +469,11 @@ h1, h2, h3, h4 {
 
 .gsd-split {
   display: grid;
-  background: var(--panel);
-  border-radius: var(--radius);
+  background: transparent;
+  border-radius: 0;
   overflow: hidden;
-  min-height: 22rem;
+  min-height: 28rem;
+  gap: 0;
 }
 
 @media (min-width: 860px) {
@@ -475,6 +487,7 @@ h1, h2, h3, h4 {
   min-height: 16rem;
   overflow: hidden;
   background: var(--charcoal);
+  border-radius: 0.75rem;
 }
 
 .gsd-split__media video,
@@ -490,7 +503,7 @@ h1, h2, h3, h4 {
   place-items: center;
   background: var(--charcoal);
   color: #fff;
-  padding: 2rem;
+  padding: 3rem 2rem;
 }
 
 .gsd-split__copy {
@@ -498,8 +511,13 @@ h1, h2, h3, h4 {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 2rem 2.1rem 2.2rem;
-  background: var(--panel);
+  padding: 2.2rem 0 2rem;
+  background: transparent;
+}
+@media (min-width: 860px) {
+  .gsd-split__copy {
+    padding: 3.2rem 0 2.8rem 3rem;
+  }
 }
 
 .gsd-split__caption {
@@ -699,7 +717,7 @@ h1, h2, h3, h4 {
 
 .course-grid {
   display: grid;
-  gap: 1rem;
+  gap: 1.75rem 1.5rem;
 }
 
 @media (min-width: 760px) {
@@ -711,14 +729,14 @@ h1, h2, h3, h4 {
   text-decoration: none;
   color: inherit;
   perspective: 1400px;
-  min-height: 20rem;
+  min-height: 22rem;
 }
 
 .flip-card__inner {
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 20rem;
+  min-height: 22rem;
   transform-style: preserve-3d;
   transition: transform 0.55s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
@@ -726,7 +744,7 @@ h1, h2, h3, h4 {
 .flip-card__face {
   position: absolute;
   inset: 0;
-  border-radius: var(--radius);
+  border-radius: 0.75rem;
   overflow: hidden;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -922,9 +940,16 @@ html[data-motion='reduce'] .flip-card__inner {
 }
 
 .site-footer {
-  background: var(--charcoal);
-  color: #fff;
-  margin-top: 2.5rem;
+  background: var(--paper-warm);
+  color: var(--ink);
+  margin-top: 5rem;
+  border-top: 1px solid var(--rule);
+}
+.site-footer .kicker {
+  color: var(--muted);
+}
+.site-footer a {
+  text-underline-offset: 3px;
 }
 
 .footer-cta {
@@ -1055,11 +1080,12 @@ html[data-motion='reduce'] .flip-card__inner {
 }
 
 .intro-ed {
-  padding: 2.25rem 1.5rem 2.4rem;
+  padding: 3.25rem 0 3.5rem;
+  background: transparent;
 }
 @media (min-width: 768px) {
   .intro-ed {
-    padding: 3.1rem 3.25rem 3.25rem;
+    padding: 4.5rem 0 4.75rem;
   }
   .intro-ed__grid {
     display: grid;
@@ -1071,10 +1097,10 @@ html[data-motion='reduce'] .flip-card__inner {
 .intro-ed__en {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4.6vw, 3.55rem);
+  font-size: clamp(2.6rem, 6.4vw, 5.15rem);
   font-weight: 800;
-  letter-spacing: -0.048em;
-  line-height: 0.96;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
   color: var(--ink);
 }
 .intro-ed__en span {
@@ -1117,8 +1143,8 @@ html[data-motion='reduce'] .flip-card__inner {
 .video-quote {
   position: relative;
   overflow: hidden;
-  border-radius: var(--radius);
-  min-height: 22rem;
+  border-radius: 0.75rem;
+  min-height: 24rem;
   background: #111;
   cursor: pointer;
 }
@@ -1162,9 +1188,9 @@ html[data-motion='reduce'] .flip-card__inner {
 }
 .video-quote__en {
   font-family: var(--font-display);
-  font-size: clamp(1.55rem, 3.4vw, 2.7rem);
-  letter-spacing: -0.03em;
-  line-height: 1.15;
+  font-size: clamp(1.85rem, 4.2vw, 3.4rem);
+  letter-spacing: -0.045em;
+  line-height: 1.05;
 }
 .video-quote__zh {
   margin-top: 0.85rem;
@@ -1245,7 +1271,7 @@ html[data-motion='reduce'] .flip-card__inner {
   max-width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  gap: 1.5rem;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -1256,18 +1282,19 @@ html[data-motion='reduce'] .flip-card__inner {
 .system-tab {
   appearance: none;
   border: 0;
-  background: #fff;
+  background: transparent;
   cursor: pointer;
   font: inherit;
   width: 100%;
-  min-height: 3.15rem;
-  padding: 0.85rem 1rem;
+  min-height: 3rem;
+  padding: 0.85rem 0.4rem 0.95rem;
   color: var(--muted);
-  text-align: center;
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  border-radius: var(--radius-sm);
+  text-align: left;
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  border-radius: 0;
+  border-bottom: 2px solid var(--rule);
 }
 
 .system-tab:focus-visible {
@@ -1276,30 +1303,35 @@ html[data-motion='reduce'] .flip-card__inner {
 }
 
 .system-tab[data-active='true'] {
-  background: var(--yellow);
+  background: transparent;
   color: var(--ink);
-  font-weight: 700;
+  font-weight: 800;
+  border-bottom-color: var(--ink);
 }
 
 .system-page {
-  margin-top: 1rem;
+  margin-top: 2rem;
+  min-height: 8rem;
 }
 
 @media (min-width: 1040px) {
   .curriculum-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
-.flip-card[data-face='photo'] { min-height: 22rem; }
-.flip-card[data-face='photo'] .flip-card__inner { min-height: 22rem; }
+.flip-card[data-face='photo'] { min-height: 26rem; }
+.flip-card[data-face='photo'] .flip-card__inner { min-height: 26rem; }
 
 .flip-card__front--photo {
-  padding: 0;
-  background: #fff;
+  padding: 0 0 0.15rem;
+  background: transparent;
+}
+.flip-card[data-face='photo'] .flip-card__photo {
+  border-radius: 0.75rem;
 }
 
 .flip-card__photo {
   flex: 1;
-  min-height: 13.5rem;
+  min-height: 16.5rem;
   background: var(--sand);
   overflow: hidden;
 }
@@ -1330,16 +1362,17 @@ html[data-motion='reduce'] .flip-card__inner {
 
 .flip-card__name {
   margin: 0;
-  padding: 1.05rem 1.2rem 1.2rem;
-  font-size: 1.55rem;
-  line-height: 1.25;
+  padding: 1.15rem 0.15rem 0.2rem;
+  font-size: clamp(1.35rem, 1.8vw, 1.7rem);
+  letter-spacing: -0.04em;
+  line-height: 1.15;
 }
 
 .flip-card[data-face='photo'] .flip-card__back {
   background: #fff;
   color: var(--ink);
   justify-content: center;
-  padding: 1.6rem 1.4rem;
+  padding: 1.8rem 1.5rem;
 }
 
 .flip-card__dossier {

@@ -100,7 +100,7 @@ export function RenderBlocks({
             )
           }
           return (
-            <section key={key} className="container-wide pb-6 pt-6 md:pt-8">
+            <section key={key} className="container-wide pb-10 pt-10 md:pt-16">
               <article className="gsd-split">
                 <div className={`gsd-split__media ${media ? '' : 'gsd-split__media--hero'}`}>
                   {media ? (
@@ -113,13 +113,13 @@ export function RenderBlocks({
                   ) : (
                     <>
                       <span className="gsd-split__caption chip-yellow">{String(block.mediaCaption || 'CRADLE-X')}</span>
-                      <p className="headline text-5xl text-white md:text-6xl">{String(block.mediaTitle || '星球学院')}</p>
+                      <p className="headline text-6xl text-white md:text-7xl">{String(block.mediaTitle || '星球学院')}</p>
                     </>
                   )}
                 </div>
                 <div className="gsd-split__copy">
                   {block.eyebrow ? <p className="kicker">{String(block.eyebrow)}</p> : null}
-                  <h1 className="headline mt-5 text-4xl md:text-6xl">{String(block.heading || '')}</h1>
+                  <h1 className="headline mt-6 text-5xl md:text-7xl lg:text-8xl">{String(block.heading || '')}</h1>
                   {block.dek ? (
                     <p className={/^[A-Z][A-Z\s]+$/.test(String(block.dek).trim()) ? 'hero-en' : 'mt-6 max-w-xl text-xl font-medium leading-8'}>
                       {String(block.dek)}
@@ -252,10 +252,10 @@ export function RenderBlocks({
           const display = String(block.display || 'flip')
           const flip = display === 'static' ? 'off' : interaction.cardFlip
           return (
-            <section key={key} id={String(block.anchor || 'featured')} className="container-wide py-10 pb-16">
+            <section key={key} id={String(block.anchor || 'featured')} className="container-wide py-16 pb-24">
               <div className="flex flex-wrap items-end justify-between gap-4">
                 {block.kicker ? <p className="kicker">{String(block.kicker)}</p> : null}
-                {block.heading ? <h2 className="headline text-3xl md:text-4xl">{String(block.heading)}</h2> : null}
+                {block.heading ? <h2 className="headline text-4xl md:text-5xl">{String(block.heading)}</h2> : null}
                 {block.moreHref ? (
                   <Link href={String(block.moreHref)} className="text-sm font-semibold no-underline">
                     {String(block.moreLabel || '进入资源库')}
@@ -263,9 +263,9 @@ export function RenderBlocks({
                 ) : null}
               </div>
               {block.intro ? <p className="dek mt-3">{String(block.intro)}</p> : null}
-              <div className="course-grid mt-8">
+              <div className="course-grid mt-10">
                 {shown.map((course, n) => (
-                  <CourseFlipCard key={course.slug} course={course} tone={n} mode={flip} />
+                  <CourseFlipCard key={course.slug} course={course} tone={n} mode={flip} face="photo" />
                 ))}
               </div>
             </section>
@@ -368,7 +368,7 @@ export function RenderBlocks({
             .filter(Boolean)
           if (editorial) {
             return (
-              <section key={key} className="container-wide py-6">
+              <section key={key} className="container-wide py-10 md:py-16">
                 <article className="panel intro-ed">
                   <div className="intro-ed__grid">
                     <h2 className="intro-ed__en">

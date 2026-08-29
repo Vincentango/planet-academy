@@ -36,13 +36,13 @@ export type SiteChrome = {
 }
 
 export const DEFAULT_TOKENS: SiteTokens = {
-  paper: '#EDEDE8',
+  paper: '#F4F1EA',
   ink: '#111111',
   panel: '#ffffff',
   chipYellow: '#f5d84c',
   chipPeach: '#f5ad6e',
   accent: '#f5d84c',
-  radius: '1.75rem',
+  radius: '0.75rem',
   maxWidth: '74rem',
 }
 
@@ -67,14 +67,16 @@ export const DEFAULT_SITE: SiteChrome = {
 
 function pickTokens(raw: Record<string, unknown> | null | undefined): SiteTokens {
   const t = (raw || {}) as Record<string, unknown>
+  const paper = String(t.paper || DEFAULT_TOKENS.paper)
+  const radius = String(t.radius || DEFAULT_TOKENS.radius)
   return {
-    paper: String(t.paper || DEFAULT_TOKENS.paper),
+    paper: paper === '#EDEDE8' ? DEFAULT_TOKENS.paper : paper,
     ink: String(t.ink || DEFAULT_TOKENS.ink),
     panel: String(t.panel || DEFAULT_TOKENS.panel),
     chipYellow: String(t.chipYellow || DEFAULT_TOKENS.chipYellow),
     chipPeach: String(t.chipPeach || DEFAULT_TOKENS.chipPeach),
     accent: String(t.accent || DEFAULT_TOKENS.accent),
-    radius: String(t.radius || DEFAULT_TOKENS.radius),
+    radius: radius === '1.75rem' ? DEFAULT_TOKENS.radius : radius,
     maxWidth: String(t.maxWidth || DEFAULT_TOKENS.maxWidth),
   }
 }

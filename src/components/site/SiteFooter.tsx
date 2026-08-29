@@ -9,37 +9,37 @@ export function SiteFooter({ site }: { site?: SiteChrome }) {
 
   return (
     <footer className="site-footer">
-      <div className="container-wide grid gap-10 pb-16 pt-4 md:grid-cols-12">
-        <div className="md:col-span-5">
-          <Wordmark className="text-3xl text-white" />
+      <div className="container-wide grid gap-12 pb-20 pt-10 md:grid-cols-12">
+        <div className="md:col-span-6">
+          <Wordmark className="text-2xl text-ink" />
         </div>
-        <div className="md:col-span-4">
-          <p className="kicker text-white/50">主路径</p>
-          <ul className="mt-3 space-y-2 text-sm text-white">
+        <div className="md:col-span-3">
+          <p className="kicker">主路径</p>
+          <ul className="mt-4 space-y-2.5 text-sm">
             {items.map((item) => (
               <li key={`${item.href}-${item.label}`}>
-                <Link href={item.href} className="no-underline hover:opacity-70">
+                <Link href={item.href} className="no-underline hover:opacity-55">
                   {item.label}
                 </Link>
               </li>
             ))}
             <li>
-              <Link href="/contact" className="no-underline hover:opacity-70">
+              <Link href="/contact" className="no-underline hover:opacity-55">
                 联系
               </Link>
             </li>
           </ul>
         </div>
         <div className="md:col-span-3">
-          <p className="kicker text-white/50">关于</p>
-          <ul className="mt-3 space-y-2 text-sm text-white">
+          <p className="kicker">关于</p>
+          <ul className="mt-4 space-y-2.5 text-sm">
             <li>
-              <Link href="/privacy" className="no-underline hover:opacity-70">
+              <Link href="/privacy" className="no-underline hover:opacity-55">
                 隐私政策
               </Link>
             </li>
             <li>
-              <Link href="/admin" className="no-underline hover:opacity-70">
+              <Link href="/admin" className="no-underline hover:opacity-55">
                 内容后台
               </Link>
             </li>

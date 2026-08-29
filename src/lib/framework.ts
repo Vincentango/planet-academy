@@ -674,11 +674,14 @@ export const FUSION_TAB_SLUGS = [
   'tansuo-xiaoyuan',
 ] as const
 
+export const PIONEER_TAB_SLUGS = [] as const
+
 const RETIRED_INTEREST_SLUGS = new Set(['manghe', 'xiaoyuan-shiwu-ditu', 'gonggong-qianghui'])
 
 const TAB_SLUGS: Partial<Record<CourseSystem, readonly string[]>> = {
   interest: INTEREST_TAB_SLUGS,
   fusion: FUSION_TAB_SLUGS,
+  pioneer: PIONEER_TAB_SLUGS,
 }
 
 export function coursesForSystem(list: CatalogCourse[], system: CourseSystem) {
