@@ -47,12 +47,12 @@ export default async function HomePage() {
           chinese="推动课程内容到基础设施再到运营模式的多维度升级"
         />
       </section>
-      <section id="featured" className="container-wide py-16 pb-24">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <p className="kicker">课程精选</p>
-          <Link href="/curriculum" className="btn-ghost no-underline">进入资源库</Link>
+      <section id="featured" className="container-wide py-20 pb-28">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <h2 className="section-head" style={{ margin: 0 }}>课程精选</h2>
+          <Link href="/curriculum" className="btn-ghost no-underline">了解更多</Link>
         </div>
-        <div className="course-grid mt-10">
+        <div className="course-grid course-grid--projects mt-12">
           {courses.slice(0, 4).map((course, i) => (
             <CourseFlipCard key={course.slug} course={course} tone={i} mode={site.interaction.cardFlip} face="photo" />
           ))}

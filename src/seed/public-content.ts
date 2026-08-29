@@ -57,7 +57,7 @@ const HOME_LAYOUT = [
     blockType: 'courseFeed',
     kicker: '课程精选',
     heading: '',
-    moreLabel: '进入资源库',
+    moreLabel: '了解更多',
     moreHref: '/curriculum',
     mode: 'featured',
     limit: 4,
@@ -285,14 +285,18 @@ export async function ensurePublicComposer(payload: Payload) {
       { label: '关于', href: '/about', visible: true },
     ]
   }
+  const cream = new Set(['#EDEDE8', '#F4F1EA', '#f4f1ea', '#ede8e0'])
+  const yellow = new Set(['#f5d84c', '#F5D84C'])
+  const peach = new Set(['#f5ad6e', '#F5AD6E'])
+  const plump = new Set(['1.75rem', '0.75rem'])
   patch.tokens = {
-    paper: tokens.paper && tokens.paper !== '#EDEDE8' ? tokens.paper : '#F4F1EA',
+    paper: tokens.paper && !cream.has(tokens.paper) ? tokens.paper : '#F7F6F3',
     ink: tokens.ink || '#111111',
     panel: tokens.panel || '#ffffff',
-    chipYellow: tokens.chipYellow || '#f5d84c',
-    chipPeach: tokens.chipPeach || '#f5ad6e',
-    accent: tokens.accent || '#f5d84c',
-    radius: tokens.radius && tokens.radius !== '1.75rem' ? tokens.radius : '0.75rem',
+    chipYellow: tokens.chipYellow && !yellow.has(tokens.chipYellow) ? tokens.chipYellow : '#111111',
+    chipPeach: tokens.chipPeach && !peach.has(tokens.chipPeach) ? tokens.chipPeach : '#d8d4cc',
+    accent: tokens.accent && !yellow.has(tokens.accent) ? tokens.accent : '#111111',
+    radius: tokens.radius && !plump.has(tokens.radius) ? tokens.radius : '0.125rem',
     maxWidth: tokens.maxWidth || '74rem',
   }
   patch.interaction = {

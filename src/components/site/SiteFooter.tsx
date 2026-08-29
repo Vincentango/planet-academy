@@ -9,13 +9,14 @@ export function SiteFooter({ site }: { site?: SiteChrome }) {
 
   return (
     <footer className="site-footer">
-      <div className="container-wide grid gap-12 pb-20 pt-10 md:grid-cols-12">
+      <div className="container-wide grid gap-14 pb-24 pt-14 md:grid-cols-12">
         <div className="md:col-span-6">
-          <Wordmark className="text-2xl text-ink" />
+          <Wordmark className="text-xl text-ink" />
+          {s.footerNote ? <p className="dek mt-6 max-w-sm text-sm">{s.footerNote}</p> : null}
         </div>
         <div className="md:col-span-3">
           <p className="kicker">主路径</p>
-          <ul className="mt-4 space-y-2.5 text-sm">
+          <ul className="mt-5 space-y-3 text-sm">
             {items.map((item) => (
               <li key={`${item.href}-${item.label}`}>
                 <Link href={item.href} className="no-underline hover:opacity-55">
@@ -32,7 +33,7 @@ export function SiteFooter({ site }: { site?: SiteChrome }) {
         </div>
         <div className="md:col-span-3">
           <p className="kicker">关于</p>
-          <ul className="mt-4 space-y-2.5 text-sm">
+          <ul className="mt-5 space-y-3 text-sm">
             <li>
               <Link href="/privacy" className="no-underline hover:opacity-55">
                 隐私政策

@@ -252,18 +252,18 @@ export function RenderBlocks({
           const display = String(block.display || 'flip')
           const flip = display === 'static' ? 'off' : interaction.cardFlip
           return (
-            <section key={key} id={String(block.anchor || 'featured')} className="container-wide py-16 pb-24">
-              <div className="flex flex-wrap items-end justify-between gap-4">
-                {block.kicker ? <p className="kicker">{String(block.kicker)}</p> : null}
+            <section key={key} id={String(block.anchor || 'featured')} className="container-wide py-20 pb-28">
+              <div className="flex flex-wrap items-end justify-between gap-6">
+                {block.kicker ? <h2 className="section-head" style={{ margin: 0 }}>{String(block.kicker)}</h2> : null}
                 {block.heading ? <h2 className="headline text-4xl md:text-5xl">{String(block.heading)}</h2> : null}
                 {block.moreHref ? (
-                  <Link href={String(block.moreHref)} className="text-sm font-semibold no-underline">
-                    {String(block.moreLabel || '进入资源库')}
+                  <Link href={String(block.moreHref)} className="btn-ghost no-underline">
+                    {String(block.moreLabel || '了解更多')}
                   </Link>
                 ) : null}
               </div>
               {block.intro ? <p className="dek mt-3">{String(block.intro)}</p> : null}
-              <div className="course-grid mt-10">
+              <div className="course-grid course-grid--projects mt-12">
                 {shown.map((course, n) => (
                   <CourseFlipCard key={course.slug} course={course} tone={n} mode={flip} face="photo" />
                 ))}

@@ -49,6 +49,7 @@ export function CourseFlipCard({
             )}
           </div>
           <h3 className="headline flip-card__name">{course.title}</h3>
+          <p className="flip-card__more">了解更多</p>
         </div>
         {photoBack}
       </div>

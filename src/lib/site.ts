@@ -36,13 +36,13 @@ export type SiteChrome = {
 }
 
 export const DEFAULT_TOKENS: SiteTokens = {
-  paper: '#F4F1EA',
+  paper: '#F7F6F3',
   ink: '#111111',
   panel: '#ffffff',
-  chipYellow: '#f5d84c',
-  chipPeach: '#f5ad6e',
-  accent: '#f5d84c',
-  radius: '0.75rem',
+  chipYellow: '#111111',
+  chipPeach: '#d8d4cc',
+  accent: '#111111',
+  radius: '0.125rem',
   maxWidth: '74rem',
 }
 
@@ -65,18 +65,26 @@ export const DEFAULT_SITE: SiteChrome = {
   interaction: DEFAULT_INTERACTION,
 }
 
+const SUPERHI_PAPER = new Set(['#EDEDE8', '#F4F1EA', '#f4f1ea', '#ede8e0'])
+const SUPERHI_YELLOW = new Set(['#f5d84c', '#F5D84C'])
+const SUPERHI_PEACH = new Set(['#f5ad6e', '#F5AD6E'])
+const SUPERHI_RADIUS = new Set(['1.75rem', '0.75rem'])
+
 function pickTokens(raw: Record<string, unknown> | null | undefined): SiteTokens {
   const t = (raw || {}) as Record<string, unknown>
   const paper = String(t.paper || DEFAULT_TOKENS.paper)
   const radius = String(t.radius || DEFAULT_TOKENS.radius)
+  const chipYellow = String(t.chipYellow || DEFAULT_TOKENS.chipYellow)
+  const chipPeach = String(t.chipPeach || DEFAULT_TOKENS.chipPeach)
+  const accent = String(t.accent || DEFAULT_TOKENS.accent)
   return {
-    paper: paper === '#EDEDE8' ? DEFAULT_TOKENS.paper : paper,
+    paper: SUPERHI_PAPER.has(paper) ? DEFAULT_TOKENS.paper : paper,
     ink: String(t.ink || DEFAULT_TOKENS.ink),
     panel: String(t.panel || DEFAULT_TOKENS.panel),
-    chipYellow: String(t.chipYellow || DEFAULT_TOKENS.chipYellow),
-    chipPeach: String(t.chipPeach || DEFAULT_TOKENS.chipPeach),
-    accent: String(t.accent || DEFAULT_TOKENS.accent),
-    radius: radius === '1.75rem' ? DEFAULT_TOKENS.radius : radius,
+    chipYellow: SUPERHI_YELLOW.has(chipYellow) ? DEFAULT_TOKENS.chipYellow : chipYellow,
+    chipPeach: SUPERHI_PEACH.has(chipPeach) ? DEFAULT_TOKENS.chipPeach : chipPeach,
+    accent: SUPERHI_YELLOW.has(accent) ? DEFAULT_TOKENS.accent : accent,
+    radius: SUPERHI_RADIUS.has(radius) ? DEFAULT_TOKENS.radius : radius,
     maxWidth: String(t.maxWidth || DEFAULT_TOKENS.maxWidth),
   }
 }

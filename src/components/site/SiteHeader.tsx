@@ -15,7 +15,7 @@ export function SiteHeader({ nav = [] }: { nav?: NavItem[] }) {
     <header className="site-header site-header--white">
       <div className="container-wide flex items-center justify-between gap-6">
         <Link href="/" className="no-underline text-ink" aria-label="星球学院 CRADLE-X">
-          <Wordmark className="text-[1.2rem] md:text-[1.35rem] text-black" />
+          <Wordmark className="text-[1.05rem] md:text-[1.15rem] text-black" />
         </Link>
         <nav className="nav-pill hidden md:flex" aria-label="主导航">
           {items.map((item, i) => (
@@ -25,17 +25,17 @@ export function SiteHeader({ nav = [] }: { nav?: NavItem[] }) {
             </span>
           ))}
         </nav>
-        <Link href="/contact" className="btn-ghost no-underline">
+        <Link href="/contact" className="nav-cta no-underline hover:opacity-55">
           联系
         </Link>
       </div>
       <nav className="container-wide flex gap-5 overflow-x-auto pb-3 md:hidden" aria-label="移动导航">
         {items.map((item) => (
-          <Link key={`${item.href}-${item.label}`} href={item.href} className="nav-cat whitespace-nowrap text-sm font-medium">
+          <Link key={`${item.href}-${item.label}`} href={item.href} className="nav-cat whitespace-nowrap">
             {item.label}
           </Link>
         ))}
-        <Link href="/contact" className="nav-cat whitespace-nowrap text-sm font-medium">
+        <Link href="/contact" className="nav-cat whitespace-nowrap">
           联系
         </Link>
       </nav>
