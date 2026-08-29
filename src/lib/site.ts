@@ -36,13 +36,13 @@ export type SiteChrome = {
 }
 
 export const DEFAULT_TOKENS: SiteTokens = {
-  paper: '#FFFFFF',
-  ink: '#1C1C1C',
-  panel: '#ffffff',
-  chipYellow: '#1C1C1C',
-  chipPeach: '#E8E8E8',
-  accent: '#1C1C1C',
-  radius: '0.55rem',
+  paper: '#FCFCF7',
+  ink: '#1F1C06',
+  panel: '#FFFDF8',
+  chipYellow: '#F9E747',
+  chipPeach: '#FFCAC5',
+  accent: '#EB2A23',
+  radius: '0.95rem',
   maxWidth: '80rem',
 }
 
@@ -65,10 +65,14 @@ export const DEFAULT_SITE: SiteChrome = {
   interaction: DEFAULT_INTERACTION,
 }
 
-const SUPERHI_PAPER = new Set(['#EDEDE8', '#F4F1EA', '#f4f1ea', '#ede8e0', '#F7F6F3', '#f7f6f3'])
-const SUPERHI_YELLOW = new Set(['#f5d84c', '#F5D84C'])
-const SUPERHI_PEACH = new Set(['#f5ad6e', '#F5AD6E', '#d8d4cc', '#D8D4CC'])
-const SUPERHI_RADIUS = new Set(['1.75rem', '0.75rem', '0.125rem'])
+const SUPERHI_PAPER = new Set([
+  '#EDEDE8', '#F4F1EA', '#f4f1ea', '#ede8e0', '#F7F6F3', '#f7f6f3',
+  '#FFFFFF', '#ffffff', '#FFF', '#fff',
+])
+const SUPERHI_YELLOW = new Set(['#f5d84c', '#F5D84C', '#1C1C1C', '#1c1c1c'])
+const SUPERHI_PEACH = new Set(['#f5ad6e', '#F5AD6E', '#d8d4cc', '#D8D4CC', '#E8E8E8', '#e8e8e8'])
+const SUPERHI_RADIUS = new Set(['1.75rem', '0.75rem', '0.125rem', '0.55rem'])
+const STUDIO_INK = new Set(['#1C1C1C', '#1c1c1c'])
 
 function pickTokens(raw: Record<string, unknown> | null | undefined): SiteTokens {
   const t = (raw || {}) as Record<string, unknown>
@@ -79,8 +83,8 @@ function pickTokens(raw: Record<string, unknown> | null | undefined): SiteTokens
   const accent = String(t.accent || DEFAULT_TOKENS.accent)
   return {
     paper: SUPERHI_PAPER.has(paper) ? DEFAULT_TOKENS.paper : paper,
-    ink: String(t.ink || DEFAULT_TOKENS.ink),
-    panel: String(t.panel || DEFAULT_TOKENS.panel),
+    ink: STUDIO_INK.has(String(t.ink || '')) ? DEFAULT_TOKENS.ink : String(t.ink || DEFAULT_TOKENS.ink),
+    panel: SUPERHI_PAPER.has(String(t.panel || '')) ? DEFAULT_TOKENS.panel : String(t.panel || DEFAULT_TOKENS.panel),
     chipYellow: SUPERHI_YELLOW.has(chipYellow) ? DEFAULT_TOKENS.chipYellow : chipYellow,
     chipPeach: SUPERHI_PEACH.has(chipPeach) ? DEFAULT_TOKENS.chipPeach : chipPeach,
     accent: SUPERHI_YELLOW.has(accent) ? DEFAULT_TOKENS.accent : accent,
