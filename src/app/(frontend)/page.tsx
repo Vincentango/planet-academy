@@ -12,22 +12,21 @@ export default async function HomePage() {
   const courses = await featuredCourses(4)
   const fallback = (
     <>
-      <section className="container-wide pb-8 pt-8 md:pt-12">
-        <article className="gsd-split">
-          <div className="gsd-split__media gsd-split__media--hero">
-            <span className="gsd-split__caption chip-yellow">CRADLE-X</span>
-            <p className="headline text-6xl text-white md:text-7xl">星球学院</p>
-          </div>
-          <div className="gsd-split__copy">
-            <p className="kicker">星球学院 · CRADLE-X</p>
-            <h1 className="headline mt-6 text-5xl md:text-7xl lg:text-8xl">无边界未来学校</h1>
+      <section className="nuvu-hero">
+        <div className="container-wide nuvu-hero__band">
+          <div className="nuvu-hero__copy">
+            <h1 className="headline nuvu-hero__title">无边界未来学校</h1>
             <p className="hero-en">BORDERLESS FUTURE SCHOOL</p>
           </div>
-        </article>
+          <div className="nuvu-hero__stage">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/samples/home-stage.jpg" alt="" />
+          </div>
+        </div>
       </section>
-      <section className="container-wide py-8 md:py-14">
-        <article className="panel intro-ed">
-          <div className="intro-ed__grid">
+      <section className="nuvu-pair">
+        <div className="container-wide nuvu-pair__grid">
+          <article className="nuvu-pair__cell nuvu-pair__cell--copy">
             <h2 className="intro-ed__en">
               <span>Driving Interdisciplinary</span>
               <span>Integration with</span>
@@ -37,17 +36,17 @@ export default async function HomePage() {
               <p>以前沿科技构建跨学科融合课程体系</p>
               <p>以真实世界问题驱动项目制学习方式</p>
             </div>
-          </div>
-        </article>
+          </article>
+          <article className="nuvu-pair__cell nuvu-pair__cell--media">
+            <VideoQuotePlayer
+              src="/samples/home-quote.mp4"
+              english="Committed to Educational Sharing and Equity"
+              chinese="推动课程内容到基础设施再到运营模式的多维度升级"
+            />
+          </article>
+        </div>
       </section>
-      <section className="container-wide py-6">
-        <VideoQuotePlayer
-          src="/samples/home-quote.mp4"
-          english="Committed to Educational Sharing and Equity"
-          chinese="推动课程内容到基础设施再到运营模式的多维度升级"
-        />
-      </section>
-      <section id="featured" className="container-wide py-16 pb-24">
+      <section id="featured" className="container-wide nuvu-studios">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <h2 className="section-head" style={{ margin: 0 }}>课程精选</h2>
           <Link href="/curriculum" className="btn-ghost no-underline">了解更多</Link>

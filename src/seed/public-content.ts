@@ -287,20 +287,21 @@ export async function ensurePublicComposer(payload: Payload) {
   }
   const cream = new Set([
     '#EDEDE8', '#F4F1EA', '#f4f1ea', '#ede8e0', '#F7F6F3', '#f7f6f3',
-    '#FFFFFF', '#ffffff', '#FFF', '#fff',
+    '#FCFCF7', '#fcfcf7', '#FFFDF8', '#fffdf8', '#F8F3DB', '#f8f3db',
   ])
-  const yellow = new Set(['#f5d84c', '#F5D84C', '#1C1C1C', '#1c1c1c'])
-  const peach = new Set(['#f5ad6e', '#F5AD6E', '#d8d4cc', '#D8D4CC', '#E8E8E8', '#e8e8e8'])
-  const plump = new Set(['1.75rem', '0.75rem', '0.125rem', '0.55rem'])
-  const studioInk = new Set(['#1C1C1C', '#1c1c1c', ''])
+  const yellow = new Set(['#f5d84c', '#F5D84C', '#F9E747', '#f9e747', '#FFC32C', '#ffc32c'])
+  const peach = new Set(['#f5ad6e', '#F5AD6E', '#d8d4cc', '#D8D4CC', '#FFCAC5', '#ffcac5', '#E8E8E8', '#e8e8e8'])
+  const plump = new Set(['1.75rem', '0.75rem', '0.125rem', '0.55rem', '0.95rem'])
+  const workshopInk = new Set(['#1F1C06', '#1f1c06', ''])
+  const workshopAccent = new Set(['#f5d84c', '#F5D84C', '#F9E747', '#f9e747', '#EB2A23', '#eb2a23'])
   patch.tokens = {
-    paper: tokens.paper && !cream.has(tokens.paper) ? tokens.paper : '#FCFCF7',
-    ink: tokens.ink && !studioInk.has(tokens.ink) ? tokens.ink : '#1F1C06',
-    panel: tokens.panel && !cream.has(tokens.panel) ? tokens.panel : '#FFFDF8',
-    chipYellow: tokens.chipYellow && !yellow.has(tokens.chipYellow) ? tokens.chipYellow : '#F9E747',
-    chipPeach: tokens.chipPeach && !peach.has(tokens.chipPeach) ? tokens.chipPeach : '#FFCAC5',
-    accent: tokens.accent && !yellow.has(tokens.accent) ? tokens.accent : '#EB2A23',
-    radius: tokens.radius && !plump.has(tokens.radius) ? tokens.radius : '0.95rem',
+    paper: tokens.paper && !cream.has(tokens.paper) ? tokens.paper : '#FFFFFF',
+    ink: tokens.ink && !workshopInk.has(tokens.ink) ? tokens.ink : '#1C1C1C',
+    panel: tokens.panel && !cream.has(tokens.panel) ? tokens.panel : '#FFFFFF',
+    chipYellow: tokens.chipYellow && !yellow.has(tokens.chipYellow) ? tokens.chipYellow : '#1C1C1C',
+    chipPeach: tokens.chipPeach && !peach.has(tokens.chipPeach) ? tokens.chipPeach : '#F6F6F6',
+    accent: tokens.accent && !workshopAccent.has(tokens.accent) ? tokens.accent : '#1C1C1C',
+    radius: tokens.radius && !plump.has(tokens.radius) ? tokens.radius : '0',
     maxWidth: tokens.maxWidth || '80rem',
   }
   patch.interaction = {

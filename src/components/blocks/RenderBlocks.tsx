@@ -99,41 +99,40 @@ export function RenderBlocks({
               </section>
             )
           }
+          const stage = media || '/samples/home-stage.jpg'
+          const stageVideo = /\.(mp4|webm|mov)(\?|$)/i.test(stage)
           return (
-            <section key={key} className="container-wide pb-10 pt-10 md:pt-16">
-              <article className="gsd-split">
-                <div className={`gsd-split__media ${media ? '' : 'gsd-split__media--hero'}`}>
-                  {media ? (
-                    media.match(/\.(mp4|webm|mov)(\?|$)/i) ? (
-                      <video src={media} muted playsInline loop={Boolean(block.autoplay)} autoPlay={Boolean(block.autoplay)} />
-                    ) : (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={media} alt="" />
-                    )
-                  ) : (
-                    <>
-                      <span className="gsd-split__caption chip-yellow">{String(block.mediaCaption || 'CRADLE-X')}</span>
-                      <p className="headline text-6xl text-white md:text-7xl">{String(block.mediaTitle || '星球学院')}</p>
-                    </>
-                  )}
-                </div>
-                <div className="gsd-split__copy">
+            <section key={key} className="nuvu-hero">
+              <div className="container-wide nuvu-hero__band">
+                <div className="nuvu-hero__copy">
                   {block.eyebrow ? <p className="kicker">{String(block.eyebrow)}</p> : null}
-                  <h1 className="headline mt-6 text-5xl md:text-7xl lg:text-8xl">{String(block.heading || '')}</h1>
+                  <h1 className="headline nuvu-hero__title">{String(block.heading || '')}</h1>
                   {block.dek ? (
-                    <p className={/^[A-Z][A-Z\s]+$/.test(String(block.dek).trim()) ? 'hero-en' : 'mt-6 max-w-xl text-xl font-medium leading-8'}>
+                    <p className={/^[A-Z][A-Z\s]+$/.test(String(block.dek).trim()) ? 'hero-en' : 'dek mt-6 max-w-xl text-xl leading-8'}>
                       {String(block.dek)}
                     </p>
                   ) : null}
                   {block.subheading ? <p className="dek mt-3 max-w-xl text-base">{String(block.subheading)}</p> : null}
                   <ActionRow actions={actions} />
                 </div>
-              </article>
+                <div className="nuvu-hero__stage">
+                  {stageVideo ? (
+                    <video src={stage} muted playsInline loop={Boolean(block.autoplay)} autoPlay={Boolean(block.autoplay)} />
+                  ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={stage} alt="" />
+                  )}
+                </div>
+              </div>
             </section>
           )
         }
 
         if (type === 'videoQuote') {
+          const prev = blocks[i - 1]
+          if (prev && String(prev.blockType || '') === 'richText' && String(prev.display || '') === 'editorial') {
+            return null
+          }
           const src = mediaUrl(block.media, String(block.url || '/samples/home-quote.mp4'))
           return (
             <section key={key} className="container-wide py-2">
@@ -252,7 +251,7 @@ export function RenderBlocks({
           const display = String(block.display || 'flip')
           const flip = display === 'static' ? 'off' : interaction.cardFlip
           return (
-            <section key={key} id={String(block.anchor || 'featured')} className="container-wide py-20 pb-28">
+            <section key={key} id={String(block.anchor || 'featured')} className="container-wide nuvu-studios">
               <div className="flex flex-wrap items-end justify-between gap-6">
                 {block.kicker ? <h2 className="section-head" style={{ margin: 0 }}>{String(block.kicker)}</h2> : null}
                 {block.heading ? <h2 className="headline text-4xl md:text-5xl">{String(block.heading)}</h2> : null}
@@ -367,23 +366,45 @@ export function RenderBlocks({
             .map((line) => line.trim())
             .filter(Boolean)
           if (editorial) {
+            const next = blocks[i + 1]
+            const pairVideo = next && String(next.blockType || '') === 'videoQuote'
+            const copy = (
+              <>
+                <h2 className="intro-ed__en">
+                  {headingLines.map((line) => (
+                    <span key={line}>{line}</span>
+                  ))}
+                </h2>
+                {body ? (
+                  <div className="intro-ed__zh">
+                    {body.split('\n\n').map((p, n) => (
+                      <p key={n}>{p}</p>
+                    ))}
+                  </div>
+                ) : null}
+              </>
+            )
+            if (pairVideo) {
+              const src = mediaUrl(next.media, String(next.url || '/samples/home-quote.mp4'))
+              return (
+                <section key={key} className="nuvu-pair">
+                  <div className="container-wide nuvu-pair__grid">
+                    <article className="nuvu-pair__cell nuvu-pair__cell--copy">{copy}</article>
+                    <article className="nuvu-pair__cell nuvu-pair__cell--media">
+                      <VideoQuotePlayer
+                        src={src}
+                        english={next.english ? String(next.english) : undefined}
+                        chinese={next.chinese ? String(next.chinese) : undefined}
+                      />
+                    </article>
+                  </div>
+                </section>
+              )
+            }
             return (
               <section key={key} className="container-wide py-10 md:py-16">
                 <article className="panel intro-ed">
-                  <div className="intro-ed__grid">
-                    <h2 className="intro-ed__en">
-                      {headingLines.map((line) => (
-                        <span key={line}>{line}</span>
-                      ))}
-                    </h2>
-                    {body ? (
-                      <div className="intro-ed__zh">
-                        {body.split('\n\n').map((p, n) => (
-                          <p key={n}>{p}</p>
-                        ))}
-                      </div>
-                    ) : null}
-                  </div>
+                  <div className="intro-ed__grid">{copy}</div>
                 </article>
               </section>
             )
