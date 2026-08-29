@@ -285,19 +285,19 @@ export async function ensurePublicComposer(payload: Payload) {
       { label: '关于', href: '/about', visible: true },
     ]
   }
-  const cream = new Set(['#EDEDE8', '#F4F1EA', '#f4f1ea', '#ede8e0'])
+  const cream = new Set(['#EDEDE8', '#F4F1EA', '#f4f1ea', '#ede8e0', '#F7F6F3', '#f7f6f3'])
   const yellow = new Set(['#f5d84c', '#F5D84C'])
-  const peach = new Set(['#f5ad6e', '#F5AD6E'])
-  const plump = new Set(['1.75rem', '0.75rem'])
+  const peach = new Set(['#f5ad6e', '#F5AD6E', '#d8d4cc', '#D8D4CC'])
+  const plump = new Set(['1.75rem', '0.75rem', '0.125rem'])
   patch.tokens = {
-    paper: tokens.paper && !cream.has(tokens.paper) ? tokens.paper : '#F7F6F3',
-    ink: tokens.ink || '#111111',
+    paper: tokens.paper && !cream.has(tokens.paper) ? tokens.paper : '#FFFFFF',
+    ink: tokens.ink || '#1C1C1C',
     panel: tokens.panel || '#ffffff',
-    chipYellow: tokens.chipYellow && !yellow.has(tokens.chipYellow) ? tokens.chipYellow : '#111111',
-    chipPeach: tokens.chipPeach && !peach.has(tokens.chipPeach) ? tokens.chipPeach : '#d8d4cc',
-    accent: tokens.accent && !yellow.has(tokens.accent) ? tokens.accent : '#111111',
-    radius: tokens.radius && !plump.has(tokens.radius) ? tokens.radius : '0.125rem',
-    maxWidth: tokens.maxWidth || '74rem',
+    chipYellow: tokens.chipYellow && !yellow.has(tokens.chipYellow) ? tokens.chipYellow : '#1C1C1C',
+    chipPeach: tokens.chipPeach && !peach.has(tokens.chipPeach) ? tokens.chipPeach : '#E8E8E8',
+    accent: tokens.accent && !yellow.has(tokens.accent) ? tokens.accent : '#1C1C1C',
+    radius: tokens.radius && !plump.has(tokens.radius) ? tokens.radius : '0.55rem',
+    maxWidth: tokens.maxWidth || '80rem',
   }
   patch.interaction = {
     cardFlip: interaction.cardFlip || 'hover',

@@ -13,9 +13,9 @@ export function SiteHeader({ nav = [] }: { nav?: NavItem[] }) {
 
   return (
     <header className="site-header site-header--white">
-      <div className="container-wide flex items-center justify-between gap-6">
+      <div className="container-wide flex items-center justify-between gap-8">
         <Link href="/" className="no-underline text-ink" aria-label="星球学院 CRADLE-X">
-          <Wordmark className="text-[1.05rem] md:text-[1.15rem] text-black" />
+          <Wordmark className="text-[1.02rem] md:text-[1.1rem] text-black" />
         </Link>
         <nav className="nav-pill hidden md:flex" aria-label="主导航">
           {items.map((item, i) => (

@@ -36,14 +36,14 @@ export type SiteChrome = {
 }
 
 export const DEFAULT_TOKENS: SiteTokens = {
-  paper: '#F7F6F3',
-  ink: '#111111',
+  paper: '#FFFFFF',
+  ink: '#1C1C1C',
   panel: '#ffffff',
-  chipYellow: '#111111',
-  chipPeach: '#d8d4cc',
-  accent: '#111111',
-  radius: '0.125rem',
-  maxWidth: '74rem',
+  chipYellow: '#1C1C1C',
+  chipPeach: '#E8E8E8',
+  accent: '#1C1C1C',
+  radius: '0.55rem',
+  maxWidth: '80rem',
 }
 
 export const DEFAULT_INTERACTION: SiteInteraction = {
@@ -65,10 +65,10 @@ export const DEFAULT_SITE: SiteChrome = {
   interaction: DEFAULT_INTERACTION,
 }
 
-const SUPERHI_PAPER = new Set(['#EDEDE8', '#F4F1EA', '#f4f1ea', '#ede8e0'])
+const SUPERHI_PAPER = new Set(['#EDEDE8', '#F4F1EA', '#f4f1ea', '#ede8e0', '#F7F6F3', '#f7f6f3'])
 const SUPERHI_YELLOW = new Set(['#f5d84c', '#F5D84C'])
-const SUPERHI_PEACH = new Set(['#f5ad6e', '#F5AD6E'])
-const SUPERHI_RADIUS = new Set(['1.75rem', '0.75rem'])
+const SUPERHI_PEACH = new Set(['#f5ad6e', '#F5AD6E', '#d8d4cc', '#D8D4CC'])
+const SUPERHI_RADIUS = new Set(['1.75rem', '0.75rem', '0.125rem'])
 
 function pickTokens(raw: Record<string, unknown> | null | undefined): SiteTokens {
   const t = (raw || {}) as Record<string, unknown>
